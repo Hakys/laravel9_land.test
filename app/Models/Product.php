@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     //use HasFactory;
+
     /**
      * PRODUCT ATTRIBUTES
      * $this->attributes['id'] - int - contains the product primary key (id)
@@ -18,6 +19,16 @@ class Product extends Model
      * $this->attributes['created_at'] - timestamp - contains the product creation date
      * $this->attributes['updated_at'] - timestamp - contains the product update date
      */
+
+    /*
+    protected $fillable = [
+        'name',
+        'description',
+        'price',
+        'image',
+    ];
+     */
+    
     public function getId()
     {
         return $this->attributes['id'];
