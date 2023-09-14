@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Laravel Land'),
 
     /*
     |--------------------------------------------------------------------------
@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://laravel9_clean.test'),
+    'url' => env('APP_URL', 'http://laravel9_land.test'),
 
     'asset_url' => env('ASSET_URL'),
 
