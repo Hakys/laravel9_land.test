@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -31,5 +32,15 @@ class DatabaseSeeder extends Seeder
         $user->save();
         exit
         */
+
+        User::Create([
+			"name" => "Hakys",
+			"email" => "hakyss@gmail.com",
+			"password" => bcrypt("password"),
+			"role" => "admin",
+            'balance' => 5000,
+		]);
+        $this->call(ContactoSeeder::class);
+        $this->call(ProductSeeder::class);
     }
 }

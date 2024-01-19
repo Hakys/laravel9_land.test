@@ -1,5 +1,11 @@
 @extends('layouts.app')
 @section('title', $viewData['title'])
+@section('header')
+    <div class="d-flex align-items-center flex-column bg-primary text-white text-center">
+        <h2>@yield('subtitle', 'A Laravel Online Store')</h2>
+    </div>
+</header>
+@endsection
 @section('content')
     <div class="row">
         <div class="col-md-6 col-lg-4 mb-2">

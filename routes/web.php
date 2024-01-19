@@ -30,6 +30,16 @@ Route::get('/cart', 'App\Http\Controllers\CartController@index')->name("cart.ind
 Route::get('/cart/delete', 'App\Http\Controllers\CartController@delete')->name("cart.delete");
 Route::post('/cart/add/{id}', 'App\Http\Controllers\CartController@add')->name("cart.add");
 
+Route::get('/contactos', 'App\Http\Controllers\ContactoController@index')->name("contacto.index");
+Route::get('/contactos/create', 'App\Http\Controllers\ContactoController@create')->name("contacto.create");
+Route::post('/contactos/store', 'App\Http\Controllers\ContactoController@store')->name("contacto.store");
+Route::get('/contactos/{telefono}', 'App\Http\Controllers\ContactoController@show')->name("contacto.show");
+Route::get('/contactos/{telefono}/edit', 'App\Http\Controllers\ContactoController@edit')->name("contacto.edit");
+Route::put('/contactos/{telefono}/update', 'App\Http\Controllers\ContactoController@update')->name("contacto.update");
+Route::delete('/contactos/{telefono}/delete', 'App\Http\Controllers\ContactoController@delete')->name("contacto.delete");
+
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/cart/purchase', 'App\Http\Controllers\CartController@purchase')->name("cart.purchase");
     Route::get('/my-account/orders', 'App\Http\Controllers\MyAccountController@orders')->name("myaccount.orders");
@@ -47,3 +57,9 @@ Route::middleware('admin')->group(function () {
 Auth::routes();
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/landing', function () {
+    $viewData = [];
+    $viewData["title"] = "Landing Page - Online Store";
+    return view('home.landing')->with("viewData", $viewData);
+})->name("home.landing");

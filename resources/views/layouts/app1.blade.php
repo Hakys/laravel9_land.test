@@ -1,28 +1,17 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="laravel9 bootstrap5" />
-    <meta name="author" content="by Hakys" />
-    <title>@yield('title', 'Landing Page - Start Bootstrap Theme')</title>
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
-
-    <!-- Bootstrap icons-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
-    <!-- Google fonts-->
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
-    <!-- Core theme CSS (includes Bootstrap)-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet" />
-    <!--<link href="{{ asset('/css/sb_landing.css') }}" rel="stylesheet" />-->
+    <title>@yield('title', 'Online Store')</title>
 </head>
 
 <body>
-    <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg bg-light">
+    <!-- header -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
         <div class="container">
             <a class="navbar-brand" href="{{ route('home.index') }}">Online Store</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
@@ -33,12 +22,11 @@
                 <div class="navbar-nav ms-auto">
                     <a class="nav-link active" href="{{ route('home.index') }}">Home</a>
                     <a class="nav-link active" href="{{ route('product.index') }}">Products</a>
-                    <a class="nav-link active" href="{{ route('contacto.index') }}">Contactos</a>
                     <a class="nav-link active" href="{{ route('cart.index') }}">Cart</a>
                     <a class="nav-link active" href="{{ route('home.about') }}">About</a>
                     <a class="nav-link active" href="{{ route('home.landing') }}">Landing</a>
-
-                    <div class="vr bg-black mx-2 d-none d-lg-block"></div>
+                   
+                    <div class="vr bg-white mx-2 d-none d-lg-block"></div>
                     @guest
                         <a class="nav-link active" href="{{ route('login') }}">Login</a>
                         <a class="nav-link active" href="{{ route('register') }}">Register</a>
@@ -55,15 +43,13 @@
             </div>
         </div>
     </nav>
-    <!-- header -->
-    <header class="masthead">
-        <div class="container">
-            @yield('header')
-        </div>        
+    <header class="masthead bg-primary text-white text-center">
+        <div class="container d-flex align-items-center flex-column">
+            <h2>@yield('subtitle', 'A Laravel Online Store')</h2>
+        </div>
     </header>
     <!-- header -->
-    <div class="container my-1">
-        @include('layouts.alert')
+    <div class="container my-4">
         @yield('content')
     </div>
     <!-- footer -->
@@ -71,9 +57,9 @@
         <div class="container">
             <small>
                 Copyright - <a class="text-reset fw-bold text-decoration-none" target="_blank"
-                    href="https://diablaroja.es">
-                    by Hakys
-                </a> - <b>by Hakys</b>
+                    href="https://twitter.com/danielgarax">
+                    Daniel Correa
+                </a> - <b>Paola Vallejo</b>
             </small>
         </div>
     </div>
