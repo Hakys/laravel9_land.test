@@ -17,10 +17,10 @@ class ProductSeeder extends Seeder
     {
         
         $products = [
-            ["name" => "TV", "description" => "Best TV", "image" => "1.png", "price" => "1000"],
-            ["name" => "iPhone", "description" => "Best iPhone", "image" => "2.png", "price" => "999"],
-            ["name" => "Chromecast", "description" => "Best Chromecast", "image" => "3.png", "price" => "30"],
-            ["name" => "Glasses", "description" => "Best Glasses", "image" => "4.png", "price" => "100"]
+            ["referencia" => "DR-0001", "title" => "TV", "slug" => "TV", "html_description" => "Best TV", "url_image" => "1.png", "price" => "1000"],
+            ["referencia" => "DR-0002", "title" => "iPhone", "slug" => "iPhone", "html_description" => "Best iPhone", "url_image" => "2.png", "price" => "999"],
+            ["referencia" => "DR-0003", "title" => "Chromecast", "slug" => "Chromecast", "html_description" => "Best Chromecast", "url_image" => "3.png", "price" => "30"],
+            ["referencia" => "DR-0004", "title" => "Glasses", "slug" => "Glasses", "html_description" => "Best Glasses", "url_image" => "4.png", "price" => "100"]
         ];
         foreach($products as $product)
             Product::Create($product);

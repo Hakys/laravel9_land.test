@@ -63,17 +63,16 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Edit</th>
-                        <th scope="col">Delete</th>
+                        <th scope="col">Referencia</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col" colspan="2" class="align-items-center"></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($viewData['products'] as $product)
                         <tr>
-                            <td>{{ $product->getId() }}</td>
-                            <td>{{ $product->getName() }}</td>
+                            <td>{{ $product->getReferencia() }}</td>
+                            <td>{{ $product->getTitle() }}</td>
                             <td>
                                 <a class="btn btn-primary"
                                     href="{{ route('admin.product.edit', ['id' => $product->getId()]) }}">

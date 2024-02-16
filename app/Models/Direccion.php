@@ -26,31 +26,38 @@ class Direccion extends Model
      * $this->attributes['updated_at'] - timestamp - contains the user update date
      */
 
+     /**
+     * The model's default values for attributes.
+     *
+     * @var array
+     */
+    /*
+    protected $attributes = [
+        'options' => '[]',
+        'delayed' => false,
+    ];
+    */
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'full_name', 'telefono', 'email', 'nif', 'direccion', 'cp', 'poblacion', 'provincia', 'pais',
+        'full_name', 'telefono', 'email', 'nif', 'direccion', 'cp', 'poblacion', 'provincia', 'pais', 'contacto_id'
     ];
 
-    public static function validate($request)
-    {
-        $request->validate([
-            'apodo' => 'required|unique:contactos',
-            'telefono' => 'required|unique:contactos',
-            //'full_name', 'telefono', 'email', 'nif', 'direccion', 'cp', 'poblacion', 'provincia', 'pais',
-        ]);
+    public function contacto(){
+        return $this->belongsTo(Contacto::class);
     }
 
     public function getId(){ return $this->attributes['id']; }
     public function setId($id){ $this->attributes['id'] = $id; }
     
-    public function getFull_name(){ return strtoupper($this->attributes['full_name']); }
+    public function getFull_name(){ return $this->attributes['full_name']; }
     public function setFull_name($full_name){ $this->attributes['full_name'] = $full_name; }
     
-    public function getTelefono(){ return $this->attributes['telefono']); }
+    public function getTelefono(){ return $this->attributes['telefono']; }
     public function setTelefono($telefono){ $this->attributes['telefono'] = $telefono; }
     
     public function getEmail(){ return $this->attributes['email']; }
@@ -74,20 +81,9 @@ class Direccion extends Model
     public function getPais(){ return $this->attributes['pais']; }
     public function setPais($pais){ $this->attributes['pais'] = $pais; }
 
-    public function getCreatedAt()
-    {
-        return $this->attributes['created_at'];
-    }
-    public function setCreatedAt($createdAt)
-    {
-        $this->attributes['created_at'] = $createdAt;
-    }
-    public function getUpdatedAt()
-    {
-        return $this->attributes['updated_at'];
-    }
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->attributes['updated_at'] = $updatedAt;
-    }
+    public function getCreatedAt(){ return $this->attributes['created_at']; }
+    public function setCreatedAt($createdAt){ $this->attributes['created_at'] = $createdAt; }
+
+    public function getUpdatedAt(){ return $this->attributes['updated_at']; }
+    public function setUpdatedAt($updatedAt){ $this->attributes['updated_at'] = $updatedAt; }
 }

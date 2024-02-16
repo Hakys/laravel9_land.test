@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Auth;
     return view('home.index')->with("viewData", $viewData);
 });*/
 
+
 Route::get('/', 'App\Http\Controllers\HomeController@index')->name("home.index");
 Route::get('/about', 'App\Http\Controllers\HomeController@about')->name("home.about");
 Route::get('/products', 'App\Http\Controllers\ProductController@index')->name("product.index");
@@ -31,14 +32,17 @@ Route::get('/cart/delete', 'App\Http\Controllers\CartController@delete')->name("
 Route::post('/cart/add/{id}', 'App\Http\Controllers\CartController@add')->name("cart.add");
 
 Route::get('/contactos', 'App\Http\Controllers\ContactoController@index')->name("contacto.index");
-Route::get('/contactos/create', 'App\Http\Controllers\ContactoController@create')->name("contacto.create");
-Route::post('/contactos/store', 'App\Http\Controllers\ContactoController@store')->name("contacto.store");
+//Route::get('/contactos/create', 'App\Http\Controllers\ContactoController@create')->name("contacto.create");
+//Route::post('/contactos/store', 'App\Http\Controllers\ContactoController@store')->name("contacto.store");
 Route::get('/contactos/{telefono}', 'App\Http\Controllers\ContactoController@show')->name("contacto.show");
-Route::get('/contactos/{telefono}/edit', 'App\Http\Controllers\ContactoController@edit')->name("contacto.edit");
-Route::put('/contactos/{telefono}/update', 'App\Http\Controllers\ContactoController@update')->name("contacto.update");
+//Route::get('/contactos/{telefono}/edit', 'App\Http\Controllers\ContactoController@edit')->name("contacto.edit");
+//Route::put('/contactos/{telefono}/update', 'App\Http\Controllers\ContactoController@update')->name("contacto.update");
 Route::delete('/contactos/{telefono}/delete', 'App\Http\Controllers\ContactoController@delete')->name("contacto.delete");
 
+//Route::delete('/direcciones/{direccion}/delete', 'App\Http\Controllers\DireccionController@delete')->name("direccion.delete");
 
+Route::get('/prestashop/products', 'App\Http\Controllers\PrestashopController@index')->name('prestashop.product.index');
+Route::get('/prestashop/products/{id}', 'App\Http\Controllers\PrestashopController@show')->name('prestashop.product.show');
 
 Route::middleware('auth')->group(function () {
     Route::get('/cart/purchase', 'App\Http\Controllers\CartController@purchase')->name("cart.purchase");
@@ -63,3 +67,10 @@ Route::get('/landing', function () {
     $viewData["title"] = "Landing Page - Online Store";
     return view('home.landing')->with("viewData", $viewData);
 })->name("home.landing");
+
+Route::get('/xml', 'App\Http\Controllers\XmlController@index')->name("xml.index");
+Route::get('/xml/importfile', 'App\Http\Controllers\XmlController@importfile')->name("xml.importfile");
+Route::get('/xml/loadfile/{limit}', 'App\Http\Controllers\XmlController@loadfile')->name("xml.loadfile");
+Route::get('/xml/show/{referencia}', 'App\Http\Controllers\XmlController@show')->name("xml.show");
+
+Route::get('/reunion', 'App\Http\Controllers\ReunionController@index')->name("reunion.index");

@@ -5,14 +5,15 @@
     <div class="card mb-3">
         <div class="row g-0">
             <div class="col-md-4">
-                <img src="{{ asset('/storage/' . $viewData['product']->getImage()) }}" class="img-fluid rounded-start">
+                <!--<img src="{{ asset('/storage/' . $viewData['product']->getUrl_image()) }}" class="img-fluid rounded-start">-->
+                <img src="{{ $viewData['product']->getUrl_image() }}" class="img-fluid rounded-start">
             </div>
             <div class="col-md-8">
                 <div class="card-body">
                     <h5 class="card-title">
-                        {{ $viewData['product']->getName() }} (${{ $viewData['product']->getPrice() }})
+                        {{ $viewData['product']->getTitle() }} (${{ $viewData['product']->getPrice() }})
                     </h5>
-                    <p class="card-text">{{ $viewData['product']->getDescription() }}</p>
+                    <p class="card-text">{{ $viewData['product']->getHtml_description() }}</p>
                     <p class="card-text">
                     <form method="POST" action="{{ route('cart.add', ['id' => $viewData['product']->getId()]) }}">
                         <div class="row">

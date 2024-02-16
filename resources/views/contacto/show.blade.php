@@ -13,24 +13,31 @@
                         {{ $viewData['contacto']->getApodo() }}
                     </h5>
                     <p class="card-text">{{ $viewData['contacto']->getTelefono() }}</p>
-                    <div class="d-flex flex-row-reverse align-self-center">                        
+                    <div class="d-flex flex-row-reverse align-self-center gap-2">                        
                         <form method="POST" action="{{ route('contacto.delete', $viewData['contacto']->getTelefono()) }}">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-danger">
+                            <button id='btn_delete' class="btn btn-danger" onclick="confirmDelete('btn_delete')">
                                 <i class="bi-trash"></i>
                             </button>
                         </form>
-                        <a class="me-2 btn btn-info text-white" href="{{ route('contacto.edit', $viewData['contacto']->getTelefono()) }}">
-                            <i class="bi-pencil"></i>
-                        </a>
-                        <a class="me-2" href="https://wa.me/{{ $viewData['contacto']->getTelefono() }}?">
+                        
+                        @livewire('contacto.form-modal',['op'=>'edit','contacto'=> $viewData['contacto']])
+                    
+                        <a href="https://wa.me/{{ $viewData['contacto']->getTelefono() }}?">
                             <img height="38" alt="Chat on WhatsApp" class="rounded-start"
                             src="{{ asset('/storage/WhatsAppButtonGreenLarge.png') }}" >
-                        </a>
-                        </div>
+                        </a>                        
+                    </div>
                 </div>
             </div>
+        </div>
+        <div class="row p-2">     
+            <div class="col-md-8">
+                @livewire('direccion.index',['contacto'=> $viewData['contacto']])       
+            </div>
+        </div>            
+        <div class="col-md-4">
         </div>
     </div>
 @endsection

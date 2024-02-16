@@ -18,6 +18,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet" />
     <!--<link href="{{ asset('/css/sb_landing.css') }}" rel="stylesheet" />-->
+    @livewireStyles
 </head>
 
 <body>
@@ -32,8 +33,10 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav ms-auto">
                     <a class="nav-link active" href="{{ route('home.index') }}">Home</a>
+                    <a class="nav-link active" href="{{ route('reunion.index') }}">Reuniones</a>
                     <a class="nav-link active" href="{{ route('product.index') }}">Products</a>
                     <a class="nav-link active" href="{{ route('contacto.index') }}">Contactos</a>
+                    <a class="nav-link active" href="{{ route('prestashop.product.index') }}">Prestashop Products</a>
                     <a class="nav-link active" href="{{ route('cart.index') }}">Cart</a>
                     <a class="nav-link active" href="{{ route('home.about') }}">About</a>
                     <a class="nav-link active" href="{{ route('home.landing') }}">Landing</a>
@@ -78,8 +81,9 @@
         </div>
     </div>
     <!-- footer -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
-    </script>
+    <script src="{{ asset('/js/app.js') }}" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    @livewireScripts
 </body>
 
 </html>

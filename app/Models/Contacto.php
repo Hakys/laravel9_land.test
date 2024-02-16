@@ -28,12 +28,8 @@ class Contacto extends Model
         'telefono'
     ];
 
-    public static function validate($request)
-    {
-        $request->validate([
-            'apodo' => 'required|unique:contactos',
-            'telefono' => 'required|unique:contactos',
-        ]);
+    public function direccions(){
+        return $this->hasMany(Direccion::class);
     }
 
     public function getId()

@@ -31,10 +31,10 @@ class AdminProductController extends Controller
         Product::validate($request);
         
         $newProduct = new Product();
-        $newProduct->setName($request->input('name'));
-        $newProduct->setDescription($request->input('description'));
+        $newProduct->setTitle($request->input('name'));
+        $newProduct->setHtml_description($request->input('description'));
         $newProduct->setPrice($request->input('price'));
-        $newProduct->setImage("game.png");
+        $newProduct->setUrl_Image("game.png");
         $newProduct->save();
 
         /*
@@ -77,8 +77,8 @@ class AdminProductController extends Controller
         Product::validate($request);
         
         $product = Product::findOrFail($id);
-        $product->setName($request->input('name'));
-        $product->setDescription($request->input('description'));
+        $product->setTitle($request->input('name'));
+        $product->setHtml_description($request->input('description'));
         $product->setPrice($request->input('price'));
         if ($request->hasFile('image')) {
             $imageName = $product->getId() . "." . $request->file('image')->extension();
@@ -86,7 +86,7 @@ class AdminProductController extends Controller
                 $imageName,
                 file_get_contents($request->file('image')->getRealPath())
             );
-            $product->setImage($imageName);
+            $product->setUrl_image($imageName);
         }
         $product->save();
         return redirect()->route('admin.product.index');

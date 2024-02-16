@@ -78,8 +78,8 @@ class DireccionController extends Controller
      * @param  \App\Models\Direccion  $direccion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Direccion $direccion)
+    public function delete(Direccion $direccion)
     {
-        //
+       //
     }
 }

@@ -21,9 +21,10 @@ return new class extends Migration
             $table->string('nif')->nullable();
             $table->string('direccion')->default('F. Simplificada, Sin Datos');
             $table->string('cp')->nullable();
-            $table->string('poblacion')->default('Huelva')->nullable();
+            $table->string('poblacion')->default('Huelva');
             $table->string('provincia')->nullable();
             $table->string('pais')->default('España');
+            $table->foreignId('contacto_id')->index();
             $table->timestamps();
         });
     }
