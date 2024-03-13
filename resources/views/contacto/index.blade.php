@@ -7,7 +7,7 @@
             <div class="flex-grow-1"><h2>{{$viewData['subtitle']}}</h2></div>
             <div><a class="btn btn-outline-secondary">
                 <b>Nº de Contactos:</b> {{ $viewData['contactos']->count() }}</a></div>
-            @livewire('contacto.form-modal',['op'=>'create'])
+            @livewire('contacto.form-modal',['op'=>'create','to'=>'contacto.index'])
         </div>
         <div class="card-body">
             <div class="row">

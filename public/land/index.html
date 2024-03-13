@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css">
     <link rel="stylesheet" href="assets/css/animate.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -132,6 +133,10 @@
             </div>
         </div>
     </section>
+    <select class="js-example-basic-single" name="state">
+        <option value="AL">Alabama</option>
+        <option value="WY">Wyoming</option>
+      </select>
     <footer class="bg-light footer">
         <div class="container">
             <div class="row">
@@ -157,8 +162,16 @@
             </div>
         </div>
     </footer>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $( document ).ready(function() {
+            alert( "ready!" );
+            $('.js-example-basic-single').select2();
+        });
+    </script>
 </body>
 
 </html>

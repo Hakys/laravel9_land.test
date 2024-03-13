@@ -68,9 +68,22 @@ Route::get('/landing', function () {
     return view('home.landing')->with("viewData", $viewData);
 })->name("home.landing");
 
-Route::get('/xml', 'App\Http\Controllers\XmlController@index')->name("xml.index");
-Route::get('/xml/importfile', 'App\Http\Controllers\XmlController@importfile')->name("xml.importfile");
-Route::get('/xml/loadfile/{limit}', 'App\Http\Controllers\XmlController@loadfile')->name("xml.loadfile");
-Route::get('/xml/show/{referencia}', 'App\Http\Controllers\XmlController@show')->name("xml.show");
+Route::get('/import', 'App\Http\Controllers\ImportController@index')->name("import.index");
+Route::get('/import/dreamlove/' , 'App\Http\Controllers\DLController@index')->name("dreamlove.index");
+Route::get('/import/dreamlove/importfile', 'App\Http\Controllers\DLController@importfile')->name("dreamlove.importfile");
+Route::get('/import/dreamlove/loadfile/{limit}', 'App\Http\Controllers\DLController@loadfile')->name("dreamlove.loadfile");
+Route::get('/import/dreamlove/{referencia}', 'App\Http\Controllers\DLController@show')->name("dreamlove.show");
+Route::get('/import/lovecherry/' , 'App\Http\Controllers\LCHController@index')->name("lovecherry.index");
+Route::get('/import/lovecherry/importfile', 'App\Http\Controllers\LCHController@importfile')->name("lovecherry.importfile");
+Route::get('/import/lovecherry/loadfile/{limit}', 'App\Http\Controllers\LCHController@loadfile')->name("lovecherry.loadfile");
+Route::get('/import/lovecherry/{referencia}', 'App\Http\Controllers\LCHController@show')->name("lovecherry.show");
+Route::get('/import/{referencia}', 'App\Http\Controllers\ImportController@index')->name("import.show");
+
+//Route::get('/xml', 'App\Http\Controllers\XmlController@index')->name("xml.index");
+//Route::get('/xml/importfile', 'App\Http\Controllers\XmlController@importfile')->name("xml.importfile");
+//Route::get('/xml/loadfile/{limit}', 'App\Http\Controllers\XmlController@loadfile')->name("xml.loadfile");
+//Route::get('/xml/show/{referencia}', 'App\Http\Controllers\XmlController@show')->name("xml.show");
 
 Route::get('/reunion', 'App\Http\Controllers\ReunionController@index')->name("reunion.index");
+Route::get('/reunion/create', 'App\Http\Controllers\ReunionController@create')->name("reunion.create");
+Route::get('/reunion/gestion', 'App\Http\Controllers\ReunionController@gestion')->name("reunion.gestion");

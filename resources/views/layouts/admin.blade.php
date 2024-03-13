@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
         crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <link href="{{ asset('/css/admin.css') }}" rel="stylesheet" />
+    @vite(['resources/css/app.css'])
     <title>@yield('title', 'Admin - Online Store')</title>
 </head>
 
@@ -22,7 +22,7 @@
             <ul class="nav flex-column">
                 <li><a href="{{ route('admin.home.index') }}" class="nav-link text-white">Home Admin</a></li>
                 <li><a href="{{ route('admin.product.index') }}" class="nav-link text-white">Products</a></li>
-                <li><a href="{{ route('xml.index') }}" class="nav-link text-white">XML Files</a></li>
+                <li><a href="{{ route('import.index') }}" class="nav-link text-white">Import Products</a></li>
                 <li>
                     <a href="{{ route('home.index') }}" class="mt-2 btn bg-primary text-white">Go back to the home
                         page</a>
@@ -52,7 +52,7 @@
         </div>
     </div>
     <!-- footer -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
+    @vite(['resources/js/app.js'])
     </script>
 </body>
 

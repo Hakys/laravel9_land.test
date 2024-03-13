@@ -26,5 +26,12 @@ class ContactoSeeder extends Seeder
             $d = Direccion::factory()->create(["contacto_id" => $c->getId()]);
             $d = Direccion::factory()->create(["contacto_id" => $c->getId()]);
         }
+
+        $contactos = Contacto::factory(10)->create();
+        foreach($contactos as $c){
+            Direccion::factory()->create(["contacto_id" => $c->getId()]);
+            Direccion::factory()->create(["contacto_id" => $c->getId()]);
+            Direccion::factory()->create(["contacto_id" => $c->getId()]);
+        }
     }
 }

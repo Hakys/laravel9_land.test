@@ -48,7 +48,7 @@ class Dreamlove{
             }
         }else{
             $url_image= "/storage/nofoto.png";
-            $this->log(" CREATE PRODUCT ".(string)$product->public_id." NO FOTO");
+            $this->log(" CREATE PRODUCT DL ".(string)$product->public_id." NO FOTO");
         }
         $producto_array = [];
         $producto_array = [
@@ -83,7 +83,7 @@ class Dreamlove{
             }
         }else{
             $url_image = "/storage/nofoto.png";
-            $this->log(" UPDATE PRODUCT ".(string)$product->public_id." NO FOTO");
+            $this->log(" UPDATE PRODUCT DL ".(string)$product->public_id." NO FOTO");
         }
         $producto_array = [
             //'proveedor_id' => (integer) $proveedor->id,
@@ -117,20 +117,20 @@ class Dreamlove{
                     try {
                         $p->update($this->update_array($product));
                         $u++;
-                        $this->log(" UPDATE PRODUCT ".(string)$product->public_id);
+                        $this->log(" UPDATE PRODUCT DL ".(string)$product->public_id);
                     } catch (QueryException $e) {
                         //echo now()." ref. ".$product->public_id." ERROR: ".$e->getCode()."<br/>";
-                        $this->log(" ref. ".$product->public_id." ERROR UPDATE PRODUCT: ".$e);
+                        $this->log(" ref. ".$product->public_id." ERROR UPDATE PRODUCT DL: ".$e);
                     } 
                 }
             }else{                
                 try {
                     Product::create($this->create_array($product));
-                    $this->log(" CREATE PRODUCT ".(string)$product->public_id);
+                    $this->log(" CREATE PRODUCT DL ".(string)$product->public_id);
                     $c++;
                 } catch (QueryException $e) {
                     //echo now()." ref. ".$product->public_id." ERROR: ".$e->getCode()."<br/>";
-                    $this->log(" ref. ".$product->public_id." ERROR CREATE PRODUCT: ".$e);
+                    $this->log(" ref. ".$product->public_id." ERROR CREATE PRODUCT DL: ".$e);
                 }
             }
             if($u+$c==$limit) break;

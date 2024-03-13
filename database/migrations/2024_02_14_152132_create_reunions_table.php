@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Reunion;
 
 return new class extends Migration
 {
@@ -24,7 +25,7 @@ return new class extends Migration
             $table->float('p_entrada',8,2)->default(0.00);
             $table->float('t_entradas',8,2)->default(0.00);            
             $table->foreignId('direccion_id')->index(); //anfitriona, direccion, poblacion y telefono
-            $table->string('estado')->default('SOLICITADA');
+            $table->string('estado')->default(Reunion::getEstados()[0]);
             $table->timestamps();
         });
     }

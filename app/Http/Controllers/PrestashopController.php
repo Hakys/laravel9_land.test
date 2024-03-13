@@ -17,7 +17,7 @@ class PrestashopController extends Controller
 
     //https://diablaroja.es/api/products/10386?ws_key=HJMMJQ2VPPVYP9L422JLTAB1FCR123DM&output_format=JSON
     public function index(){
-        $items = $this->products->all();
+        $items = $this->products;
         return view('prestashop.product.index',compact('items'));
     }
 

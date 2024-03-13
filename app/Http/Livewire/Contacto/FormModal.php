@@ -12,14 +12,15 @@ class FormModal extends Component
     public $apodo;
     public $telefono;
     public Contacto $contacto;
+    public $to;
 
     public $rules;
 
     public function submit(){
         if($this->op=="create"){
             $this->validate();
-            Contacto::create(['apodo'=>$this->apodo,'telefono'=>$this->telefono]);
-            return redirect()->route('contacto.index')->with('success', 'Nuevo Contacto Añadido.');
+            Contacto::create(['apodo'=>$this->apodo,'telefono'=>$this->telefono]);            
+            return redirect()->route($this->to)->with('success', 'Nuevo Contacto Añadido.');
         }else if($this->op=="edit"){
             $this->validate();
             $this->contacto->SetApodo($this->apodo);

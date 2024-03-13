@@ -9,6 +9,14 @@ export default defineConfig({
                 'resources/js/app.js',
             ],
             refresh: true,
+            detectTls: 'laravel9_land.test',
         }),
     ],
+    build: {
+        rollupOptions: {
+          input: {
+            app: 'resources/js/app.js',
+          },
+        },
+      },
 });

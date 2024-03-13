@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Reunion;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Reunion>
@@ -20,7 +21,7 @@ class ReunionFactory extends Factory
         $p = $this->faker->numberBetween(5, 10);
 
         return [
-            'fecha' => $this->faker->dateTimeInInterval('-10 week', '+10 week'), 
+            'fecha' => $this->faker->dateTimeInInterval('-5 day', '+10 day'), 
             //dateTimeBetween
             //'fecha' => $this->faker->dateTimeThisMonth(),
             //'fecha' => $this->faker->date(),
@@ -32,7 +33,7 @@ class ReunionFactory extends Factory
             'p_entrada' => (float)$p,
             't_entradas' => (float)$n*$p, 
             'direccion_id' => 1,
-            'estado' => $this->faker->randomElement(["SOLICITADA","RESERVADA","REALIZADA","CANCELADA"]),
+            'estado' => $this->faker->randomElement(Reunion::getEstados()),
             //'estado' => "SOLICITADA",
             'created_at' => today(),
             'updated_at' => today(),

@@ -15,7 +15,7 @@ class ContactoController extends Controller
     public function index(){
         $viewData = [];
         $viewData["title"] = "Contactos - DR Admin";
-        $viewData["subtitle"] = "Lista de contactos";
+        $viewData["subtitle"] = "Lista de Contactos";
         $viewData["contactos"] = Contacto::all();
         return view('contacto.index')->with("viewData", $viewData);
     }

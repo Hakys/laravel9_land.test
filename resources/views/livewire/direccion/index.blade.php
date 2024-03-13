@@ -7,7 +7,7 @@
                     <th scope="col">Nombre Completo</th>
                     <th scope="col">Dirección</th>
                     <th scope="col">Población</th>
-                    <td>@livewire('direccion.form-modal',['op'=>'create','contacto'=>$contacto],key(0))</td>
+                    <td>@livewire('direccion.form-modal',['op'=>'create','to'=>'contacto.show','contacto'=>$contacto],key(0))</td>
                 </tr>
             </thead>
             <tbody class="table-group-divider">

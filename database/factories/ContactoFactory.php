@@ -17,7 +17,7 @@ class ContactoFactory extends Factory
     public function definition()
     {
         return [
-            "apodo" => $this->faker->name." ".$this->faker->city." ".$this->faker->state,
+            "apodo" => $this->faker->name." ".$this->faker->city,
             "telefono" => $this->faker->phoneNumber(),
             'created_at' => today(),
             'updated_at' => today(),

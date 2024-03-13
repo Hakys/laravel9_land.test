@@ -14,6 +14,7 @@ class FormModal extends Component
     public $titleform;
     public $recoge = false;
     public $id_dir;
+    public $to;
 
     public $full_name;
     public $telefono;
@@ -116,7 +117,8 @@ class FormModal extends Component
                 'pais' => $this->pais,
                 'contacto_id' => $this->contacto->getId(),
             ]);
-            $msg = 'Nueva Dirección Añadida.';            
+            $msg = 'Nueva Dirección Añadida.';
+            return redirect()->route($this->to,$this->contacto->getTelefono())->with('success', $msg);            
         }else if($this->op=="edit"){
             $this->validate();            
             $this->direccion->setFull_name($this->full_name);
@@ -130,8 +132,9 @@ class FormModal extends Component
             $this->direccion->setEmail($this->email);
             $this->direccion->save();
             $msg = "Dirección Actualizada.";
+            return redirect()->route('contacto.show',$this->contacto->getTelefono())->with('success', $msg);
         }
-        return redirect()->route('contacto.show',$this->contacto->getTelefono())->with('success', $msg);
+        
     }
     
     public function delete(){

@@ -1,9 +1,9 @@
 <div>
     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ContactoFormModal" >
       @if ($op=="create")
-        <i class="bi-plus-square"></i>
+        <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
       @else
-        <i class="bi-pencil-square"></i>
+        <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
       @endif
     </button>
     <div wire:ignore.self class="modal fade" id="ContactoFormModal" tabindex="-1" aria-labelledby="ContactoFormModalLabel" aria-hidden="true">

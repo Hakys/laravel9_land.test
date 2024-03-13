@@ -2,7 +2,7 @@
 @section('title', $viewData['title'])
 @section('header')
     <div class="d-flex align-items-center flex-column bg-primary text-white text-center">
-        <h2>@yield('subtitle', 'A Laravel Online Store')</h2>
+        <h2>@yield('subtitle', 'Sex Shop Diabla Roja App')</h2>
     </div>
 </header>
 @endsection
