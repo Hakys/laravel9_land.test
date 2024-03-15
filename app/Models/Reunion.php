@@ -12,7 +12,7 @@ class Reunion extends Model
     use HasFactory;
 
     protected $fillable = [
-        'fecha','poblacion','provincia','chicas','prepago','n_personas',
+        'fecha','chicas','prepago','n_personas',
         'p_entrada','t_entradas','direccion_id','estado'
     ];
 
@@ -23,12 +23,21 @@ class Reunion extends Model
     static function formatFecha($fecha){
         $f = new Carbon($fecha);
         $f->parse();
-        return ucwords($f->dayName.", ".$f->day)." de ".ucwords($f->monthName)." de ".$f->year;        
+        return ucwords($f->dayName.", ".$f->day)." de ".ucwords($f->monthName);//." de ".$f->year;        
         //return date("l, j ",strtotime($this->fecha))." de ".date("F",strtotime($this->fecha));
     }
 
     public function fechaDia(){
         return $this->formatFecha($this->fecha);
+    }
+
+    public function fechaHora(){
+        return $this->duracion(2);
+    }
+
+    public function hora(){
+        $f = new Carbon($this->getFecha());
+        return $f->format("H:i");
     }
 
     public function IdfechaDia(){
@@ -45,9 +54,8 @@ class Reunion extends Model
     }
 
     public function getEstado(){ return $this->attributes['estado']; }
-    
     public function setEstado($value){
-        if(in_array($value,$this->estados)) $this->attributes['estado'] = $value; }
+        if(in_array($value,$this->estados)) $this->attributes['estado'] = $value; }   
 
     public function getId(){ return $this->attributes['id']; }
     public function setId($id){ $this->attributes['id'] = $id; }
@@ -64,25 +72,21 @@ class Reunion extends Model
     public function getN_personas(){ return $this->attributes['n_personas']; }
     public function setN_personas($value){ $this->attributes['n_personas'] = $value; }
 
-    public function getP_entradas(){ return $this->attributes['p_entradas']; }
-    public function setP_entradas($value){ $this->attributes['p_entradas'] = $value; }
+    public function getP_entrada(){ return $this->attributes['p_entrada']; }
+    public function setP_entrada($value){ $this->attributes['p_entrada'] = $value; }
 
     public function getT_entradas(){ return $this->attributes['t_entradas']; }
     public function setT_entradas($value){ $this->attributes['t_entradas'] = $value; }
 
-    public function getPoblacion(){ return $this->attributes['poblacion']; }
-    public function setPoblacion($poblacion){ $this->attributes['poblacion'] = $poblacion; }
+    public function getDireccion(){ return $this->direccion->direccion; }
 
-    public function getProvincia(){ return $this->attributes['provincia']; }
-    public function setProvincia($provincia){ $this->attributes['provincia'] = $provincia; }
+    public function getPoblacion(){ return $this->direccion->poblacion; }
+
+    public function getProvincia(){ return $this->direccion->provincia; }
 
     public function getCreatedAt(){ return $this->attributes['created_at']; }
     public function setCreatedAt($createdAt){ $this->attributes['created_at'] = $createdAt; }
 
     public function getUpdatedAt(){ return $this->attributes['updated_at']; }
     public function setUpdatedAt($updatedAt){ $this->attributes['updated_at'] = $updatedAt; }
-
-
-      //'fecha''poblacion''provincia''chicas''prepago''n_personas'
-    //'p_entrada''t_entradas''direccion_id''estado'
 }

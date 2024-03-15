@@ -10,16 +10,16 @@
     <form>
     <div class="row ${1| ,row-cols-2,row-cols-3, auto,justify-content-md-center,|}">
         <div class="col-md-6 form-floating mb-3">
-            <input wire:model="poblacion" type="text" id="poblacion" name="poblacion" 
-                placeholder="Población" @if(!$direccion_id) disabled @endif value="{{ old('poblacion') }}"
-                class="form-control rounded-3 @error('poblacion') is-invalid @enderror"/>
+            <input wire:model="poblacion" type="text" id="poblacion" name="poblacion" readonly
+                placeholder="Población"  disabled  value="{{ old('poblacion') }}"
+                class="form-control rounded-3"/>
             <label for="poblacion">Población</label>
             @error('poblacion')<small class="text-danger">{{ $message }}</small>@enderror
         </div>
         <div class="col-md-6 form-floating mb-3">
-            <input wire:model="provincia" type="text" id="provincia" name="provincia" 
-                placeholder="Provincia" @if(!$direccion_id) disabled @endif value="{{ old('provincia') }}"
-                class="form-control rounded-3 @error('provincia') is-invalid @enderror">
+            <input wire:model="provincia" type="text" id="provincia" name="provincia" readonly
+                placeholder="Provincia" disabled value="{{ old('provincia') }}"
+                class="form-control rounded-3 ">
             <label for="provincia">Provincia</label>
             @error('provincia')<small class="text-danger">{{ $message }}</small>@enderror
         </div>
@@ -28,7 +28,7 @@
         <div class="col-md-3 form-floating mb-3">
             <input wire:model="fecha" type="datetime-local" name="fecha" id="fecha"
                 @if(!$direccion_id) disabled @endif value="{{ old('fecha') }}"
-                class="form-control rounded-3 @error('fecha') is-invalid @enderror"/>
+                class="form-control rounded-3 fs-4 @error('fecha') is-invalid @enderror"/>
             <label for="fecha">Fecha</label>
         </div>
         <div class="col-md-3 form-floating mb-3">

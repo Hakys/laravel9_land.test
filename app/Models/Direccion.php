@@ -51,6 +51,8 @@ class Direccion extends Model
         return $this->belongsTo(Contacto::class);
     }
 
+    public function getContacto(){ return $this->contacto(); }
+
     public function getId(){ return $this->attributes['id']; }
     public function setId($id){ $this->attributes['id'] = $id; }
     

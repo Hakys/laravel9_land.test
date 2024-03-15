@@ -7,11 +7,11 @@
         <div class="flex-grow-1"><h2>{{$viewData['subtitle']}}</h2></div>
     </div>
     <div class="card-body">
-        <div class="d-flex">
-            <div class="flex-grow-1">@livewire('direccion.select2')</div>
+        <div class="d-flex"> 
+            <div class="flex-grow-1">@livewire('direccion.select2',[$viewData['reunion']->direccion->getId()])</div>
         </div>
         <div class="row">
-            @livewire('reunion.show')
+            @livewire('reunion.show',[$viewData['reunion']->getId()])
         </div>
     </div>
 </div>

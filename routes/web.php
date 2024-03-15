@@ -85,5 +85,7 @@ Route::get('/import/{referencia}', 'App\Http\Controllers\ImportController@index'
 //Route::get('/xml/show/{referencia}', 'App\Http\Controllers\XmlController@show')->name("xml.show");
 
 Route::get('/reunion', 'App\Http\Controllers\ReunionController@index')->name("reunion.index");
-Route::get('/reunion/create', 'App\Http\Controllers\ReunionController@create')->name("reunion.create");
 Route::get('/reunion/gestion', 'App\Http\Controllers\ReunionController@gestion')->name("reunion.gestion");
+Route::get('/reunion/create', 'App\Http\Controllers\ReunionController@create')->name("reunion.create");
+Route::get('/reunion/{id}/edit', 'App\Http\Controllers\ReunionController@edit')->name("reunion.edit");
+

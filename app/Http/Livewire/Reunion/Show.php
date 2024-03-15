@@ -22,9 +22,28 @@ class Show extends Component
     public $estado = "solicitada";
     public $estados;
 
+    public $edit = false;
+
     protected $listeners = ['ReunionShow' => 'SetDireccion'];
 
     public $rules;
+
+    public function mount($id=null){
+        if($id){
+            $this->edit=true;
+            $this->reunion = Reunion::find($id);
+            $this->direccion_id = $this->reunion->direccion_id;
+            $this->SetDireccion($this->direccion_id);
+            $this->fecha = $this->reunion->getFecha();
+            $this->n_personas = $this->reunion->getN_personas();
+            $this->p_entrada = $this->reunion->getP_entrada();
+            $this->t_entradas = $this->reunion->getT_entradas();
+            $this->prepago = $this->reunion->getPrepago();
+            $this->estado = $this->reunion->getEstado();
+            $this->chicas = $this->reunion->getChicas();
+            $this->rules['id'] = "required|exists:reunions,id";
+        }
+    }
 
     public function SetDireccion($value){
         $this->direccion_id = $value;
@@ -37,8 +56,6 @@ class Show extends Component
     {   
         $this->rules = [
             'direccion_id' => 'required|exists:direccions,id',
-            'poblacion'  => 'required',
-            'provincia' => 'required',
             'fecha' => 'required|date',
             'n_personas' => 'required|integer|min:0',
             'p_entrada' => 'required|numeric|min:0',
@@ -55,8 +72,6 @@ class Show extends Component
         Reunion::create([
             'direccion_id' => $this->direccion_id,
             'fecha' => $this->fecha,
-            'poblacion' => $this->poblacion,
-            'provincia' => $this->provincia,
             'chicas' => $this->chicas,
             'prepago' => $this->prepago,
             'n_personas' => $this->n_personas,

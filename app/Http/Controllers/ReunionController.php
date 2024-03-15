@@ -30,6 +30,15 @@ class ReunionController extends Controller
         return view("reunion.create")->with("viewData", $viewData);
     }
 
+    public function edit($id){
+        $viewData["title"] = "Reuniones";
+        $viewData["subtitle"] = "Editar Info. Reuniones Tuppersex";
+        $reunion = Reunion::find($id)->first(); 
+        $viewData["reunion"] = $reunion; 
+        $viewData["direccion_id"] = $reunion->direccion->getId();
+        return view("reunion.edit")->with("viewData", $viewData);
+    }
+
     public function gestion(){
         $viewData["title"] = "Reuniones";
         $viewData["subtitle"] = "Gestión Reuniones Tuppersex";

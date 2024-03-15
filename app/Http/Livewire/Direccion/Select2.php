@@ -17,6 +17,17 @@ class Select2 extends Component
 
     //protected $listeners = ['DireccionSelect2' => 'render'];
 
+    public function mount($id=null){
+        if($id){
+            $direccion = Direccion::find($id)->first(); 
+            $this->direccion_id =$direccion->getId();
+            $this->contacto = $direccion->contacto;
+            $this->contacto_id = $this->contacto->getId();
+            $this->direcciones = Direccion::where('contacto_id',$this->contacto_id)->get(); 
+            $this->emitTo('ReunionShow','SetDireccion',$this->direccion_id); 
+        }
+    }
+
     public function updated(){
         $this->contacto = Contacto::find($this->contacto_id)->first();
         $this->direcciones = Direccion::where('contacto_id',$this->contacto_id)->get();  

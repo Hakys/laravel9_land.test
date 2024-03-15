@@ -25,8 +25,8 @@ class ReunionFactory extends Factory
             //dateTimeBetween
             //'fecha' => $this->faker->dateTimeThisMonth(),
             //'fecha' => $this->faker->date(),
-            'poblacion' => $this->faker->city,
-            'provincia' => $this->faker->state,
+            //'poblacion' => $this->faker->city,
+            //'provincia' => $this->faker->state,
             'chicas' => $this->faker->boolean,
             'prepago' => $this->faker->boolean,
             'n_personas' => $n,

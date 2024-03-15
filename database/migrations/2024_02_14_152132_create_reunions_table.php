@@ -17,8 +17,6 @@ return new class extends Migration
         Schema::create('reunions', function (Blueprint $table) {
             $table->id();
             $table->timestamp('fecha'); //dia y hora
-            $table->string('poblacion')->nullable();
-            $table->string('provincia')->nullable();
             $table->boolean('chicas')->default(true);
             $table->boolean('prepago')->default(false);
             $table->integer('n_personas')->default(0);

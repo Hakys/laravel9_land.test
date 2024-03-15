@@ -32,22 +32,12 @@ class Contacto extends Model
         return $this->hasMany(Direccion::class);
     }
 
-    public function getId()
-    {
-        return $this->attributes['id'];
-    }
-    public function setId($id)
-    {
-        $this->attributes['id'] = $id;
-    }
-    public function getApodo()
-    {
-        return strtoupper($this->attributes['apodo']);
-    }
-    public function setApodo($apodo)
-    {
-        $this->attributes['apodo'] = $apodo;
-    }
+    public function getId(){ return $this->attributes['id']; }
+    public function setId($id){ $this->attributes['id'] = $id; }
+
+    public function getApodo(){ return strtoupper($this->attributes['apodo']); }
+    public function setApodo($apodo){ $this->attributes['apodo'] = $apodo; }
+    
     public function getTelefono()
     {
         return $this->attributes['telefono'];

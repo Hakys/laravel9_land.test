@@ -26,7 +26,8 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav ms-auto">
                     <a class="nav-link active" href="{{ route('home.index') }}">Home</a>
-                    <a class="nav-link active" href="{{ route('reunion.index') }}">Reuniones TPS</a>
+                    <a class="nav-link active" href="{{ route('reunion.index') }}">Agenda TPS</a>
+                    <a class="nav-link active" href="{{ route('reunion.gestion') }}">Gestión TPS</a>
                     <a class="nav-link active" href="{{ route('product.index') }}">Productos</a>
                     <a class="nav-link active" href="{{ route('contacto.index') }}">Contactos</a>
                     <a class="nav-link active" href="{{ route('prestashop.product.index') }}">Prestashop Products</a>
