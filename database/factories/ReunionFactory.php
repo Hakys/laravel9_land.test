@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Direccion;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Reunion;
 
@@ -32,7 +33,7 @@ class ReunionFactory extends Factory
             'n_personas' => $n,
             'p_entrada' => (float)$p,
             't_entradas' => (float)$n*$p, 
-            'direccion_id' => 1,
+            'direccion_id' => Direccion::inRandomOrder()->first()->id,
             'estado' => $this->faker->randomElement(Reunion::getEstados()),
             //'estado' => "SOLICITADA",
             'created_at' => today(),

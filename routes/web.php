@@ -89,3 +89,11 @@ Route::get('/reunion/gestion', 'App\Http\Controllers\ReunionController@gestion')
 Route::get('/reunion/create', 'App\Http\Controllers\ReunionController@create')->name("reunion.create");
 Route::get('/reunion/{id}/edit', 'App\Http\Controllers\ReunionController@edit')->name("reunion.edit");
 
+Route::middleware('admin')->group(function () {
+    Route::get('/evento', 'App\Http\Controllers\EventoController@index')->name("evento.index");
+    Route::post('/evento/list', 'App\Http\Controllers\EventoController@list')->name("evento.list");
+    Route::post('/evento/store', 'App\Http\Controllers\EventoController@store')->name("evento.store");
+    Route::post('/evento/edit/{id}', 'App\Http\Controllers\EventoController@edit')->name("evento.edit");
+    Route::post('/evento/update/{evento}', 'App\Http\Controllers\EventoController@update')->name("evento.update");
+    Route::post('/evento/delete/{id}', 'App\Http\Controllers\EventoController@delete')->name("evento.delete");
+});

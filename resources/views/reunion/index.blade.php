@@ -16,7 +16,9 @@
         </div>
         <div class="card-body">
             <div class="row">
+                @include('reunion.schedule1')
                 @include('reunion.schedule')
+                @include('reunion.schedule0')
             </div>
         </div>
     </div>
