@@ -1,3 +1,5 @@
+$enable-grid-classes: true;
+
 // Body
 $body-bg: #f8fafc;
 
@@ -5,3 +7,11 @@ $body-bg: #f8fafc;
 $font-family-sans-serif: 'Nunito', sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
+
+// Create your own map
+$custom-colors: (
+  "rojo": #900
+);
+
+// Merge the maps
+$theme-colors: map-merge($theme-colors, $custom-colors);

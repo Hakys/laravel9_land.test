@@ -23,13 +23,14 @@ class Contacto extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'apodo',
-        'telefono'
-    ];
+    protected $fillable = ['id', 'apodo', 'telefono' ];
 
     public function direccions(){
         return $this->hasMany(Direccion::class);
+    }
+
+    public function getFullApodoAttribute(){
+        return "{$this->apodo} {$this->telefono}";
     }
 
     public function getId(){ return $this->attributes['id']; }

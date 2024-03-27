@@ -21,6 +21,7 @@
             Manage Eventos
         </div>
         <div class="card-body">
+            {{$viewData['clientes']}}
             {{$viewData['eventos']}}
         </div>
     </div>

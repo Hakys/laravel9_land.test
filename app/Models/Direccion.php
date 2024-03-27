@@ -44,7 +44,8 @@ class Direccion extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'full_name', 'telefono', 'email', 'nif', 'direccion', 'cp', 'poblacion', 'provincia', 'pais', 'contacto_id'
+        'full_name', 'telefono', 'email', 'nif', 'direccion', 
+        'cp', 'poblacion', 'provincia', 'pais', 'contacto_id'
     ];
 
     public function contacto(){

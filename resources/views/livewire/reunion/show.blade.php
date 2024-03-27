@@ -13,14 +13,14 @@
             <input wire:model="poblacion" type="text" id="poblacion" name="poblacion" readonly
                 placeholder="Población"  disabled  value="{{ old('poblacion') }}"
                 class="form-control rounded-3"/>
-            <label for="poblacion">Población</label>
+            <label class="form-label" for="poblacion">Población</label>
             @error('poblacion')<small class="text-danger">{{ $message }}</small>@enderror
         </div>
         <div class="col-md-6 form-floating mb-3">
             <input wire:model="provincia" type="text" id="provincia" name="provincia" readonly
                 placeholder="Provincia" disabled value="{{ old('provincia') }}"
                 class="form-control rounded-3 ">
-            <label for="provincia">Provincia</label>
+            <label class="form-label" for="provincia">Provincia</label>
             @error('provincia')<small class="text-danger">{{ $message }}</small>@enderror
         </div>
     </div>

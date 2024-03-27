@@ -4,8 +4,6 @@ import * as bootstrap from 'bootstrap';
 window.bootstrap = bootstrap;
 import axios from 'axios';
 window.axios = axios;
-import 'fullcalendar';
-import { Calendar } from 'fullcalendar';
 import 'owl.carousel';
 import './select2.min';
 import './schedule';

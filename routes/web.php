@@ -32,9 +32,12 @@ Route::get('/cart/delete', 'App\Http\Controllers\CartController@delete')->name("
 Route::post('/cart/add/{id}', 'App\Http\Controllers\CartController@add')->name("cart.add");
 
 Route::get('/contactos', 'App\Http\Controllers\ContactoController@index')->name("contacto.index");
+Route::get('/contacto/datalist', 'App\Http\Controllers\ContactoController@index')->name("contacto.datalist");
 //Route::get('/contactos/create', 'App\Http\Controllers\ContactoController@create')->name("contacto.create");
 //Route::post('/contactos/store', 'App\Http\Controllers\ContactoController@store')->name("contacto.store");
+Route::post('/contactos/{full_apodo}/direccions', 'App\Http\Controllers\ContactoController@direccions')->name("contacto.direccions");
 Route::get('/contactos/{telefono}', 'App\Http\Controllers\ContactoController@show')->name("contacto.show");
+
 //Route::get('/contactos/{telefono}/edit', 'App\Http\Controllers\ContactoController@edit')->name("contacto.edit");
 //Route::put('/contactos/{telefono}/update', 'App\Http\Controllers\ContactoController@update')->name("contacto.update");
 Route::delete('/contactos/{telefono}/delete', 'App\Http\Controllers\ContactoController@delete')->name("contacto.delete");
@@ -84,16 +87,18 @@ Route::get('/import/{referencia}', 'App\Http\Controllers\ImportController@index'
 //Route::get('/xml/loadfile/{limit}', 'App\Http\Controllers\XmlController@loadfile')->name("xml.loadfile");
 //Route::get('/xml/show/{referencia}', 'App\Http\Controllers\XmlController@show')->name("xml.show");
 
-Route::get('/reunion', 'App\Http\Controllers\ReunionController@index')->name("reunion.index");
-Route::get('/reunion/gestion', 'App\Http\Controllers\ReunionController@gestion')->name("reunion.gestion");
-Route::get('/reunion/create', 'App\Http\Controllers\ReunionController@create')->name("reunion.create");
-Route::get('/reunion/{id}/edit', 'App\Http\Controllers\ReunionController@edit')->name("reunion.edit");
-
 Route::middleware('admin')->group(function () {
+
+    Route::get('/reunion', 'App\Http\Controllers\ReunionController@index')->name("reunion.index");
+    Route::get('/reunion/gestion', 'App\Http\Controllers\ReunionController@gestion')->name("reunion.gestion");
+    Route::get('/reunion/create', 'App\Http\Controllers\ReunionController@create')->name("reunion.create");
+    Route::get('/reunion/{id}/edit', 'App\Http\Controllers\ReunionController@edit')->name("reunion.edit");
+});
     Route::get('/evento', 'App\Http\Controllers\EventoController@index')->name("evento.index");
-    Route::post('/evento/list', 'App\Http\Controllers\EventoController@list')->name("evento.list");
+    Route::get('/evento/list', 'App\Http\Controllers\EventoController@list')->name("evento.list");
+    //Route::post('/evento/list', 'App\Http\Controllers\EventoController@list')->name("evento.list");
     Route::post('/evento/store', 'App\Http\Controllers\EventoController@store')->name("evento.store");
     Route::post('/evento/edit/{id}', 'App\Http\Controllers\EventoController@edit')->name("evento.edit");
+    Route::get('/evento/show/{id}', 'App\Http\Controllers\EventoController@show')->name("evento.show");
     Route::post('/evento/update/{evento}', 'App\Http\Controllers\EventoController@update')->name("evento.update");
     Route::post('/evento/delete/{id}', 'App\Http\Controllers\EventoController@delete')->name("evento.delete");
-});

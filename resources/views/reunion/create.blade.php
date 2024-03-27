@@ -11,7 +11,7 @@
             <div class="flex-grow-1">@livewire('direccion.select2')</div>
         </div>
         <div class="row">
-            @livewire('reunion.show')
+            @livewire('reunion.show',['id'=>null,'date'=>$viewData['date']])
         </div>
     </div>
 </div>

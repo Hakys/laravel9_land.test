@@ -53,6 +53,11 @@ class Reunion extends Model
         return $this->belongsTo(Direccion::class);
     }
 
+    //$reunion->evento()->save($evento);
+    public function evento(){
+        return $this->morphOne(Evento::class, 'eventoable');
+    }
+
     public function getEstado(){ return $this->attributes['estado']; }
     public function setEstado($value){
         if(in_array($value,$this->estados)) $this->attributes['estado'] = $value; }   
@@ -62,6 +67,9 @@ class Reunion extends Model
     
     public function getFecha(){ return $this->attributes['fecha']; }
     public function setFecha($value){ $this->attributes['fecha'] = $value; }
+
+    public function getHora(){ return $this->attributes['hora']; }
+    public function setHora($value){ $this->attributes['hora'] = $value; }
 
     public function getChicas(){ return $this->attributes['chicas']; }
     public function setChicas($value){ $this->attributes['chicas'] = $value; }

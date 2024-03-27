@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Reunion;
 use Illuminate\Http\Request;
 use App\Repositories\Distance\Distancematrix;
+use Illuminate\Support\Carbon;
 
 class ReunionController extends Controller
 {
@@ -24,9 +25,10 @@ class ReunionController extends Controller
         return view("reunion.index")->with("viewData", $viewData);
     }
 
-    public function create(){
+    public function create(Request $request){
         $viewData["title"] = "Reuniones";
         $viewData["subtitle"] = "Crear Reuniones Tuppersex";
+        $viewData["date"] = $request->date." 00:00";
         return view("reunion.create")->with("viewData", $viewData);
     }
 

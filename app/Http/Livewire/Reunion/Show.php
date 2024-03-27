@@ -3,8 +3,10 @@
 namespace App\Http\Livewire\Reunion;
 
 use App\Models\Direccion;
+use App\Models\Evento;
 use Livewire\Component;
 use App\Models\Reunion;
+use Illuminate\Support\Carbon;
 
 class Show extends Component
 {
@@ -28,7 +30,7 @@ class Show extends Component
 
     public $rules;
 
-    public function mount($id=null){
+    public function mount($id=null,$date=null){
         if($id){
             $this->edit=true;
             $this->reunion = Reunion::find($id);
@@ -43,6 +45,8 @@ class Show extends Component
             $this->chicas = $this->reunion->getChicas();
             $this->rules['id'] = "required|exists:reunions,id";
         }
+        if($date)
+            $this->fecha = $date;
     }
 
     public function SetDireccion($value){
@@ -69,7 +73,7 @@ class Show extends Component
     public function submit(){ 
         
         $this->validate();
-        Reunion::create([
+        $reunion = Reunion::create([
             'direccion_id' => $this->direccion_id,
             'fecha' => $this->fecha,
             'chicas' => $this->chicas,
@@ -78,6 +82,12 @@ class Show extends Component
             'p_entrada' => $this->p_entrada,
             't_entradas' => $this->t_entradas,
             'estado' => $this->estado,
+        ]);
+        $end = new Carbon($reunion->fecha);
+        Evento::create([
+            'title' => $reunion->direccion->provincia,
+            'start' => $reunion->fecha,
+            'end' => $end->addHours(2),
         ]);
         $msg = 'Nueva Reunión Añadida.';
         return redirect()->route('reunion.index')->with('success', $msg);   
