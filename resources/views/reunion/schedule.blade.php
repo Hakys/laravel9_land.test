@@ -158,7 +158,7 @@
                     year: 'numeric',
                     month: 'short',
                     day: '2-digit',
-                    hour12: false,
+                    hour12: false, 
                 },
                 displayEventTime:true,
                 navLinks: true,
