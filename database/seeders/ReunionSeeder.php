@@ -21,7 +21,7 @@ class ReunionSeeder extends Seeder
             $evento = new Evento(['title' => $reunion->direccion->provincia]);
             //$evento->setDuration(29);
             $evento->setStart($reunion->fecha,$reunion->hora);
-            $evento->setEnd($reunion->fecha,$reunion->hora);
+            $evento->setEnd($reunion->fecha,$reunion->hora,"02:00");
             $reunion->evento()->save($evento);
         }
         

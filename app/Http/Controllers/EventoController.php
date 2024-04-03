@@ -9,6 +9,7 @@ use App\Models\Contacto;
 use App\Models\Direccion;
 use App\Models\Reunion;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class EventoController extends Controller
 {
@@ -51,9 +52,29 @@ class EventoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
         request()->validate(Evento::$rules);
-        $evento = Evento::create($request->all());
+        request()->validate(Reunion::$rules);
+        $reunion = new Reunion();
+        $reunion->fecha = $request->fecha;
+        $reunion->hora = $request->hora;
+        $reunion->direccion_id = $request->direccion_id;
+        $reunion->n_personas = $request->integer('n_personas');
+        $reunion->p_entrada = $request->integer('p_entrada');
+        $reunion->t_entradas = $request->integer('t_entradas');
+        $reunion->estado = $request->estado;
+        $reunion->prepago = $request->boolean('prepago');
+        $reunion->chicas = $request->boolean('chicas');
+        $reunion->save();
+
+        $evento = new Evento();
+        $evento->title = $request->title;        
+        $evento->setStart($request->fecha,$request->hora);
+        $evento->setEnd($request->fecha,$request->hora,$request->duration);
+        //$evento->eventoable()->save($reunion);        
+        $reunion->evento()->save($evento); 
+        $evento->save();
+        //$reunion->refresh();
     }
 
     /**
@@ -65,17 +86,13 @@ class EventoController extends Controller
     public function show($id)
     {
         $evento = Evento::find($id);
-        $contactos= DB::table('contactos as c')
-            ->selectRaw('c.id')
-            ->selectRaw('CONCAT(c.apodo," (",c.telefono,")") AS full_apodo')
-            ->get();
         $response = [
             'id' => $evento->getId(),
             'title' => $evento->title,
             'start' => $evento->start,
             'end' => $evento->end,
             'contacto_id' => $evento->eventoable->direccion->contacto->id,
-            'clientes' => $contactos,
+            'clientes' => Contacto::getDatalist(),
             'direccion_id' => $evento->eventoable->direccion->id,
         ];
         return response()->json($response); 
@@ -93,19 +110,21 @@ class EventoController extends Controller
         //$evento->start = Carbon::createFromFormat('Y-m-d H:i:s', $evento->start)->format('Y-m-d');
         //$evento->end = Carbon::createFromFormat('Y-m-d H:i:s', $evento->end)->format('Y-m-d');
         $contactos= DB::table('contactos as c')
-            ->selectRaw('c.id')
-            ->selectRaw('CONCAT(c.apodo," (",c.telefono,")") AS full_apodo')
-            ->get();
+        ->selectRaw('c.id')
+        ->selectRaw('CONCAT(c.apodo," (",c.telefono,")") AS full_apodo')
+        ->get();
+    $response = [];
         $response = [
             'id' => $evento->getId(),
             'title' => $evento->title,
             'start' => $evento->start,
             'end' => $evento->end,
-            'clientes' => $contactos,
+            'clientes' => Contacto::getDatalist(),
             'direccion_id' => $evento->eventoable->direccion->id,
             'contacto_id' => $evento->eventoable->direccion->contacto->id,
-            'date' => Carbon::createFromFormat('Y-m-d H:i:s', $evento->start)->format('Y-m-d'),
-            'time' => Carbon::createFromFormat('Y-m-d H:i:s', $evento->start)->format('H:i'),
+            'direccions' => $evento->eventoable->direccion->contacto->direccions,
+            'fecha' => Carbon::createFromFormat('Y-m-d H:i:s', $evento->start)->format('Y-m-d'),
+            'hora' => Carbon::createFromFormat('Y-m-d H:i:s', $evento->start)->format('H:i'),
             'duration' => "02:00",
             't_entradas' => $evento->eventoable->t_entradas,
             'p_entrada' => $evento->eventoable->p_entrada,
@@ -128,7 +147,21 @@ class EventoController extends Controller
     public function update(Request $request, Evento $evento)
     {
         request()->validate(Evento::$rules);
-        $evento->update($request->all());
+        //Log::info(now()." ".$request);
+        $reunion = Reunion::find($evento->eventoable->getId());
+        $reunion->fecha = $request->fecha;
+        $reunion->hora = $request->hora;
+        $evento->setStart($reunion->fecha,$reunion->hora);
+        $evento->setEnd($reunion->fecha,$reunion->hora,$request->duration);
+        $reunion->direccion_id = $request->direccion_id;
+        $reunion->n_personas = $request->n_personas;
+        $reunion->p_entrada = $request->p_entrada;
+        $reunion->t_entradas = $request->t_entradas;
+        $reunion->estado = $request->estado;
+        $reunion->prepago = $request->boolean('prepago');
+        $reunion->chicas = $request->boolean('chicas');
+        $evento->save();
+        $reunion->save();
         return response()->json($evento);
     }
 

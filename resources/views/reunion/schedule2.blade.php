@@ -29,11 +29,12 @@
                     <form action ="" id="formularioEventos">
                         @csrf  
                         <div class="flex">
-                            <input type="text" name="id" id="id" hidden/>
-                            <input type="datetime" name="start" id="start" hidden/>
-                            <input type="datetime" name="end" id="end" hidden/>
-                            <input type="text" name="contacto_id_text" id="contacto_id_text" hidden/> 
-                            <input type="text" name="full_apodo" id="full_apodo" hidden/>
+                            id<input type="text" name="id" id="id" />
+                            start<input type="datetime" name="start" id="start" />
+                            <br>end<input type="datetime" name="end" id="end" />
+                            contacto_id<input type="text" name="contacto_id_text" id="contacto_id_text" /> 
+                            direccion_id<input type="text" name="direccion_id_text" id="direccion_id_text" />
+                            <br>full_apodo<input type="text" name="full_apodo" id="full_apodo" />
                         </div>
                         
 
@@ -67,17 +68,19 @@
                                 <div class="col">
                                     <div class="input-group mb-3">
                                         <span class="input-group-text">Estado:</span>  
-                                        <select name="estado" id="estado" class="form-select text-uppercase"></select>     
+                                        <select name="estado" id="estado" 
+                                            class="form-select text-uppercase">
+                                        </select>     
                                     </div>
                                     
                                 </div>
                             </div>                       
                             <div class="input-group mb-3">
                                 <input list="clientes" name="contacto_id" 
-                                    id="contacto_id" onchange="loadDireccions(this)"
+                                    id="contacto_id" onchange="loadDireccions(this.value)"
                                     class="form-control" aria-label="Clientes"
-                                    placeholder="Selecciona un cliente">  
-                                <datalist id="clientes" class="w-100"></datalist>      
+                                    placeholder="Selecciona un cliente">
+                                <datalist id="clientes" class="w-100"></datalist>     
                                 <div class="input-group-append">
                                     <button id="btnClear_contacto_id" type="button"
                                         class="btn btn-outline-danger">
@@ -86,7 +89,17 @@
                                 </div>
                             </div>
                             <div class="input-group mb-3">
-                                <select name="direccion_id" id="direccion_id" class="form-select"></select>  
+                                <input list="direccions" name="direccion_id" 
+                                    id="direccion_id" 
+                                    class="form-control" aria-label="Dirección"
+                                    placeholder="Selecciona una dirección">
+                                <datalist id="direccions" class="w-100"></datalist>     
+                                <div class="input-group-append">
+                                    <button id="btnClear_direccion_id" type="button"
+                                        class="btn btn-outline-danger">
+                                        <i class="fa fa-times fa-lg" aria-hidden="true"></i>
+                                    </button>
+                                </div>
                             </div>   
                             <div class="row ${1| ,row-cols-2,row-cols-3, auto,justify-content-md-center,|}">
                                 <div class="col">
@@ -173,8 +186,7 @@
                 },
         
                 //events: "/evento/list/",
-                //display:'background'
-                //eventColor: 'green',
+                
                 eventSources:{
                     url:"/evento/list/",
                     method: "POST",
@@ -186,7 +198,6 @@
                 dateClick:function(info){     
                     //console.log(info);               
                     formulario.reset(); 
-                    reset_text();
                     reset_errors();                   
                     modalTitleId.innerHTML = "Crear Nuevo Evento";
                     formulario.start.value = info.dateStr+" 00:00:00";
@@ -198,8 +209,6 @@
                     formulario.n_personas.value = 7;
                     formulario.p_entrada.value = 5;
                     formulario.t_entradas.value = 35;
-                    formulario.chicas.checked = true;
-                    formulario.prepago.checked = false;
                     myModal.show();
                 },
                 eventClick:function(info){
@@ -219,38 +228,52 @@
                         formulario.contacto_id_text.value = response.data.contacto_id;
                         formulario.contacto_id.value = null;
                         formulario.contacto_id.list.innerHTML="";
-                        var clientes = response.data.clientes;
-                        for(var i=0;i<clientes.length;i++){
-                            var option = document.createElement('option'); 
-                            option.id = clientes[i].id;
-                            option.value = clientes[i].full_apodo;
-                            formulario.contacto_id.list.appendChild(option);  
-                            if(clientes[i].id==formulario.contacto_id_text.value){
-                                formulario.contacto_id.value = clientes[i].full_apodo; 
-                                formulario.full_apodo.value = clientes[i].full_apodo;   
-                            }
-                        }
+                        axios.post("/contactos/datalist")
+                            .then(response => { 
+                                //console.log(response.data);  
+                                var clientes = response.data.clientes;
+                                for(var i=0;i<clientes.length;i++){
+                                    var option = document.createElement('option'); 
+                                    option.id = clientes[i].id;
+                                    option.value = clientes[i].full_apodo;
+                                    formulario.contacto_id.list.appendChild(option);  
+                                    if(clientes[i].id==formulario.contacto_id_text.value){
+                                        formulario.contacto_id.value = clientes[i].full_apodo; 
+                                        formulario.full_apodo.value = clientes[i].full_apodo;   
+                                    }
+                                }
+                            })
+                            .catch(error=> {console.log(error); });
                         //end_CONTACTO_ID
                         
-                        //DIRECCION_ID                                
-                        var list = response.data.direccions;
-                        var datalist = formulario.direccion_id;
-                        datalist.innerHTML="";
-                        option = document.createElement('option');
-                        option.value = "";
-                        option.text = "Seleccione una dirección";
-                        datalist.appendChild(option);
-                        for(var i=0;i<list.length;i++){
-                            var option = document.createElement('option');
-                            option.value = list[i].id;
-                            option.text = list[i].direccion
-                                +" "+list[i].poblacion
-                                +" "+list[i].provincia;
-                            datalist.appendChild(option);     
-                        }
-                        formulario.direccion_id.value = response.data.direccion_id; 
-                        //end_DIRECCION_ID        
-            
+                        //console.log("XXX"+formulario.contacto_id_text.value);
+
+                        //DIRECCION_ID
+                        formulario.direccion_id_text.value = response.data.direccion_id;
+                        formulario.direccion_id.value = null;
+                        formulario.direccion_id.list.innerHTML="";
+                        loadDireccions(formulario.full_apodo.value,formulario.direccion_id_text.value)
+                        /*
+                        axios.post("/contactos/"+formulario.full_apodo.value+"/direccions")
+                            .then(response => { 
+                                console.log(response.data);     
+                                var direccions = response.data.direccions;
+                                for(var i=0;i<direccions.length;i++){
+                                    var option = document.createElement('option');
+                                    option.id = direccions[i].id;
+                                    option.value = direccions[i].direccion
+                                        +" "+direccions[i].poblacion
+                                        +" "+direccions[i].provincia;
+                                    formulario.direccion_id.list.appendChild(option); 
+                                    if(direccions[i].id==formulario.direccion_id_text.value){
+                                        formulario.direccion_id.value = option.value; 
+                                    }
+                                }
+                            })
+                            .catch(error=> {console.log(error); });
+                        */
+                        //end_DIRECCION_ID
+
                         formulario.fecha.value = response.data.fecha;
                         formulario.hora.value = response.data.hora;
                         formulario.duration.value = response.data.duration;
@@ -270,6 +293,9 @@
             calendar.render();
 
             function sendData(url){
+                //var baseURL =  json_encode(url('/')) ; 
+                //console.log(baseURL);
+                //url = baseURL+url;
                 reset_errors();
                 const datos = new FormData(formulario);
                 //console.log(datos);
@@ -280,7 +306,7 @@
                     })
                     .catch(error => { 
                         console.log(error);
-                        console.log(error.response.data.message);
+                        //console.log(error.response.data.message);
                         //console.log(error.response.data.errors);
                         if(!(typeof error.response.data.errors === 'undefined')){
                             if(!(typeof error.response.data.errors.title === 'undefined')) 
@@ -301,6 +327,16 @@
                     });
             }
             
+            var a = document.getElementsByName("direccion_id")[0];
+            a.addEventListener("change",function(){ 
+                var datalist = formulario.direccion_id.list;
+                for(var i=0;i<datalist.options.length;i++){
+                    if(datalist.options[i].value == formulario.direccion_id.value){
+                        formulario.direccion_id_text.value=datalist.options[i].id;
+                    }
+                }
+            });
+            
             document.getElementById("btnGuardar").addEventListener("click",function(){
                 if(formulario.id.value)
                     sendData("/evento/update/"+formulario.id.value);
@@ -313,12 +349,20 @@
             });
 
         });
+        
+        
 
         document.getElementById("btnClear_contacto_id").addEventListener("click",function(){
             formulario.contacto_id_text.value = "";
+            formulario.direccion_id_text.value = "";
             formulario.contacto_id.value = null;
             formulario.direccion_id.value = null;
-            formulario.direccion_id.innerHTML="";
+            formulario.direccion_id.list.innerHTML="";
+        });
+
+        document.getElementById("btnClear_direccion_id").addEventListener("click",function(){
+            formulario.direccion_id_text.value = "";
+            formulario.direccion_id.value = null;
         });
 
         function loadEstados(datalist){
@@ -359,38 +403,39 @@
                 .catch(error=> {console.log(error); });
         } 
 
-        function loadDireccions(full_apodo){
-            //console.log(full_apodo.value);
+        function loadDireccions(full_apodo,direccion_id=null){
             formulario.direccion_id.value = null;
-            axios.post("/contactos/"+full_apodo.value+"/direccions")
+            formulario.direccion_id.list.innerHTML="";
+            axios.post("/contactos/"+full_apodo+"/direccions")
                 .then(response => { 
                     formulario.contacto_id_text.value = response.data.id; 
                     var list = response.data.direccions;
-                    var datalist = formulario.direccion_id;
+                    var datalist = formulario.direccion_id.list;
                     datalist.innerHTML="";
-                    option = document.createElement('option');
-                    option.value = "";
-                    option.text = "Seleccione una dirección";
-                    datalist.appendChild(option);
                     for(var i=0;i<list.length;i++){
                         var option = document.createElement('option');
-                        option.value = list[i].id;
-                        option.text = list[i].direccion
+                        option.id = list[i].id;
+                        option.value = list[i].direccion
                             +" "+list[i].poblacion
                             +" "+list[i].provincia;
+                        if(list[i].id==direccion_id)
+                            datalist.value = option.value;
                         datalist.appendChild(option);     
                     }
                 })
                 .catch(error=> {console.log(error); });
-        }
-        
-        function reset_text(){
-            formulario.title.value = "";
-            formulario.contacto_id.value = "";
-            formulario.contacto_id_text.value = "";
-            formulario.direccion_id.value = "";
+                formulario.direccion_id.focus();
         }
 
+        function select_id(elem){
+            var datalist = formulario.direccion_id.list;
+            for(var i=0;i<datalist.options.length;i++){
+                if(datalist.options[i].value == elem.value){
+                    formulario.direccion_id_text.value=datalist.options[i].id;
+                }
+            }
+        }   
+        
         function reset_errors(){
             formulario.title.classList.remove("is-invalid");
             formulario.fecha.classList.remove("is-invalid");

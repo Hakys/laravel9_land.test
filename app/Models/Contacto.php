@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Contacto extends Model
 {
@@ -24,6 +25,13 @@ class Contacto extends Model
      * @var array<int, string>
      */
     protected $fillable = ['id', 'apodo', 'telefono' ];
+
+    public static function getDatalist(){
+        return DB::table('contactos as c')
+        ->selectRaw('c.id')
+        ->selectRaw('CONCAT(c.apodo," (",c.telefono,")") AS full_apodo')
+        ->get();
+    }
 
     public function direccions(){
         return $this->hasMany(Direccion::class);

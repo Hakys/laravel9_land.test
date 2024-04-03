@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
@@ -11,8 +12,22 @@ class Reunion extends Model
 {
     use HasFactory;
 
+    static $rules=[
+        'fecha' => 'required',
+        'hora' => 'required',
+        'duration' => 'required',
+        'estado' => 'required',
+        'contacto_id' => 'required',
+        'direccion_id' => 'required',
+        'p_entrada' => 'required',
+        'n_personas' => 'required',
+        't_entradas' => 'required',
+        //'chicas' => 'required',
+        //'prepago' => 'required',
+    ];
+
     protected $fillable = [
-        'fecha','chicas','prepago','n_personas',
+        'fecha','hora','chicas','prepago','n_personas',
         'p_entrada','t_entradas','direccion_id','estado'
     ];
 
@@ -54,7 +69,7 @@ class Reunion extends Model
     }
 
     //$reunion->evento()->save($evento);
-    public function evento(){
+    public function evento(): MorphOne {
         return $this->morphOne(Evento::class, 'eventoable');
     }
 

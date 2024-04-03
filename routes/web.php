@@ -32,10 +32,11 @@ Route::get('/cart/delete', 'App\Http\Controllers\CartController@delete')->name("
 Route::post('/cart/add/{id}', 'App\Http\Controllers\CartController@add')->name("cart.add");
 
 Route::get('/contactos', 'App\Http\Controllers\ContactoController@index')->name("contacto.index");
-Route::get('/contacto/datalist', 'App\Http\Controllers\ContactoController@index')->name("contacto.datalist");
+Route::post('/contactos/datalist/{id?}', 'App\Http\Controllers\ContactoController@datalist')->name("contacto.datalist");
 //Route::get('/contactos/create', 'App\Http\Controllers\ContactoController@create')->name("contacto.create");
 //Route::post('/contactos/store', 'App\Http\Controllers\ContactoController@store')->name("contacto.store");
 Route::post('/contactos/{full_apodo}/direccions', 'App\Http\Controllers\ContactoController@direccions')->name("contacto.direccions");
+//Route::post('/contactos/{full_apodo}/direccions', 'App\Http\Controllers\ContactoController@direccions')->name("contacto.direccions");
 Route::get('/contactos/{telefono}', 'App\Http\Controllers\ContactoController@show')->name("contacto.show");
 
 //Route::get('/contactos/{telefono}/edit', 'App\Http\Controllers\ContactoController@edit')->name("contacto.edit");
@@ -93,6 +94,7 @@ Route::middleware('admin')->group(function () {
     Route::get('/reunion/gestion', 'App\Http\Controllers\ReunionController@gestion')->name("reunion.gestion");
     Route::get('/reunion/create', 'App\Http\Controllers\ReunionController@create')->name("reunion.create");
     Route::get('/reunion/{id}/edit', 'App\Http\Controllers\ReunionController@edit')->name("reunion.edit");
+    Route::post('/reunion/estados', 'App\Http\Controllers\ReunionController@estados')->name("reunion.estados");
 });
     Route::get('/evento', 'App\Http\Controllers\EventoController@index')->name("evento.index");
     Route::get('/evento/list', 'App\Http\Controllers\EventoController@list')->name("evento.list");

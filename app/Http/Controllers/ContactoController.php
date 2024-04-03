@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contacto;
+use App\Models\Direccion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -21,12 +22,14 @@ class ContactoController extends Controller
         return view('contacto.index')->with("viewData", $viewData);
     }
 
-    public function datalist(){
-        $contactos= DB::table('contactos as c')
-            ->selectRaw('c.id')
-            ->selectRaw('CONCAT(c.apodo," (",c.telefono,")") AS full_apodo')
-            ->get(); 
-        return response()->json($contactos);
+    public function datalist($id=null){
+        $response = ['clientes' => Contacto::getDatalist()];
+        if($id){
+            $c =Contacto::find($id);
+            $response['direccions'] = $c->direccions;
+        }
+        return response()->json($response);
+
     }
 
     /**
@@ -43,10 +46,23 @@ class ContactoController extends Controller
         $viewData["subtitle"] = "Información del Contacto ".$viewData["contacto"]->getApodo();
         return view('contacto.show')->with("viewData", $viewData);
     }
-
+/*
+    public function direccions($id){
+        $contacto = Contacto::find($id)->first();
+        $response = [
+            'id' => $contacto->id,
+            'direccions' => $contacto->direccions,
+        ];
+        return response()->json($response);
+    }
+*/
     public function direccions($full_apodo){
         $contacto = Contacto::where('apodo',explode("(",$full_apodo))->first();
-        return response()->json($contacto->direccions);
+        $response = [
+            'id' => $contacto->id,
+            'direccions' => $contacto->direccions,
+        ];
+        return response()->json($response);
     }
 
     /**

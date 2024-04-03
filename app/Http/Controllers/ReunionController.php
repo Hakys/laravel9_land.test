@@ -46,4 +46,9 @@ class ReunionController extends Controller
         $viewData["subtitle"] = "Gestión Reuniones Tuppersex";
         return view("reunion.gestion")->with("viewData", $viewData);
     }
+
+    public function estados(){
+        $response = ['estados' => Reunion::getEstados()];
+        return response()->json($response);
+    }
 }
