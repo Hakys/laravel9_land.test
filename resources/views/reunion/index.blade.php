@@ -17,7 +17,6 @@
         <div class="card-body">
             <div class="row">
                 @include('reunion.schedule')
-
             </div>
         </div>
     </div>

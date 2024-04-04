@@ -150,7 +150,7 @@
             var calendarEl = document.getElementById('agenda');
             var calendar = new FullCalendar.Calendar(calendarEl, { 
                 initialView: 'dayGridMonth',
-                initialView: 'dayGridMonth',
+                height: 'auto',
                 locale: 'es',
                 timeZone: 'local',
                 firstDay: 1,
