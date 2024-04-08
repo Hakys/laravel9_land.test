@@ -1,9 +1,39 @@
 <div>
     <style>
-        .fc-license-message{ visibility: hidden;}    
+        .fc-license-message{ visibility: hidden; }  
+        @media screen and (max-width: 767px){
+            .fc .fc-toolbar{display:block; align-items: center;}
+            .fc-toolbar-chunk{     
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }  
+        }
+       
     </style>
+
     <div id='agenda'></div>
 
+    <div class="modal fade" id="listDia" tabindex="-1" 
+        data-bs-backdrop="true" data-bs-keyboard="false"
+        role="dialog" aria-labelledby="modalTitleIdDia" aria-hidden="true">
+        <div role="document" class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md modal-fullscreen-sm-down">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitleIdDia"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body"> 
+                    Contenido Dia
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="btnGuardarDia">Guardar</button>
+                    <button type="button" class="btn btn-danger" id="btnEliminarDia">Eliminar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Modal trigger button 
     <button
         type="button"
@@ -11,7 +41,7 @@
         data-bs-toggle="modal"
         data-bs-target="#evento"
     >
-        Launch
+        Launch 
     </button>
     -->
     <!-- Modal Body -->
@@ -35,8 +65,6 @@
                             <input type="text" name="contacto_id_text" id="contacto_id_text" hidden/> 
                             <input type="text" name="full_apodo" id="full_apodo" hidden/>
                         </div>
-                        
-
                         <div class="flex">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" placeholder=""
@@ -145,12 +173,15 @@
         let  formulario = document.querySelector("#formularioEventos");             
         document.addEventListener('DOMContentLoaded', function() {
             var myModal = new bootstrap.Modal(
-                document.getElementById("evento"),{});    
+                document.getElementById("evento"),{}); 
+            var listDia = new bootstrap.Modal(
+                document.getElementById("listDia"),{});   
             loadEstados(formulario.estado);           
             var calendarEl = document.getElementById('agenda');
             var calendar = new FullCalendar.Calendar(calendarEl, { 
                 initialView: 'dayGridMonth',
                 height: 'auto',
+                aspectRatio: 3,
                 locale: 'es',
                 timeZone: 'local',
                 firstDay: 1,
@@ -163,13 +194,12 @@
                 displayEventTime:true,
                 navLinks: true,
                 headerToolbar: {
-                    //left: 'prevYear,prev,today,next,nextYear',
+                    
                     left:   'prev,today,next',
                     center: 'title',
+                    right:  'listDay,dayGridMonth,listYear',
+                    //left: 'prevYear,prev,today,next,nextYear',
                     //right:'timeGridDay,timeGridWeek,dayGridMonth,dayGridYear,listWeek,listMonth,listYear',
-                    right:  'dayGridMonth,listYear',
-                    day:    'Almanaque',
-                    list:    'Listado',
                 },
         
                 //events: "/evento/list/",
@@ -184,11 +214,14 @@
                 },
                 
                 dateClick:function(info){     
-                    //console.log(info);               
+                    //console.log(info);   
+                    //listDia.show();
+                                
                     formulario.reset(); 
                     reset_text();
                     reset_errors();                   
                     modalTitleId.innerHTML = "Crear Nuevo Evento";
+                    btnEliminar.hidden = true;
                     formulario.start.value = info.dateStr+" 00:00:00";
                     formulario.end.value = info.dateStr+" 00:00:00"; 
                     formulario.fecha.value = info.dateStr;                    
@@ -201,10 +234,12 @@
                     formulario.chicas.checked = true;
                     formulario.prepago.checked = false;
                     myModal.show();
+                    
                 },
                 eventClick:function(info){
                     var evento = info.event;
                     //console.log(evento);
+                    btnEliminar.hidden = false;
                     reset_errors();
                     axios.post("/evento/edit/"+info.event.id)
                     .then(response => {
