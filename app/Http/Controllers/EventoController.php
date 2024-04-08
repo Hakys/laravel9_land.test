@@ -117,7 +117,7 @@ class EventoController extends Controller
         $response = [
             'id' => $evento->getId(),
             'title' => $evento->title,
-            'start' => $evento->start,
+            'start' => $evento->start, 
             'end' => $evento->end,
             'clientes' => Contacto::getDatalist(),
             'direccion_id' => $evento->eventoable->direccion->id,
