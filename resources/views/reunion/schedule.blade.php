@@ -9,6 +9,10 @@
                 align-items: center;
             }  
         }
+        .fc .fc-toolbar-title{margin-top: 4px; margin-bottom: 4px;}
+        .fc-col-header { background-color: lightgrey; }
+        .fc-col-header-cell-cushion{ text-transform: capitalize; text-decoration: none; color: black;}
+        .fc-daygrid-day-number{ font-size: 1.1rem; margin-right: 4px; text-decoration: none; font-weight: 600; }
        
     </style>
 
@@ -115,7 +119,10 @@
                             </div>
                             <div class="input-group mb-3">
                                 <select name="direccion_id" id="direccion_id" class="form-select"></select>  
-                            </div>   
+                            </div>  
+                            <div class="input-group mb-3">
+                                <input type="text" id="viaje" name="viaje" />
+                            </div>
                             <div class="row ${1| ,row-cols-2,row-cols-3, auto,justify-content-md-center,|}">
                                 <div class="col">
                                     <div class="form-floating mb-3"> 
@@ -231,7 +238,7 @@
                     formulario.n_personas.value = 7;
                     formulario.p_entrada.value = 5;
                     formulario.t_entradas.value = 35;
-                    formulario.chicas.checked = true;
+                    formulario.chicas.checked = true; 
                     formulario.prepago.checked = false;
                     myModal.show();
                     
@@ -243,7 +250,7 @@
                     reset_errors();
                     axios.post("/evento/edit/"+info.event.id)
                     .then(response => {
-                        //console.log(response.data); 
+                        console.log(response.data); 
                         modalTitleId.innerHTML = "Datos del Evento";
                         formulario.id.value = response.data.id;
                         formulario.title.value = response.data.title;
@@ -284,6 +291,7 @@
                             datalist.appendChild(option);     
                         }
                         formulario.direccion_id.value = response.data.direccion_id; 
+                        formulario.viaje.value = response.data.viaje;
                         //end_DIRECCION_ID        
             
                         formulario.fecha.value = response.data.fecha;

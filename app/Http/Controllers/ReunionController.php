@@ -10,13 +10,6 @@ use Illuminate\Support\Carbon;
 class ReunionController extends Controller
 {
     public function index(){
-        $matrix = new Distancematrix();
-        $origins = "37.270974062858784,-6.9505493644180705";
-        $origins="avenida de cristobal colon, 103, huelva, españa";
-        $destinations = "37.377497011094654,-5.98694274301218";
-        
-        //$r=$matrix->distance($origins,$destinations);
-        //dd($r); 
         $viewData["title"] = "Reuniones Tuppersex";
         $viewData["subtitle"] = "Agenda Tuppersex";
         $viewData["ant"] = "";        

@@ -105,7 +105,7 @@ class FormModal extends Component
     public function submit(){        
         if($this->op=="create"){
             $this->validate();
-            Direccion::create([
+            $d = Direccion::create([
                 'full_name' => $this->full_name,
                 'telefono' => $this->telefono,
                 'email' => $this->email,
@@ -117,6 +117,8 @@ class FormModal extends Component
                 'pais' => $this->pais,
                 'contacto_id' => $this->contacto->getId(),
             ]);
+            $d->setMatrix();
+            $d->save();
             $msg = 'Nueva Dirección Añadida.';
             return redirect()->route($this->to,$this->contacto->getTelefono())->with('success', $msg);            
         }else if($this->op=="edit"){
@@ -130,6 +132,7 @@ class FormModal extends Component
             $this->direccion->setPais($this->pais);
             $this->direccion->setNif($this->nif);
             $this->direccion->setEmail($this->email);
+            $this->direccion->setMatrix();
             $this->direccion->save();
             $msg = "Dirección Actualizada.";
             return redirect()->route('contacto.show',$this->contacto->getTelefono())->with('success', $msg);

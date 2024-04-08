@@ -133,6 +133,8 @@ class EventoController extends Controller
             'estados' => Reunion::getEstados(),
             'chicas' => $evento->eventoable->chicas,
             'prepago' => $evento->eventoable->prepago,
+            'viaje' => $evento->eventoable->direccion->distance_text
+                ." ".$evento->eventoable->direccion->duration_text,
         ];
         return response()->json($response);
     }

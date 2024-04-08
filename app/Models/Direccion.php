@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Repositories\Distance\Distancematrix;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -45,7 +46,8 @@ class Direccion extends Model
      */
     protected $fillable = [
         'full_name', 'telefono', 'email', 'nif', 'direccion', 
-        'cp', 'poblacion', 'provincia', 'pais', 'contacto_id'
+        'cp', 'poblacion', 'provincia', 'pais', 'contacto_id',
+        'distance_text','distance_value','duration_text','duration_value'
     ];
 
     public function contacto(){
@@ -83,6 +85,24 @@ class Direccion extends Model
 
     public function getPais(){ return $this->attributes['pais']; }
     public function setPais($pais){ $this->attributes['pais'] = $pais; }
+
+    public function getDistance_text(){ return $this->attributes['distance_text']; }
+    public function getDistance_value(){ return $this->attributes['distance_value']; }   
+    public function getDuration_text(){ return $this->attributes['duration_text']; }
+    public function getDuration_value(){ return $this->attributes['duration_value']; }
+    public function setMatrix(){ 
+        $matrix = new Distancematrix();
+        $m = $matrix->desdeCasa(
+            $this->attributes['direccion'].", ".
+            $this->attributes['poblacion'].", ".
+            $this->attributes['provincia'].", ".
+            $this->attributes['pais']
+        );       
+        $this->attributes['distance_text'] = $m->distance->text; 
+        $this->attributes['distance_value'] = $m->distance->value; 
+        $this->attributes['duration_text'] = $m->duration->text; 
+        $this->attributes['duration_value'] = $m->duration->value; 
+    }
 
     public function getCreatedAt(){ return $this->attributes['created_at']; }
     public function setCreatedAt($createdAt){ $this->attributes['created_at'] = $createdAt; }

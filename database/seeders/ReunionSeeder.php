@@ -18,7 +18,7 @@ class ReunionSeeder extends Seeder
     {
         $reunions = Reunion::factory(20)->create();
         foreach ($reunions as $reunion) {
-            $evento = new Evento(['title' => $reunion->direccion->provincia]);
+            $evento = new Evento(['title' => $reunion->direccion->poblacion]);
             //$evento->setDuration(29);
             $evento->setStart($reunion->fecha,$reunion->hora);
             $evento->setEnd($reunion->fecha,$reunion->hora,"02:00");
