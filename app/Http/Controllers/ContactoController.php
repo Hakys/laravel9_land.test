@@ -25,7 +25,7 @@ class ContactoController extends Controller
     public function datalist($id=null){
         $response = ['clientes' => Contacto::getDatalist()];
         if($id){
-            $c =Contacto::find($id);
+            $c = Contacto::find($id);
             $response['direccions'] = $c->direccions;
         }
         return response()->json($response);

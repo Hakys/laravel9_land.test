@@ -19,8 +19,12 @@ class FormModal extends Component
     public function submit(){
         if($this->op=="create"){
             $this->validate();
-            Contacto::create(['apodo'=>$this->apodo,'telefono'=>$this->telefono]);            
-            return redirect()->route($this->to)->with('success', 'Nuevo Contacto Añadido.');
+            Contacto::create(['apodo'=>$this->apodo,'telefono'=>$this->telefono]);   
+            if($this->to){
+                return redirect()->route($this->to)->with('success', 'Nuevo Contacto Añadido.');
+            }else{
+                
+            }         
         }else if($this->op=="edit"){
             $this->validate();
             $this->contacto->SetApodo($this->apodo);

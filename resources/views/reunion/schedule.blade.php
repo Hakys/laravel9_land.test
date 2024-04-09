@@ -17,7 +17,7 @@
     </style>
 
     <div id='agenda'></div>
-
+    <!--
     <div class="modal fade" id="listDia" tabindex="-1" 
         data-bs-backdrop="true" data-bs-keyboard="false"
         role="dialog" aria-labelledby="modalTitleIdDia" aria-hidden="true">
@@ -38,6 +38,7 @@
             </div>
         </div>
     </div>
+    -->
     <!-- Modal trigger button 
     <button
         type="button"
@@ -105,6 +106,20 @@
                                 </div>
                             </div>                       
                             <div class="input-group mb-3">
+                                <button type="button" class="btn btn-success" data-bs-toggle="" data-bs-target="#" >
+                                    <i class="fa fa-plus fa-lg" aria-hidden="true"></i></button>
+                                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                                        <div class="accordion-item">
+                                          <h2 class="accordion-header" id="flush-headingOne">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                              Accordion Item #1
+                                            </button>
+                                          </h2>
+                                          <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+                                          </div>
+                                        </div>
+                                    </div>
                                 <input list="clientes" name="contacto_id" 
                                     id="contacto_id" onchange="loadDireccions(this)"
                                     class="form-control" aria-label="Clientes"
@@ -181,8 +196,8 @@
         document.addEventListener('DOMContentLoaded', function() {
             var myModal = new bootstrap.Modal(
                 document.getElementById("evento"),{}); 
-            var listDia = new bootstrap.Modal(
-                document.getElementById("listDia"),{});   
+            //var listDia = new bootstrap.Modal(
+            //    document.getElementById("listDia"),{});   
             loadEstados(formulario.estado);           
             var calendarEl = document.getElementById('agenda');
             var calendar = new FullCalendar.Calendar(calendarEl, { 

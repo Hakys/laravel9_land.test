@@ -6,7 +6,9 @@
         <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
       @endif
     </button>
-    <div wire:ignore.self class="modal fade" id="ContactoFormModal" tabindex="-1" aria-labelledby="ContactoFormModalLabel" aria-hidden="true">
+    <div wire:ignore.self class="modal fade" id="ContactoFormModal" 
+      tabindex="-1" aria-labelledby="ContactoFormModalLabel" aria-hidden="true"
+      data-bs-backdrop="true" data-bs-keyboard="false">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
