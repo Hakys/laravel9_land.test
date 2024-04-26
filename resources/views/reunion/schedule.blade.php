@@ -101,38 +101,114 @@
                                     <div class="input-group mb-3">
                                         <span class="input-group-text">Estado:</span>  
                                         <select name="estado" id="estado" class="form-select text-uppercase"></select>     
-                                    </div>
-                                    
+                                    </div>                                    
                                 </div>
                             </div>                       
-                            <div class="input-group mb-3">
-                                <button type="button" class="btn btn-success" data-bs-toggle="" data-bs-target="#" >
-                                    <i class="fa fa-plus fa-lg" aria-hidden="true"></i></button>
-                                    <div class="accordion accordion-flush" id="accordionFlushExample">
-                                        <div class="accordion-item">
-                                          <h2 class="accordion-header" id="flush-headingOne">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                              Accordion Item #1
+                            <div class="input-group mb-3">                
+                                <div class="accordion accordion-flush" id="accordionFlushCliente" style="width:auto">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="flush-headingOne">
+                                            <button class="btn btn-success collapsed" type="button" data-bs-toggle="collapse" 
+                                                data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
                                             </button>
-                                          </h2>
-                                          <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                            <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
-                                          </div>
+                                        </h2>
+                                        <div id="flush-collapseOne" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushCliente"
+                                            class="accordion-collapse collapse border border-1 border-success p-1 rounded-3 mb-1">
+                                            <div class="d-grid ">
+                                                <form>
+                                                <div class="mt-2"><h6>Añadir Cliente:</h6></div>
+                                                <div class="form-floating mb-2">
+                                                    <input type="text" id="telefono" name="telefono" placeholder="Teléfono" 
+                                                        class="form-control rounded-3 @error('telefono') is-invalid @enderror">
+                                                    <label for="telefono">Teléfono</label>
+                                                    @error('telefono')<small class="text-danger">{{ $message }}</small>@enderror
+                                                </div>                                        
+                                                <div class="form-floating mb-2">
+                                                    <input type="text" id="full_name" name="full_name" placeholder="Nombre Completo" 
+                                                        class="form-control rounded-3 @error('full_name') is-invalid @enderror" >
+                                                    <label for="full_name">Nombre Completo</label>
+                                                    @error('full_name')<small class="text-danger">{{ $message }}</small>@enderror
+                                                </div>  <span class="white">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</span>      
+                                                <button type="button" class="btn btn-success btn-block" id="btnClienteGuardar">Guardar Cliente</button>                                                        
+                                                </form>                      
+                                            </div>
                                         </div>
                                     </div>
+                                </div>                          
                                 <input list="clientes" name="contacto_id" 
                                     id="contacto_id" onchange="loadDireccions(this)"
                                     class="form-control" aria-label="Clientes"
                                     placeholder="Selecciona un cliente">  
-                                <datalist id="clientes" class="w-100"></datalist>      
+                                <datalist id="clientes"></datalist>      
                                 <div class="input-group-append">
                                     <button id="btnClear_contacto_id" type="button"
                                         class="btn btn-outline-danger">
                                         <i class="fa fa-times fa-lg" aria-hidden="true"></i>
                                     </button>
-                                </div>
+                                </div>   
                             </div>
                             <div class="input-group mb-3">
+                                <div class="accordion accordion-flush" id="accordionFlushDireccion">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="flush-headingTwo">
+                                            <button class="btn btn-success collapsed" type="button" data-bs-toggle="collapse" 
+                                                data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                                <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
+                                            </button>
+                                        </h2>
+                                        <div id="flush-collapseTwo" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushDireccion"
+                                            class="accordion-collapse collapse border border-1 border-success p-1 rounded-3" >
+                                            <div class="d-block">
+                                                <form>     
+                                                <div class="mt-2"><h6>Añadir Dirección:</h6></div>      
+                                                <div class="form-floating mb-2">
+                                                    <input type="text" id="ladireccion" name="ladireccion" placeholder="Dirección Completa" 
+                                                        class="form-control rounded-3 @error('ladireccion') is-invalid @enderror">
+                                                    <label for="ladireccion">Dirección Completa</label>
+                                                    @error('ladireccion')<small class="text-danger">{{ $message }}</small>@enderror
+                                                </div>                                                      
+                                                <div class="row">
+                                                    <div class="col-md-4"> 
+                                                        <div class="form-floating mb-2">
+                                                            <input type="text" id="cp" name="cp" placeholder="Código Postal"  
+                                                                class="form-control rounded-3 @error('cp') is-invalid @enderror">
+                                                            <label for="cp">Código Postal</label>
+                                                            @error('cp')<small class="text-danger">{{ $message }}</small>@enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="form-floating mb-2">
+                                                            <input type="text" id="poblacion" name="poblacion" placeholder="Población" 
+                                                                class="form-control rounded-3 @error('poblacion') is-invalid @enderror">
+                                                            <label for="poblacion">Población</label>
+                                                            @error('poblacion')<small class="text-danger">{{ $message }}</small>@enderror
+                                                        </div>                
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col"> 
+                                                        <div class="form-floating mb-2">
+                                                            <input type="text" id="provincia" name="provincia" placeholder="Provincia" 
+                                                                class="form-control rounded-3 @error('provincia') is-invalid @enderror">
+                                                            <label for="provincia">Provincia</label>
+                                                            @error('provincia')<small class="text-danger">{{ $message }}</small>@enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-floating mb-2">
+                                                            <input type="text" id="pais" name="pais" placeholder="País" 
+                                                                class="form-control rounded-3 @error('pais') is-invalid @enderror">
+                                                            <label for="pais">Pais</label>
+                                                            @error('pais')<small class="text-danger">{{ $message }}</small>@enderror
+                                                        </div>                
+                                                    </div>
+                                                </div>                                                            
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <select name="direccion_id" id="direccion_id" class="form-select"></select>  
                             </div>  
                             <div class="input-group mb-3">
@@ -436,7 +512,7 @@
                         option.text = list[i].direccion
                             +" "+list[i].poblacion
                             +" "+list[i].provincia;
-                        datalist.appendChild(option);     
+                        datalist.appendChild(option);      
                     }
                 })
                 .catch(error=> {console.log(error); });
@@ -463,5 +539,9 @@
             formulario.chicas.classList.remove("is-invalid");
             formulario.prepago.classList.remove("is-invalid");
         }
+
+        document.getElementById("btnClienteGuardar").addEventListener("click",function(){
+                
+            });
     </script>
 </div>
