@@ -60,6 +60,8 @@ class ContactoController extends Controller
         $contacto = Contacto::where('apodo',explode("(",$full_apodo))->first();
         $response = [
             'id' => $contacto->id,
+            'apodo' => $contacto->apodo,
+            'telefono' => $contacto->telefono,
             'direccions' => $contacto->direccions,
         ];
         return response()->json($response);

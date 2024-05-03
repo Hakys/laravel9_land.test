@@ -10,6 +10,14 @@ class Direccion extends Model
 {
     use HasFactory;
 
+    static $rules = [
+        'full_name' => 'required',
+        'telefono' => 'required',                
+        'ladireccion' => 'required',                
+        'poblacion' => 'required',                
+        'contacto_id' => 'required|exists:contactos,id'
+    ]; 
+
     /**
      * USER ATTRIBUTES
      * full_name telefono email nif direccion cp poblacion provincia pais

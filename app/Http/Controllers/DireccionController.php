@@ -44,9 +44,20 @@ class DireccionController extends Controller
      * @param  \App\Models\Direccion  $direccion
      * @return \Illuminate\Http\Response
      */
-    public function show(Direccion $direccion)
+    public function show($direccion_id)
     {
-        //
+        $direccion = Direccion::find($direccion_id);
+        $response = [
+            'full_name' => $direccion->full_name,
+            'ladireccion' => $direccion->direccion,
+            'cp' => $direccion->cp,
+            'poblacion' => $direccion->poblacion,
+            'provincia' => $direccion->provincia,
+            'pais' => $direccion->pais,
+            'viaje' => $direccion->distance_text
+                ." ".$direccion->duration_text,
+        ];
+        return response()->json($response);
     }
 
     /**

@@ -10,6 +10,11 @@ class Contacto extends Model
 {
     use HasFactory;
 
+    static $rules=[
+        'apodo' => 'required|unique:contactos',
+        'telefono' => 'required|unique:contactos',
+    ];
+
     /**
      * USER ATTRIBUTES
      * $this->attributes['id'] - int - contains the user primary key (id)
@@ -29,7 +34,7 @@ class Contacto extends Model
     public static function getDatalist(){
         return DB::table('contactos as c')
         ->selectRaw('c.id')
-        ->selectRaw('CONCAT(c.apodo," (",c.telefono,")") AS full_apodo')
+        ->selectRaw('CONCAT(c.apodo," (",c.telefono,")") AS apodo')
         ->get();
     }
 

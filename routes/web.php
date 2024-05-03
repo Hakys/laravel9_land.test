@@ -86,6 +86,7 @@ Route::middleware('admin')->group(function () {
     //Route::put('/contactos/{telefono}/update', 'App\Http\Controllers\ContactoController@update')->name("contacto.update");
     Route::delete('/contactos/{telefono}/delete', 'App\Http\Controllers\ContactoController@delete')->name("contacto.delete");
     
+    Route::get('/direcciones/{direccion}', 'App\Http\Controllers\DireccionController@show')->name("direccion.show");
     //Route::delete('/direcciones/{direccion}/delete', 'App\Http\Controllers\DireccionController@delete')->name("direccion.delete");
 
     Route::get('/reunion', 'App\Http\Controllers\ReunionController@index')->name("reunion.index");

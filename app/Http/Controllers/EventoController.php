@@ -53,7 +53,34 @@ class EventoController extends Controller
      */
     public function store(Request $request)
     {   
+        Log::info($request->all());
         request()->validate(Evento::$rules);
+        if(!$request->direccion_id){
+            if(!$request->contacto_id){
+                request()->validate(Contacto::$rules);
+                $contacto = new Contacto();
+                $contacto->setApodo($request->apodo);
+                $contacto->setTelefono($request->telefono);
+                $contacto->save();
+                $request->merge([
+                    'contacto_id' => $contacto->getId(),
+                ]);
+                Log::info($request->all());
+            }
+            request()->validate(Direccion::$rules);
+            $direccion = new Direccion();
+            $direccion->setFull_name($request->full_name);
+            $direccion->setTelefono($request->telefono);
+            $direccion->setDireccion($request->ladireccion);
+            $direccion->setCp($request->cp);
+            $direccion->setPoblacion($request->poblacion);
+            $direccion->setProvincia($request->provincia);
+            $direccion->setPais($request->pais);
+            $direccion->contacto_id = $request->contacto_id;
+            $direccion->setMatrix();
+            $direccion->save();
+            $request['direccion_id'] = $direccion->getId();
+        }
         request()->validate(Reunion::$rules);
         $reunion = new Reunion();
         $reunion->fecha = $request->fecha;
@@ -75,6 +102,7 @@ class EventoController extends Controller
         $reunion->evento()->save($evento); 
         $evento->save();
         //$reunion->refresh();
+        return response()->json($request); 
     }
 
     /**
@@ -111,7 +139,7 @@ class EventoController extends Controller
         //$evento->end = Carbon::createFromFormat('Y-m-d H:i:s', $evento->end)->format('Y-m-d');
         $contactos= DB::table('contactos as c')
         ->selectRaw('c.id')
-        ->selectRaw('CONCAT(c.apodo," (",c.telefono,")") AS full_apodo')
+        ->selectRaw('CONCAT(c.apodo," (",c.telefono,")") AS apodo')
         ->get();
     $response = [];
         $response = [
@@ -121,6 +149,12 @@ class EventoController extends Controller
             'end' => $evento->end,
             'clientes' => Contacto::getDatalist(),
             'direccion_id' => $evento->eventoable->direccion->id,
+            'full_name' => $evento->eventoable->direccion->full_name,
+            'ladireccion' => $evento->eventoable->direccion->direccion,
+            'cp' => $evento->eventoable->direccion->cp,
+            'poblacion' => $evento->eventoable->direccion->poblacion,
+            'provincia' => $evento->eventoable->direccion->provincia,
+            'pais' => $evento->eventoable->direccion->pais,
             'contacto_id' => $evento->eventoable->direccion->contacto->id,
             'direccions' => $evento->eventoable->direccion->contacto->direccions,
             'fecha' => Carbon::createFromFormat('Y-m-d H:i:s', $evento->start)->format('Y-m-d'),
