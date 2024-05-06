@@ -16,6 +16,17 @@
        .accordion-collapse {
         display: grid;
        }
+       .mi-modal-footer{
+            display: flex;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 2px;   
+       }
+       .mi-modal-footer .btn{
+            margin: 2px;
+       }
     </style>
 
     <div id='agenda'></div>
@@ -62,7 +73,37 @@
                     <h5 class="modal-title" id="modalTitleId"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">     
+                <div class="modal-body">  
+                    <div id="flush-collapseOne" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushCliente"
+                        class="accordion-collapse collapse border border-1 border-success p-1 rounded-3 mb-1">
+                        <div class="d-block px-2 mb-2"> 
+                            <form id="formContacto" action="">     
+                                @csrf                                          
+                                <div class="mt-2"><h6>Nuevo Contacto:</h6></div>                                      
+                                <div class="form-floating mb-2">
+                                    <input type="text" id="apodo" name="apodo" placeholder="Nombre Completo" 
+                                        class="form-control rounded-3" aria-describedby="helpApodo">
+                                    <label for="apodo">Nombre Completo</label>
+                                    <small id=helpApodo class="text-danger"></small>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-floating">
+                                            <input type="text" id="telefono" name="telefono" placeholder="Teléfono" 
+                                                class="form-control rounded-3" aria-describedby="helpTelefono">
+                                            <label for="new_telefono">Teléfono</label>
+                                            
+                                        </div>  
+                                    </div>
+                                    <div class="col mi-modal-footer">
+                                        <button type="button" class="btn btn-success" id="btnContactoGuardar">Guardar</button>
+                                        <button type="button" class="btn btn-secondary" id="btnContactoReset">Reset</button>
+                                    </div>
+                                    <small id="helpTelefono" class="text-danger"></small>
+                                </div>
+                            </form>                                                             
+                        </div>
+                    </div>   
                     <form action ="" id="formularioEventos">
                         @csrf  
                         <div class="flex">
@@ -74,9 +115,8 @@
                         <div class="flex">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" placeholder=""
-                                    name="title" id="title" aria-describedby="helpId"/>
-                                <label for="title">Título / Descripción:</label>
-                                <small id="helpId" class="form-text text-muted" hidden>Help text</small>
+                                    name="title" id="title" />
+                                <label for="title">Título / Descripción:</label>                                
                                 @error('title')<small class="text-danger">{{ $message }}</small>@enderror
                             </div>
                             <div class="input-group mb-3">
@@ -133,24 +173,7 @@
                                             </div>   
                                             @error('contacto_id_full')<small class="text-danger">{{ $message }}</small>@enderror
                                         </div>   
-                                        <div id="flush-collapseOne" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushCliente"
-                                            class="accordion-collapse collapse border border-1 border-success p-1 rounded-3 mb-1">
-                                            <div class="d-block">                                                
-                                                <div class="mt-2"><h6>Datos del Contacto:</h6></div>
-                                                <div class="form-floating mb-2">
-                                                    <input type="text" id="telefono" name="telefono" placeholder="Teléfono" 
-                                                        class="form-control rounded-3 @error('telefono') is-invalid @enderror">
-                                                    <label for="new_telefono">Teléfono</label>
-                                                    @error('telefono')<small class="text-danger">{{ $message }}</small>@enderror
-                                                </div>                                        
-                                                <div class="form-floating mb-2">
-                                                    <input type="text" id="apodo" name="apodo" placeholder="Nombre Completo" 
-                                                        class="form-control rounded-3 @error('apodo') is-invalid @enderror" >
-                                                    <label for="apodo">Nombre Completo</label>
-                                                    @error('apodo')<small class="text-danger">{{ $message }}</small>@enderror
-                                                </div>                
-                                            </div>
-                                        </div>
+                                        
                                     </div>
                                 </div>         
                             </div>
@@ -277,13 +300,16 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" id="btnGuardar">Guardar</button>
                     <button type="button" class="btn btn-danger" id="btnEliminar">Eliminar</button>
+                    <button type="button" class="btn btn-danger" id="btnPrueba">Prueba</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                </div>
+                </div> 
             </div>
         </div>
     </div>
     <script>
         let  formulario = document.querySelector("#formularioEventos");             
+        let  formContacto = document.querySelector("#formContacto");  
+        let  collapseOne = document.querySelector("#flush-collapseOne");             
         document.addEventListener('DOMContentLoaded', function() {
             var myModal = new bootstrap.Modal(
                 document.getElementById("evento"),{}); 
@@ -460,6 +486,38 @@
                         //formulario.contacto_id.value = error.response.data.contacto_id;
                     });
             }
+
+            function sendDataContacto(url){
+                reset_errors_contacto();
+                const datos = new FormData(formContacto);
+                //console.log(datos);
+                axios.post(url,datos)
+                    .then(response => {
+                        //console.log(response);
+                        formulario.contacto_id.value = response.data.contacto_id;
+                        loadContacts(formulario.contacto_id_full,response.data.contacto_id);
+                        reset_contacto();
+                        $('#flush-collapseOne').collapse('hide');
+                    })
+                    .catch(error => { 
+                        //console.log(error);
+                        console.log(error.response.data);
+                        //console.log(error.response.data.errors);
+                        if(!(typeof error.response.data.errors === 'undefined')){
+                            if(!(typeof error.response.data.errors.apodo === 'undefined')){
+                                formContacto.apodo.classList.add("is-invalid");
+                                $('#helpApodo').text(error.response.data.errors.apodo);
+                            } 
+                                
+
+                            if(!(typeof error.response.data.errors.telefono === 'undefined')){
+                                formContacto.telefono.classList.add("is-invalid");
+                                $('#helpTelefono').text(error.response.data.errors.telefono);
+                            } 
+                        }
+                        //formulario.contacto_id.value = error.response.data.contacto_id;
+                    });
+            }
             
             document.getElementById("btnGuardar").addEventListener("click",function(){
                 if(formulario.id.value)
@@ -471,6 +529,17 @@
             document.getElementById("btnEliminar").addEventListener("click",function(){
                 sendData("/evento/delete/"+formulario.id.value);
             });
+            document.getElementById("btnPrueba").addEventListener("click",function(){
+                $('#flush-collapseOne').collapse('hide');
+            });
+
+            document.getElementById("btnContactoGuardar").addEventListener("click",function(){
+                if(formulario.contacto_id.value)
+                    sendDataContacto("/contactos/update/"+formulario.contacto_id.value);
+                else
+                    sendDataContacto("/contactos/store");
+            });
+            
 
             document.getElementById("direccion_id").addEventListener("change",function(){
                 //console.log("has cambiado: "+formulario.direccion_id.value);  
@@ -534,7 +603,7 @@
                         option.value = clientes[i].apodo;
                         if(clientes[i].id==select_id){
                             formulario.contacto_id_full.value = clientes[i].apodo;
-                            formulario.contacto_id.value = cliente[i].id;     
+                            formulario.contacto_id.value = select_id;     
                         }
                         datalist.appendChild(option);    
                     }
@@ -594,9 +663,16 @@
             formulario.prepago.classList.remove("is-invalid");  
         }
 
+        function reset_errors_contacto(){
+            formContacto.telefono.classList.remove("is-invalid");
+            $('#helpTelfono').text("");
+            formContacto.apodo.classList.remove("is-invalid");
+            $('#helpApodo').text("");
+        }
+
         function reset_contacto(){
-            formulario.telefono.value = "";
-            formulario.apodo.value = "";        
+            formContacto.telefono.value = "";
+            formContacto.apodo.value = "";        
         }
 
         function reset_direccion(){

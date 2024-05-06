@@ -78,7 +78,9 @@ Route::middleware('admin')->group(function () {
     Route::get('/contactos', 'App\Http\Controllers\ContactoController@index')->name("contacto.index");
     Route::post('/contactos/datalist/{id?}', 'App\Http\Controllers\ContactoController@datalist')->name("contacto.datalist");
     //Route::get('/contactos/create', 'App\Http\Controllers\ContactoController@create')->name("contacto.create");
-    //Route::post('/contactos/store', 'App\Http\Controllers\ContactoController@store')->name("contacto.store");
+    
+    Route::post('/contactos/store', 'App\Http\Controllers\ContactoController@store')->name("contacto.store");
+    Route::post('/contactos/update/{id}', 'App\Http\Controllers\ContactoController@update')->name("contacto.update");
    
     Route::get('/contactos/{telefono}', 'App\Http\Controllers\ContactoController@show')->name("contacto.show");
     

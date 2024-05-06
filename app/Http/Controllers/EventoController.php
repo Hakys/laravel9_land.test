@@ -62,10 +62,7 @@ class EventoController extends Controller
                 $contacto->setApodo($request->apodo);
                 $contacto->setTelefono($request->telefono);
                 $contacto->save();
-                $request->merge([
-                    'contacto_id' => $contacto->getId(),
-                ]);
-                Log::info($request->all());
+                request()->merge(['errors.contacto_id' => $contacto->getId()]);
             }
             request()->validate(Direccion::$rules);
             $direccion = new Direccion();
@@ -79,7 +76,7 @@ class EventoController extends Controller
             $direccion->contacto_id = $request->contacto_id;
             $direccion->setMatrix();
             $direccion->save();
-            $request['direccion_id'] = $direccion->getId();
+            request()->merge(['direccion_id' => $direccion->getId()]);
         }
         request()->validate(Reunion::$rules);
         $reunion = new Reunion();
@@ -101,8 +98,9 @@ class EventoController extends Controller
         //$evento->eventoable()->save($reunion);        
         $reunion->evento()->save($evento); 
         $evento->save();
+        $req['id'] = $evento->getId();
         //$reunion->refresh();
-        return response()->json($request); 
+        return response()->json($req); 
     }
 
     /**

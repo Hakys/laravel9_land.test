@@ -6,6 +6,7 @@ use App\Models\Contacto;
 use App\Models\Direccion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ContactoController extends Controller
 {
@@ -66,6 +67,23 @@ class ContactoController extends Controller
         ];
         return response()->json($response);
     }
+
+    public function store(Request $request){ 
+        Log::info($request->all());
+        request()->validate(Contacto::$rules);
+        $c = new Contacto();
+        $c->setApodo($request->apodo);
+        $c->setTelefono($request->telefono);
+        $c->save();
+        return response()->json(['contacto_id'=>$c->getId()]);
+    } 
+
+    public function update(Request $request, $telefono){ 
+        Log::info($request->all());
+        request()->validate(Contacto::$rules);
+
+        return response()->json(['contacto_id'=>5]);
+    } 
 
     /**
      * Remove the specified resource from storage.
