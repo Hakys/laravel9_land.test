@@ -50,6 +50,7 @@ class DireccionController extends Controller
         $response = [
             'full_name' => $direccion->full_name,
             'ladireccion' => $direccion->direccion,
+            'telefono' => $direccion->telefono,
             'cp' => $direccion->cp,
             'poblacion' => $direccion->poblacion,
             'provincia' => $direccion->provincia,

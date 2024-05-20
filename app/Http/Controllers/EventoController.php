@@ -56,14 +56,6 @@ class EventoController extends Controller
         Log::info($request->all());
         request()->validate(Evento::$rules);
         if(!$request->direccion_id){
-            if(!$request->contacto_id){
-                request()->validate(Contacto::$rules);
-                $contacto = new Contacto();
-                $contacto->setApodo($request->apodo);
-                $contacto->setTelefono($request->telefono);
-                $contacto->save();
-                request()->merge(['errors.contacto_id' => $contacto->getId()]);
-            }
             request()->validate(Direccion::$rules);
             $direccion = new Direccion();
             $direccion->setFull_name($request->full_name);
@@ -149,6 +141,7 @@ class EventoController extends Controller
             'direccion_id' => $evento->eventoable->direccion->id,
             'full_name' => $evento->eventoable->direccion->full_name,
             'ladireccion' => $evento->eventoable->direccion->direccion,
+            'telefono' => $evento->eventoable->direccion->telefono,
             'cp' => $evento->eventoable->direccion->cp,
             'poblacion' => $evento->eventoable->direccion->poblacion,
             'provincia' => $evento->eventoable->direccion->provincia,
@@ -180,22 +173,48 @@ class EventoController extends Controller
      */
     public function update(Request $request, Evento $evento)
     {
+        Log::info($request->all());
+        Log::info($evento);
         request()->validate(Evento::$rules);
-        //Log::info(now()." ".$request);
-        $reunion = Reunion::find($evento->eventoable->getId());
-        $reunion->fecha = $request->fecha;
-        $reunion->hora = $request->hora;
+        $reunion = Reunion::where('id',$evento->eventoable->getId())->first();
+        $reunion->setFecha($request->fecha);
+        $reunion->setHora($request->hora);
         $evento->setStart($reunion->fecha,$reunion->hora);
         $evento->setEnd($reunion->fecha,$reunion->hora,$request->duration);
-        $reunion->direccion_id = $request->direccion_id;
+        if(!$request->direccion_id) {
+            $d = Direccion::where('id',$request->direccion_id)->first();
+            $d->update([
+                'contacto_id' => $request->contacto_id,
+                'full_name' => $request->full_name,
+                'direccion' => $request->ladireccion,
+                'telefono' => $request->telefono,
+                'cp' => $request->cp,
+                'poblacion' => $request->poblacion,
+                'provincia' => $request->provincia,
+                'pais' => $request->pais,
+            ]);
+        }else{
+            $d = new Direccion();
+            $d->contacto_id = $request->contacto_id;
+            $d->setFull_name($request->full_name);
+            $d->setDireccion($request->ladireccion);
+            $d->setTelefono($request->telefono);
+            $d->setCp($request->cp);
+            $d->setPoblacion($request->poblacion);
+            $d->setProvincia($request->provincia);
+            $d->setPais($request->pais);
+            $d->save();
+        }
+        
+        Log::info($d->id);
         $reunion->n_personas = $request->n_personas;
         $reunion->p_entrada = $request->p_entrada;
         $reunion->t_entradas = $request->t_entradas;
         $reunion->estado = $request->estado;
         $reunion->prepago = $request->boolean('prepago');
         $reunion->chicas = $request->boolean('chicas');
-        $evento->save();
-        $reunion->save();
+        $reunion->update(['direccion_id' => $d->id]);
+        $evento->update();
         return response()->json($evento);
     }
 

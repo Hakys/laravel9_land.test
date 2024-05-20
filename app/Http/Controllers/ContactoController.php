@@ -41,10 +41,11 @@ class ContactoController extends Controller
      */
     public function show($telefono)
     {
+        $c = Contacto::where('telefono',$telefono)->first();
         $viewData = [];
-        $viewData["contacto"] = Contacto::where('telefono',$telefono)->first();
-        $viewData["title"] = $viewData["contacto"]->getApodo()." - Online Store";
-        $viewData["subtitle"] = "Información del Contacto ".$viewData["contacto"]->getApodo();
+        $viewData["contacto"] = $c;
+        $viewData["title"] = $c->getApodo()." - Online Store";
+        $viewData["subtitle"] = "Información del Contacto ".$c->getApodo();
         return view('contacto.show')->with("viewData", $viewData);
     }
 /*
@@ -78,11 +79,15 @@ class ContactoController extends Controller
         return response()->json(['contacto_id'=>$c->getId()]);
     } 
 
-    public function update(Request $request, $telefono){ 
+    public function update(Request $request, $id){ 
         Log::info($request->all());
-        request()->validate(Contacto::$rules);
-
-        return response()->json(['contacto_id'=>5]);
+        $c = Contacto::where('id',$id)->first();
+        $c->validator($request->all());
+        $c->update([
+            'apodo' => $request->apodo,
+            'telefono' => $request->telefono,
+        ]);
+        return response()->json(['contacto_id'=>$c->getId()]);
     } 
 
     /**

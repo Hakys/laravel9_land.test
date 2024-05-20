@@ -5,15 +5,31 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class Contacto extends Model
 {
     use HasFactory;
 
     static $rules=[
-        'apodo' => 'required|unique:contactos',
-        'telefono' => 'required|unique:contactos',
+        'apodo' => 'required|unique:contactos,apodo,id',
+        'telefono' => 'required|unique:contactos,telefono,id',
     ];
+
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    public function validator(array $data)
+    {
+        return Validator::make($data, [
+            'apodo' => ['required', Rule::unique('contactos','apodo')->ignore($data['id'])],
+            'telefono' => ['required', Rule::unique('contactos','telefono')->ignore($data['id'])],
+        ]);
+    }
 
     /**
      * USER ATTRIBUTES
@@ -29,12 +45,14 @@ class Contacto extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['id', 'apodo', 'telefono' ];
+    protected $fillable = ['id', 'apodo', 'telefono'];
 
     public static function getDatalist(){
         return DB::table('contactos as c')
         ->selectRaw('c.id')
-        ->selectRaw('CONCAT(c.apodo," (",c.telefono,")") AS apodo')
+        ->selectRaw('CONCAT(c.apodo," (",c.telefono,")") AS full_apodo')
+        ->selectRaw('c.apodo')
+        ->selectRaw('c.telefono')
         ->get();
     }
 

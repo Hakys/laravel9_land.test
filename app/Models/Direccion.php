@@ -11,11 +11,11 @@ class Direccion extends Model
     use HasFactory;
 
     static $rules = [
+        'contacto_id' => 'required|exists:contactos,id',
         'full_name' => 'required',
         'telefono' => 'required',                
         'ladireccion' => 'required',                
         'poblacion' => 'required',                
-        'contacto_id' => 'required|exists:contactos,id'
     ]; 
 
     /**
