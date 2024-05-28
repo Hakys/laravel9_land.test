@@ -1,28 +1,35 @@
 <div>
+    <script>
+        //alert("hola");
+        //console.log("hola");
+        //debugger;
+    </script>
     <div id='agenda'></div>
     <div class="modal fade" id="evento" tabindex="-1" 
         data-bs-backdrop="true" data-bs-keyboard="false"
-        role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+        role="dialog" aria-labelledby="modalTitleId" aria-hidden="true"> 
         <div role="document" class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md modal-fullscreen-sm-down">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalTitleId"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">  
+                <div class="modal-nav">
                     <nav>
                         <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                             <button class="nav-link active" id="nav-evento-tab" 
                                 data-bs-toggle="tab" data-bs-target="#nav-evento" type="button" role="tab" 
-                                aria-controls="nav-evento" aria-selected="true">Evento</button>
+                                aria-controls="nav-evento" aria-selected="true">EVENTO</button>
                             <button class="nav-link" id="nav-cliente-tab" 
                                 data-bs-toggle="tab" data-bs-target="#nav-cliente" type="button" role="tab" 
-                                aria-controls="nav-cliente" aria-selected="false">Cliente</button>
+                                aria-controls="nav-cliente" aria-selected="false">CLIENTE</button>
                             <button class="nav-link" id="nav-reunion-tab" 
                                 data-bs-toggle="tab" data-bs-target="#nav-reunion" type="button" role="tab" 
-                                aria-controls="nav-reunion" aria-selected="false">Reunión</button>
+                                aria-controls="nav-reunion" aria-selected="false">REUNIÓN</button> 
                         </div>
                     </nav>
+                </div>
+                <div class="modal-body">                       
                     <div class="tab-content border border-1 bs-border-color rounded-2 p-2 border-top-0 rounded-top-0" id="nav-tabContent">
                         {{-- EVENTO --}} 
                         <div class="tab-pane fade show active" id="nav-evento" role="tabpanel" aria-labelledby="nav-evento-tab">
@@ -30,9 +37,10 @@
                                 @csrf  
                                 <div class="flex">
                                     <input type="text" name="id" id="id" hidden/>
-                                    <input type="datetime" name="start" id="start" hidden/>
-                                    <input type="datetime" name="end" id="end" hidden/>
-                                    <input type="text" name="contacto_id" id="contacto_id" hidden/> 
+                                    <input type="datetime" name="start" id="start" hidden/>  
+                                    <input type="datetime" name="end" id="end" hidden/> 
+                                    <input type="text" name="contacto_id" id="contacto_id"/>  
+                                    <input type="text" name="direccion_id" id="direccion_id"/>  
                                 </div>
                                 <div class="flex">
                                     <div class="form-floating mb-3">
@@ -62,15 +70,15 @@
                                         <input type="time" id="duration" name="duration" 
                                             class="form-control form-control-lg fs-6"
                                             aria-describedby="helpDuration">
-                                        <small id="helpDuration" class="text-danger"></small>
+                                        <small id="helpDuration" class="text-danger"></small> 
                                     </div>
                                 </div>
                                 <div class="input-group">                                       
-                                    <button class="btn btn-success" type="button" id="btn_contacto_id_full">
+                                    <button class="btn btn-success" type="button" id="btn_contacto_id_full">  
                                         <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
                                     </button>                                                                  
                                     <input list="clientes" name="contacto_id_full" class="form-control"
-                                        id="contacto_id_full" onchange="loadDireccions(this)"
+                                        id="contacto_id_full"
                                         aria-label="Clientes" aria-describedby="helpContacto_id_full"
                                         placeholder="Seleccione un Cliente">  
                                     <datalist id="clientes"></datalist>      
@@ -85,14 +93,14 @@
                                     <small id="helpContacto_id_full" class="text-danger"></small> 
                                 </div>
                                 <div class="input-group">  
-                                    <button class="btn btn-success" type="button" id="btn_direccion_id">
+                                    <button class="btn btn-success" type="button" id="btn_direccion_id_full">
                                         <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
                                     </button>                                     
-                                    <select name="direccion_id" id="direccion_id" placeholder="Añada o Seleccione una Dirección." 
-                                        class="form-select" aria-describedby="helpDireccion_id"></select>
+                                    <select name="direccion_id_full" id="direccion_id_full" placeholder="Seleccione una Dirección." 
+                                        class="form-select" aria-describedby="helpDireccion_id_full"></select>
                                 </div>
                                 <div class="mb-3">
-                                    <small id="helpDireccion_id" class="text-danger mb-3"></small>
+                                    <small id="helpDireccion_id_full" class="text-danger mb-3"></small>
                                 </div>
                             </form>
                         </div>
@@ -112,17 +120,19 @@
                                         <div class="form-floating">
                                             <input type="text" id="telefono" name="telefono" placeholder="Teléfono" 
                                                 class="form-control rounded-3" aria-describedby="helpTelefono">
-                                            <label for="new_telefono">Teléfono</label>
+                                            <label for="telefono">Teléfono</label>
                                         </div>  
                                     </div>
                                     <div class="col mi-modal-footer">
+                                        <button class="btn btn-info text-white" type="button" id="btnContactoNuevo">
+                                            <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
+                                        </button> 
                                         <button type="button" class="btn btn-success" id="btnContactoGuardar">Guardar</button>
                                         <button type="button" class="btn btn-secondary" id="btnContactoReset">Reset</button>
                                     </div>
                                     <small id="helpTelefono" class="text-danger"></small>
                                 </div>
-                            </form>             
-                            <hr>                 
+                            </form>                             
                             <form id="formularioDireccion" action="">  
                                 @csrf                                            
                                 <div class="mt-2"><h6>Dirección del Cliente:</h6></div> 
@@ -141,9 +151,9 @@
                                 <div class="row mb-md-2">
                                     <div class="col-md-4 mb-2 mb-md-0"> 
                                         <div class="form-floating">
-                                            <input type="text" id="telefono" name="telefono" placeholder="Telefóno"  
-                                                class="form-control rounded-3" aria-describedby="helpTelefono">
-                                            <label for="telefono">Telefóno</label>
+                                            <input type="text" id="eltelefono" name="eltelefono" placeholder="Telefóno"  
+                                                class="form-control rounded-3" aria-describedby="helpEltelefono">
+                                            <label for="eltelefono">Telefóno</label>
                                         </div>
                                     </div>
                                     <div class="col-6 col-md-4 mb-2 mb-md-0"> 
@@ -162,7 +172,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <small id="helpTelefono" class="text-danger"></small>
+                                    <small id="helpEltelefono" class="text-danger"></small>
                                     <small id="helpCp" class="text-danger"></small>
                                     <small id="helpPais" class="text-danger"></small>
                                 </div>    
@@ -185,24 +195,31 @@
                                 <div class="mb-2">
                                     <small id="helpPoblacion" class="text-danger"></small>
                                     <small id="helpProvincia" class="text-danger"></small>
-                                </div>   
-                                <div class="mi-modal-footer">
-                                    <button type="button" class="btn btn-success" id="btnDireccionGuardar">Guardar</button>
-                                    <button type="button" class="btn btn-secondary" id="btnDireccionReset">Reset</button>
                                 </div> 
-                                <hr>
-                                <div class="input-group">
-                                    <span class="input-group-text">Desplazamiento:</span>                                
-                                    <input type="text" id="viaje" name="viaje" 
-                                        class="form-control form-control-lg fs-6"
-                                        aria-describedby="helpViaje">
-                                    <small id="helpViaje" class="text-danger"></small>
-                                </div>       
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="input-group">
+                                            <span class="input-group-text">Ruta:</span>                                
+                                            <input type="text" id="viaje" name="viaje" 
+                                                class="form-control fs-6" aria-describedby="helpViaje">
+                                        </div>    
+                                    </div>                                
+                                    <div class="col">
+                                        <div class="mi-modal-footer">
+                                            <button class="btn btn-info text-white" type="button" id="btnDireccionNuevo">
+                                                <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-success" id="btnDireccionGuardar">Guardar</button>
+                                            <button type="button" class="btn btn-secondary" id="btnDireccionReset">Reset</button>
+                                        </div>
+                                    </div>
+                                </div>    
+                                <small id="helpViaje" class="text-danger"></small>
                             </form>
                         </div>
                         {{-- REUNION --}}
                         <div class="tab-pane fade" id="nav-reunion" role="tabpanel" aria-labelledby="nav-reunion-tab">
-                            <form id="formReunion" action="">     
+                            <form id="formularioReunion" action="">     
                                 @csrf 
                                 <div class="row">
                                     <div class="col-md-4">
@@ -248,26 +265,28 @@
                                         </div>
                                     </div>    
                                 </div>
-                                <div class="row ${1| ,row-cols-2,row-cols-3, auto,justify-content-md-center,|}">
-                                    <div class="col form-floating">
+                                <div class="row">
+                                    <div class="col-7 form-floating">
                                         <div class="input-group mb-3">
                                             <span class="input-group-text">Estado:</span>  
                                             <select name="estado" id="estado" class="form-select text-uppercase"></select>     
                                         </div>   
                                     </div>
-                                    <div class="mi-modal-footer">
-                                        <button type="button" class="btn btn-success" id="btnReunionGuardar">Guardar</button>
-                                        <button type="button" class="btn btn-secondary" id="btnReunionReset">Reset</button>
-                                    </div> 
-                                    <small id="helpEstado" class="text-danger"></small>  
+                                    <div class="col">
+                                        <div class="mi-modal-footer">
+                                            <button type="button" class="btn btn-success" id="btnReunionGuardar">Guardar</button>
+                                            <button type="button" class="btn btn-secondary" id="btnReunionReset">Reset</button>
+                                        </div> 
+                                    </div>
                                 </div>
+                                <small id="helpEstado" class="text-danger"></small> 
                             </form>
                         </div>
                     </div>      
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="btnGuardar">Guardar</button>
-                    <button type="button" class="btn btn-danger" id="btnEliminar">Eliminar</button>
+                    <button type="button" class="btn btn-success" id="btnGuardarTodo">Guardar Todo</button>
+                    <button type="button" class="btn btn-danger" id="btnEliminarEvento">Eliminar Evento</button>
                     <button type="button" class="btn btn-danger" id="btnPrueba">Prueba</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 </div> 

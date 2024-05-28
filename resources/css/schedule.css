@@ -11,9 +11,7 @@
 .fc-col-header { background-color: lightgrey; }
 .fc-col-header-cell-cushion{ text-transform: capitalize; text-decoration: none; color: black;}
 .fc-daygrid-day-number{ font-size: 1.1rem; margin-right: 4px; text-decoration: none; font-weight: 600; }
-.accordion-collapse {
-    display: grid;
-}
+.accordion-collapse { display: grid; }
 .mi-modal-footer{
     display: flex;
     flex-shrink: 0;
@@ -22,6 +20,8 @@
     justify-content: flex-end;
     gap: 2px;   
 }
-.mi-modal-footer .btn{
-    margin: 2px;
-}
+.mi-modal-footer .btn { margin: 2px; }
+.modal-content .modal-header { padding: 0.5rem; border-bottom: 0; } 
+.modal-content .modal-body { padding: 0.5rem; padding-top: 0; } 
+.modal-content .modal-footer { padding: 0.5rem; }
+.modal-content .modal-nav { margin-left: 0.5rem; margin-right: 0.5rem; }
