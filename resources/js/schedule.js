@@ -1,13 +1,11 @@
-let  formEvento = document.querySelector("#formularioEvento");             
-let  formContacto = document.querySelector("#formularioContacto");  
-let  formDireccion = document.querySelector("#formularioDireccion");  
-let  formReunion = document.querySelector("#formularioReunion");  
-let  collapseOne = document.querySelector("#flush-collapseOne");             
-
 document.addEventListener('DOMContentLoaded', function() {
+    let  formEvento = document.querySelector("#formularioEvento");             
+    let  formContacto = document.querySelector("#formularioContacto");  
+    let  formDireccion = document.querySelector("#formularioDireccion");  
+    let  collapseOne = document.querySelector("#flush-collapseOne");   
     var myModal = new bootstrap.Modal(
         document.getElementById("evento"),{});  
-    loadEstados(formReunion.estado);           
+    loadEstados(formEvento.estado);           
     var calendarEl = document.getElementById('agenda');
     var calendar = new FullCalendar.Calendar(calendarEl, { 
         initialView: 'dayGridMonth',
@@ -81,10 +79,10 @@ document.addEventListener('DOMContentLoaded', function() {
             axios.post("/evento/edit/"+info.event.id)
             .then(response => {
                 //console.log(response.data); 
-                modalTitleId.innerHTML = "Datos del Evento";
+                modalTitleId.innerHTML = "Datos de la Reunión";
 
-                //EVENTO
-                formEvento.id.value = response.data.id;
+                //REUNION
+                formEvento.id.value = response.data.id;                
                 formEvento.contacto_id.value = response.data.contacto_id;
                 formEvento.direccion_id.value = response.data.direccion_id;
                 formEvento.title.value = response.data.title;
@@ -92,7 +90,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 formEvento.end.value = response.data.end;
                 formEvento.fecha.value = response.data.fecha;
                 formEvento.hora.value = response.data.hora;
-                formEvento.duration.value = response.data.duration;
+                formEvento.duration.value = response.data.duration;                
+                formEvento.t_entradas.value = response.data.t_entradas;
+                formEvento.p_entrada.value = response.data.p_entrada;
+                formEvento.n_personas.value = response.data.n_personas;
+                formEvento.estado.value = response.data.estado;
+                formEvento.chicas.checked = response.data.chicas;
+                formEvento.prepago.checked = response.data.prepago;
                 
                 //CONTACTO_ID                
                 formEvento.contacto_id_full.value = null;
@@ -123,10 +127,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         +" "+list[i].provincia;
                     datalist.appendChild(option);     
                 }
-                formEvento.direccion_id.value = response.data.direccion_id;
                 formEvento.direccion_id_full.value = response.data.direccion_id;
                 
-                //CLIENTE
+                //DIRECCION
                 formDireccion.full_name.value = response.data.full_name;
                 formDireccion.ladireccion.value = response.data.ladireccion;
                 formDireccion.eltelefono.value = response.data.telefono;
@@ -136,14 +139,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 formDireccion.pais.value = response.data.pais; 
                 formDireccion.viaje.value = response.data.viaje;       
                 
-                //REUNION
-                formReunion.t_entradas.value = response.data.t_entradas;
-                formReunion.p_entrada.value = response.data.p_entrada;
-                formReunion.n_personas.value = response.data.n_personas;
-                formReunion.estado.value = response.data.estado;
-                formReunion.chicas.checked = response.data.chicas;
-                formReunion.prepago.checked = response.data.prepago;
-               
                 myModal.show();
             })
             .catch(error => {console.log(error);});
@@ -175,16 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
         reset_ladireccion();
     });
 
-    document.getElementById("btnContactoGuardar").addEventListener("click",function(){
-        if(formEvento.contacto_id.value)
-            sendDataContacto("/contactos/update/"+formEvento.contacto_id.value);
-        else{
-            sendDataContacto("/contactos/store");
-            reset_direccion();
-            reset_ladireccion();
-        }
-        //$('#nav-evento-tab').trigger( "click" );
-    });
+    document.getElementById("btnContactoGuardar").addEventListener("click",storeContacto);
 
     document.getElementById("btnDireccionNuevo").addEventListener("click",function(){
         formEvento.direccion_id.value = null;
@@ -192,20 +178,17 @@ document.addEventListener('DOMContentLoaded', function() {
         reset_ladireccion();
     });
 
-    document.getElementById("btnDireccionGuardar").addEventListener("click",function(){
-        if(formEvento.direccion_id.value)
-            sendDataDireccion("/direccions/update/"+formEvento.direccion_id.value);
-        else
-            sendDataDireccion("/direccions/store");
-        //$('#nav-evento-tab').trigger( "click" );
-    });
+    document.getElementById("btnDireccionGuardar").addEventListener("click",storeDireccion);
 
     document.getElementById("btnGuardarTodo").addEventListener("click",function(){
-        if(formEvento.id.value)
-            sendData("/evento/update/"+formEvento.id.value);
-        else
-            sendData("/evento/store");
+        storeContacto();
+        storeDireccion();
+        storeEvento();
     });
+
+    document.getElementById("p_entrada").addEventListener("change",calculator);
+    document.getElementById("n_personas").addEventListener("change",calculator);
+    document.getElementById("t_entradas").addEventListener("change",calculator_inv);
 
 /*
     document.getElementById("btnEliminar").addEventListener("click",function(){
@@ -216,311 +199,354 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 */
 
-});
-
-function sendDataContacto(url){
-    reset_errors_contacto();
-    const datos = new FormData(formContacto);
-    datos.append('id',formEvento.contacto_id.value);
-    //console.log(datos);
-    axios.post(url,datos)
-        .then(response => {
-            //console.log(response);
-            reset_contacto();
-            loadContacts();
-            formEvento.contacto_id.value = response.data.contacto_id;
-        })
-        .catch(error => { 
-            console.log(error);
-            //console.log(error.response.data);
-            console.log(error.response.data.errors);
-            if(!(typeof error.response.data.errors === 'undefined')){
-                if(!(typeof error.response.data.errors.apodo === 'undefined')){
-                    formContacto.apodo.classList.add("is-invalid");
-                    $('#helpApodo').text(error.response.data.errors.apodo);
-                } 
-                if(!(typeof error.response.data.errors.telefono === 'undefined')){
-                    formContacto.telefono.classList.add("is-invalid");
-                    $('#helpTelefono').text(error.response.data.errors.telefono); 
-                } 
-            }
-        });
-}
-
-function sendDataDireccion(url){
-    //reset_errors_contacto();
-    const datos = new FormData(formDireccion);
-    datos.append('id',formEvento.direccion_id.value);
-    datos.append('contacto_id',formEvento.contacto_id.value);
-    datos.append('telefono',formDireccion.eltelefono.value);
-    datos.append('direccion',formDireccion.ladireccion.value);
-    //console.log(datos);
-    axios.post(url,datos)
-        .then(response => {
-            //console.log(response);
+    function storeContacto(){
+        if(formEvento.contacto_id.value)
+            sendDataContacto("/contactos/update/"+formEvento.contacto_id.value);
+        else{
+            sendDataContacto("/contactos/store");
             reset_direccion();
-            formEvento.direccion_id.value = response.data.direccion_id;
-            loadDireccions();
             reset_ladireccion();
-            loadLadireccion();
-        })
-        .catch(error => { 
-            console.log(error);
-            //console.log(error.response.data);
-            //console.log(error.response.data.errors);
-            /*
-            if(!(typeof error.response.data.errors === 'undefined')){
-                if(!(typeof error.response.data.errors.apodo === 'undefined')){
-                    formContacto.apodo.classList.add("is-invalid");
-                    $('#helpApodo').text(error.response.data.errors.apodo);
-                } 
-                if(!(typeof error.response.data.errors.telefono === 'undefined')){
-                    formContacto.telefono.classList.add("is-invalid");
-                    $('#helpTelefono').text(error.response.data.errors.telefono); 
-                } 
-            }
-            */
-        });
-}
-
-function sendData(url){
-    reset_errors();
-    const datos = new FormData(formEvento);
-    //console.log(datos);
-    axios.post(url,datos)
-        .then(response => {
-            console.log(response);
-            myModal.hide();
-            calendar.refetchEvents();
-        })
-        .catch(error => { 
-            //console.log(error);
-            //console.log(error.response.data);
-            //console.log(error.response.data.errors);
-            /*
-            if(!(typeof error.response.data.errors === 'undefined')){
-                if(!(typeof error.response.data.errors.title === 'undefined')){ 
-                    formulario.title.classList.add("is-invalid");
-                    $('#helpTitle').text(error.response.data.errors.title);
-                }
-                if(!(typeof error.response.data.errors.fecha === 'undefined')){
-                    formulario.fecha.classList.add("is-invalid");
-                    $('#helpFecha').text(error.response.data.errors.fecha);
-                }
-                if(!(typeof error.response.data.errors.hora === 'undefined')){
-                    formulario.hora.classList.add("is-invalid");
-                    $('#helpHora').text(error.response.data.errors.hora);
-                }                                
-                if(!(typeof error.response.data.errors.duration === 'undefined')){
-                    formulario.duration.classList.add("is-invalid"); 
-                    $('#helpDuration').text(error.response.data.errors.duration);
-                }
-                if(!(typeof error.response.data.errors.estado === 'undefined')) 
-                    formulario.estado.classList.add("is-invalid");
-                if(!(typeof error.response.data.errors.contacto_id === 'undefined')){
-                    formulario.contacto_id_full.classList.add("is-invalid");
-                    $('#helpContacto_id_full').text(error.response.data.errors.contacto_id);
-                } 
-                if(!(typeof error.response.data.errors.direccion_id === 'undefined')){
-                    formulario.direccion_id.classList.add("is-invalid");
-                    $('#helpDireccion_id').text(error.response.data.errors.direccion_id);
-                } 
-                if(!(typeof error.response.data.errors.full_name === 'undefined')){
-                    formulario.direccion_id.classList.add("is-invalid");
-                    formulario.full_name.classList.add("is-invalid");
-                    $('#helpDireccion_id').text("Seleccione o Rellene los datos.");
-                    $('#helpFull_name').text(error.response.data.errors.full_name);
-                    $('#flush-collapseTwo').collapse('show');
-                } 
-                    
-            }
-            */
-            console.log(error.response.data);
-        });
-}
-
-
-function loadEstados(datalist){
-    axios.post("/reunion/estados")
-        .then(response => {
-            //console.log(response.data);                        
-            var estados = response.data.estados;
-            datalist.innerHTML="";
-            for(var i=0;i<estados.length;i++){
-                var option = document.createElement('option');
-                option.text = estados[i];
-                option.value = estados[i];
-                datalist.appendChild(option);
-            }
-        })
-    .catch(error=> {console.log(error); });
-}
-
-function loadContacts(){
-    formEvento.contacto_id_full.value = null;
-    var datalist = formEvento.contacto_id_full.list;
-    datalist.innerHTML="";
-    axios.post("/contactos/datalist")
-        .then(response => { 
-            //console.log(response.data);  
-            var clientes = response.data.clientes;
-            for(var i=0;i<clientes.length;i++){
-                var option = document.createElement('option'); 
-                option.id = clientes[i].id;
-                option.value = clientes[i].full_apodo;
-                if(formEvento.contacto_id.value==clientes[i].id){
-                    formEvento.contacto_id_full.value = clientes[i].full_apodo;   
-                    formContacto.apodo.value = clientes[i].apodo;
-                    formContacto.telefono.value = clientes[i].telefono;  
-                }
-                datalist.appendChild(option);    
-            }
-        })
-        .catch(error=> {console.log(error); });
-} 
-
-function loadDireccions(){
-    reset_direccion();
-    //console.log("loadDirrecion "+formEvento.contacto_id_full.list);
-    axios.post("/contactos/"+formEvento.contacto_id_full.value+"/direccions")
-        .then(response => { 
-            formEvento.contacto_id.value = response.data.id; 
-            formContacto.telefono.value = response.data.telefono;
-            formContacto.apodo.value = response.data.apodo;                    
-            var list = response.data.direccions;
-            for(var i=0;i<list.length;i++){
-                var option = document.createElement('option');
-                option.value = list[i].id;
-                option.text = list[i].direccion
-                    +" "+list[i].poblacion
-                    +" "+list[i].provincia;
-                formEvento.direccion_id_full.appendChild(option);      
-            }
-            formEvento.direccion_id_full.value = formEvento.direccion_id.value;
-        })
-        .catch(error=> { console.log(error); });
-    
-}
-
-function loadLadireccion(){
-    //console.log(formEvento.direccion_id.value);  
-    //reset_ladireccion();
-    if(formEvento.direccion_id.value){
-        axios.get("/direcciones/"+formEvento.direccion_id.value)
-            .then(response => {
-                //console.log(response.data); 
-                formDireccion.full_name.value = response.data.full_name;
-                formDireccion.ladireccion.value = response.data.ladireccion;
-                formDireccion.eltelefono.value = response.data.telefono;
-                formDireccion.cp.value = response.data.cp;
-                formDireccion.poblacion.value = response.data.poblacion;
-                formDireccion.provincia.value = response.data.provincia;
-                formDireccion.pais.value = response.data.pais;
-                formDireccion.viaje.value = response.data.viaje;
-                $('#nav-cliente-tab').trigger( "click" );
-            })
-            .catch(error => { console.log(error); });
+        }
     }
-}
 
-function reset_contacto(){
-    formEvento.contacto_id.value = "";
-    formEvento.contacto_id_full.value = null;
-    formContacto.apodo.value = "";
-    formContacto.telefono.value = "";
-}
+    function storeDireccion(){
+        if(formEvento.direccion_id.value)
+            sendDataDireccion("/direccions/update/"+formEvento.direccion_id.value);
+        else
+            sendDataDireccion("/direccions/store");
+    }
 
-function reset_direccion(){
-    //formEvento.direccion_id.value = null;
-    formEvento.direccion_id_full.value = null;
-    formEvento.direccion_id_full.innerHTML="";
-    var option = document.createElement('option');
-    option.value = "";
-    option.text = "Seleccione una dirección";
-    formEvento.direccion_id_full.appendChild(option);
-}
+    function storeEvento(){
+        if(formEvento.id.value)
+            sendDataEvento("/evento/update/"+formEvento.id.value);
+        else
+            sendDataEvento("/evento/store");
+    }
 
-function reset_ladireccion(){
-    formDireccion.full_name.value = "";
-    formDireccion.ladireccion.value = "";
-    formDireccion.eltelefono.value = "";
-    formDireccion.cp.value = "";
-    formDireccion.poblacion.value = "";
-    formDireccion.provincia.value = "";
-    formDireccion.pais.value = "";
-    formDireccion.viaje.value = "";
-}
+    function sendDataContacto(url){
+        reset_errors_contacto();
+        const datos = new FormData(formContacto);
+        datos.append('id',formEvento.contacto_id.value);
+        //console.log(datos);
+        axios.post(url,datos)
+            .then(response => {
+                //console.log(response);
+                reset_contacto();
+                loadContacts();
+                formEvento.contacto_id.value = response.data.contacto_id;
+            })
+            .catch(error => { 
+                console.log(error);
+                //console.log(error.response.data);
+                console.log(error.response.data.errors);
+                if(!(typeof error.response.data.errors === 'undefined')){
+                    if(!(typeof error.response.data.errors.apodo === 'undefined')){
+                        formContacto.apodo.classList.add("is-invalid");
+                        $('#helpApodo').text(error.response.data.errors.apodo);
+                    } 
+                    if(!(typeof error.response.data.errors.telefono === 'undefined')){
+                        formContacto.telefono.classList.add("is-invalid");
+                        $('#helpTelefono').text(error.response.data.errors.telefono); 
+                    } 
+                }
+            });
+    }
 
-function reset_errors_evento(){
-    formEvento.title.classList.remove("is-invalid");
-    $('#helpTitle').text("");
-    formEvento.fecha.classList.remove("is-invalid");
-    $('#helpFecha').text("");
-    formEvento.hora.classList.remove("is-invalid");
-    $('#helpHora').text("");
-    formEvento.duration.classList.remove("is-invalid");
-    $('#helpDuration').text("");
-}
+    function sendDataDireccion(url){
+        //reset_errors_contacto();
+        const datos = new FormData(formDireccion);
+        datos.append('id',formEvento.direccion_id.value);
+        datos.append('contacto_id',formEvento.contacto_id.value);
+        datos.append('telefono',formDireccion.eltelefono.value);
+        datos.append('direccion',formDireccion.ladireccion.value);
+        //console.log(datos);
+        axios.post(url,datos)
+            .then(response => {
+                //console.log(response);
+                reset_direccion();
+                formEvento.direccion_id.value = response.data.direccion_id;
+                loadDireccions();
+                reset_ladireccion();
+                loadLadireccion();
+            })
+            .catch(error => { 
+                console.log(error); 
+                //console.log(error.response.data);
+                //console.log(error.response.data.errors);
+                /*
+                if(!(typeof error.response.data.errors === 'undefined')){
+                    if(!(typeof error.response.data.errors.apodo === 'undefined')){
+                        formContacto.apodo.classList.add("is-invalid");
+                        $('#helpApodo').text(error.response.data.errors.apodo);
+                    } 
+                    if(!(typeof error.response.data.errors.telefono === 'undefined')){
+                        formContacto.telefono.classList.add("is-invalid");
+                        $('#helpTelefono').text(error.response.data.errors.telefono); 
+                    } 
+                }
+                */
+            });
+    }
 
-function reset_errors_contacto(){
-    formContacto.telefono.classList.remove("is-invalid");
-    $('#helpTelefono').text("");
-    formContacto.apodo.classList.remove("is-invalid");
-    $('#helpApodo').text("");
-}
+    function sendDataEvento(url){
+        //reset_errors();
+        const datos = new FormData(formEvento); 
+        //console.log(datos);
+        axios.post(url,datos)
+            .then(response => {
+                console.log(response);
+                myModal.hide();
+                calendar.refetchEvents();
+            })
+            .catch(error => { 
+                console.log(error);
+                //console.log(error.response.data);
+                //console.log(error.response.data.errors);
+                
+                if(!(typeof error.response.data.errors === 'undefined')){
+                    if(!(typeof error.response.data.errors.title === 'undefined')){ 
+                        formulario.title.classList.add("is-invalid");
+                        $('#helpTitle').text(error.response.data.errors.title);
+                    }
+                    if(!(typeof error.response.data.errors.fecha === 'undefined')){
+                        formulario.fecha.classList.add("is-invalid");
+                        $('#helpFecha').text(error.response.data.errors.fecha);
+                    }
+                    if(!(typeof error.response.data.errors.hora === 'undefined')){
+                        formulario.hora.classList.add("is-invalid");
+                        $('#helpHora').text(error.response.data.errors.hora);
+                    }                                
+                    if(!(typeof error.response.data.errors.duration === 'undefined')){
+                        formulario.duration.classList.add("is-invalid"); 
+                        $('#helpDuration').text(error.response.data.errors.duration);
+                    }
+                    if(!(typeof error.response.data.errors.p_entrada === 'undefined')){
+                        formEvento.p_entrada.classList.add("is-invalid"); 
+                        $('#helpP_entrada').text(error.response.data.errors.p_entrada);
+                    }
+                    if(!(typeof error.response.data.errors.n_personas === 'undefined')){
+                        formEvento.n_personas.classList.add("is-invalid"); 
+                        $('#helpN_personas').text(error.response.data.errors.n_personas);
+                    }
+                    if(!(typeof error.response.data.errors.t_entradas === 'undefined')){
+                        formEvento.t_entradas.classList.add("is-invalid"); 
+                        $('#helpT_entradas').text(error.response.data.errors.t_entradas);
+                    }
+                    /*
+                    if(!(typeof error.response.data.errors.estado === 'undefined')) 
+                        formulario.estado.classList.add("is-invalid");
+                    if(!(typeof error.response.data.errors.contacto_id === 'undefined')){
+                        formulario.contacto_id_full.classList.add("is-invalid");
+                        $('#helpContacto_id_full').text(error.response.data.errors.contacto_id);
+                    } 
+                    if(!(typeof error.response.data.errors.direccion_id === 'undefined')){
+                        formulario.direccion_id.classList.add("is-invalid");
+                        $('#helpDireccion_id').text(error.response.data.errors.direccion_id);
+                    } 
+                    if(!(typeof error.response.data.errors.full_name === 'undefined')){
+                        formulario.direccion_id.classList.add("is-invalid");
+                        formulario.full_name.classList.add("is-invalid");
+                        $('#helpDireccion_id').text("Seleccione o Rellene los datos.");
+                        $('#helpFull_name').text(error.response.data.errors.full_name);
+                        $('#flush-collapseTwo').collapse('show');
+                    } 
+                    */  
+                }
+                
+            });
+    }
 
-/*
-    formReunion.estado.classList.remove("is-invalid");
-    formulario.contacto_id_full.classList.remove("is-invalid");
-    $('#helpContacto_id_full').text("");
-    formulario.direccion_id.classList.remove("is-invalid");
-    formulario.p_entrada.classList.remove("is-invalid");
-    formulario.n_personas.classList.remove("is-invalid");
-    formulario.t_entradas.classList.remove("is-invalid");
-    formulario.chicas.classList.remove("is-invalid");
-    formulario.prepago.classList.remove("is-invalid");   
-}
-*/
-/*
+    function loadEstados(datalist){
+        axios.post("/reunion/estados")
+            .then(response => {
+                //console.log(response.data);                        
+                var estados = response.data.estados;
+                datalist.innerHTML="";
+                for(var i=0;i<estados.length;i++){
+                    var option = document.createElement('option');
+                    option.text = estados[i];
+                    option.value = estados[i];
+                    datalist.appendChild(option);
+                }
+            })
+        .catch(error=> {console.log(error); });
+    }
 
-        document.getElementById("btnContactoReset").addEventListener("click",resetContacto);
+    function loadContacts(){
+        formEvento.contacto_id_full.value = null;
+        var datalist = formEvento.contacto_id_full.list;
+        datalist.innerHTML="";
+        axios.post("/contactos/datalist")
+            .then(response => { 
+                //console.log(response.data);  
+                var clientes = response.data.clientes;
+                for(var i=0;i<clientes.length;i++){
+                    var option = document.createElement('option'); 
+                    option.id = clientes[i].id;
+                    option.value = clientes[i].full_apodo;
+                    if(formEvento.contacto_id.value==clientes[i].id){
+                        formEvento.contacto_id_full.value = clientes[i].full_apodo;   
+                        formContacto.apodo.value = clientes[i].apodo;
+                        formContacto.telefono.value = clientes[i].telefono;  
+                    }
+                    datalist.appendChild(option);    
+                }
+            })
+            .catch(error=> {console.log(error); });
+    } 
 
+    function loadDireccions(){
+        reset_direccion();
+        //console.log("loadDirrecion "+formEvento.contacto_id_full.list);
+        axios.post("/contactos/"+formEvento.contacto_id_full.value+"/direccions")
+            .then(response => { 
+                formEvento.contacto_id.value = response.data.id; 
+                formContacto.telefono.value = response.data.telefono;
+                formContacto.apodo.value = response.data.apodo;                    
+                var list = response.data.direccions;
+                for(var i=0;i<list.length;i++){
+                    var option = document.createElement('option');
+                    option.value = list[i].id;
+                    option.text = list[i].direccion
+                        +" "+list[i].poblacion
+                        +" "+list[i].provincia;
+                    formEvento.direccion_id_full.appendChild(option);      
+                }
+                formEvento.direccion_id_full.value = formEvento.direccion_id.value;
+            })
+            .catch(error=> { console.log(error); });
         
-        
+    }
 
-        
-        function reset_text(){
-            formulario.title.value = "";
-            formulario.contacto_id_full.value = "";
-            formulario.contacto_id.value = "";
-            formulario.direccion_id.value = "";
-            formulario.direccion_id.innerHTML="";
-            reset_direccion();
+    function loadLadireccion(){
+        //console.log(formEvento.direccion_id.value);  
+        //reset_ladireccion();
+        if(formEvento.direccion_id.value){
+            axios.get("/direcciones/"+formEvento.direccion_id.value)
+                .then(response => {
+                    //console.log(response.data); 
+                    formDireccion.full_name.value = response.data.full_name;
+                    formDireccion.ladireccion.value = response.data.ladireccion;
+                    formDireccion.eltelefono.value = response.data.telefono;
+                    formDireccion.cp.value = response.data.cp;
+                    formDireccion.poblacion.value = response.data.poblacion;
+                    formDireccion.provincia.value = response.data.provincia;
+                    formDireccion.pais.value = response.data.pais;
+                    formDireccion.viaje.value = response.data.viaje;
+                    $('#nav-cliente-tab').trigger( "click" );
+                })
+                .catch(error => { console.log(error); });
         }
+    }
 
-        function reset_errors(){
-            formulario.title.classList.remove("is-invalid");
-            $('#helpTitle').text("");
-            formulario.fecha.classList.remove("is-invalid");
-            $('#helpFecha').text("");
-            formulario.hora.classList.remove("is-invalid");
-            $('#helpHora').text("");
-            formulario.duration.classList.remove("is-invalid");
-            $('#helpDuration').text("");
-            formulario.estado.classList.remove("is-invalid");
-            formulario.contacto_id_full.classList.remove("is-invalid");
-            $('#helpContacto_id_full').text("");
-            formulario.direccion_id.classList.remove("is-invalid");
-            formulario.p_entrada.classList.remove("is-invalid");
-            formulario.n_personas.classList.remove("is-invalid");
-            formulario.t_entradas.classList.remove("is-invalid");
-            formulario.chicas.classList.remove("is-invalid");
-            formulario.prepago.classList.remove("is-invalid");   
-        }
+    function reset_contacto(){
+        formEvento.contacto_id.value = "";
+        formEvento.contacto_id_full.value = null;
+        formContacto.apodo.value = "";
+        formContacto.telefono.value = "";
+    }
 
-       
-        
-        
+    function reset_direccion(){
+        //formEvento.direccion_id.value = null;
+        formEvento.direccion_id_full.value = null;
+        formEvento.direccion_id_full.innerHTML="";
+        var option = document.createElement('option');
+        option.value = "";
+        option.text = "Seleccione una dirección";
+        formEvento.direccion_id_full.appendChild(option);
+    }
+
+    function reset_ladireccion(){
+        formDireccion.full_name.value = "";
+        formDireccion.ladireccion.value = "";
+        formDireccion.eltelefono.value = "";
+        formDireccion.cp.value = "";
+        formDireccion.poblacion.value = "";
+        formDireccion.provincia.value = "";
+        formDireccion.pais.value = "";
+        formDireccion.viaje.value = "";
+    }
+
+    function calculator(){
+        formEvento.t_entradas.value = formEvento.n_personas.value * formEvento.p_entrada.value;
+    }
+
+    function calculator_inv(){
+        formEvento.p_entrada.value = formEvento.t_entradas.value / formEvento.n_personas.value;
+        //formEvento.n_personas.value = formEvento.t_entradas.value / formEvento.p_entrada.value;
+    }
+
+    function reset_errors_evento(){
+        formEvento.title.classList.remove("is-invalid");
+        $('#helpTitle').text("");
+        formEvento.fecha.classList.remove("is-invalid");
+        $('#helpFecha').text("");
+        formEvento.hora.classList.remove("is-invalid");
+        $('#helpHora').text("");
+        formEvento.duration.classList.remove("is-invalid");
+        $('#helpDuration').text("");
+    }
+
+    function reset_errors_contacto(){
+        formContacto.telefono.classList.remove("is-invalid");
+        $('#helpTelefono').text("");
+        formContacto.apodo.classList.remove("is-invalid");
+        $('#helpApodo').text("");
+    }
+
+    /*
+        formEvento.estado.classList.remove("is-invalid");
+        formulario.contacto_id_full.classList.remove("is-invalid");
+        $('#helpContacto_id_full').text("");
+        formulario.direccion_id.classList.remove("is-invalid");
+        formulario.p_entrada.classList.remove("is-invalid");
+        formulario.n_personas.classList.remove("is-invalid");
+        formulario.t_entradas.classList.remove("is-invalid");
+        formulario.chicas.classList.remove("is-invalid");
+        formulario.prepago.classList.remove("is-invalid");   
+    }
+    */
+    /*
+
+            document.getElementById("btnContactoReset").addEventListener("click",resetContacto);
+
+            
+            
+
+            
+            function reset_text(){
+                formulario.title.value = "";
+                formulario.contacto_id_full.value = "";
+                formulario.contacto_id.value = "";
+                formulario.direccion_id.value = "";
+                formulario.direccion_id.innerHTML="";
+                reset_direccion();
+            }
+
+            function reset_errors(){
+                formulario.title.classList.remove("is-invalid");
+                $('#helpTitle').text("");
+                formulario.fecha.classList.remove("is-invalid");
+                $('#helpFecha').text("");
+                formulario.hora.classList.remove("is-invalid");
+                $('#helpHora').text("");
+                formulario.duration.classList.remove("is-invalid");
+                $('#helpDuration').text("");
+                formulario.estado.classList.remove("is-invalid");
+                formulario.contacto_id_full.classList.remove("is-invalid");
+                $('#helpContacto_id_full').text("");
+                formulario.direccion_id.classList.remove("is-invalid");
+                formulario.p_entrada.classList.remove("is-invalid");
+                formulario.n_personas.classList.remove("is-invalid");
+                formulario.t_entradas.classList.remove("is-invalid");
+                formulario.chicas.classList.remove("is-invalid");
+                formulario.prepago.classList.remove("is-invalid");   
+            }
 
         
-*/
+            
+            
+
+            
+    */
+});

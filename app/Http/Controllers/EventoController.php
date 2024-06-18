@@ -55,21 +55,6 @@ class EventoController extends Controller
     {   
         Log::info($request->all());
         request()->validate(Evento::$rules);
-        if(!$request->direccion_id){
-            request()->validate(Direccion::$rules);
-            $direccion = new Direccion();
-            $direccion->setFull_name($request->full_name);
-            $direccion->setTelefono($request->telefono);
-            $direccion->setDireccion($request->ladireccion);
-            $direccion->setCp($request->cp);
-            $direccion->setPoblacion($request->poblacion);
-            $direccion->setProvincia($request->provincia);
-            $direccion->setPais($request->pais);
-            $direccion->contacto_id = $request->contacto_id;
-            $direccion->setMatrix();
-            $direccion->save();
-            request()->merge(['direccion_id' => $direccion->getId()]);
-        }
         request()->validate(Reunion::$rules);
         $reunion = new Reunion();
         $reunion->fecha = $request->fecha;
@@ -82,17 +67,14 @@ class EventoController extends Controller
         $reunion->prepago = $request->boolean('prepago');
         $reunion->chicas = $request->boolean('chicas');
         $reunion->save();
-
         $evento = new Evento();
         $evento->title = $request->title;        
         $evento->setStart($request->fecha,$request->hora);
         $evento->setEnd($request->fecha,$request->hora,$request->duration);
         //$evento->eventoable()->save($reunion);        
         $reunion->evento()->save($evento); 
-        $evento->save();
-        $req['id'] = $evento->getId();
-        //$reunion->refresh();
-        return response()->json($req); 
+        $evento->save();  
+        return response()->json(['id'=>$evento->getId()]);
     }
 
     /**
@@ -176,46 +158,24 @@ class EventoController extends Controller
         Log::info($request->all());
         Log::info($evento);
         request()->validate(Evento::$rules);
+        request()->validate(Reunion::$rules);
         $reunion = Reunion::where('id',$evento->eventoable->getId())->first();
         $reunion->setFecha($request->fecha);
         $reunion->setHora($request->hora);
-        $evento->setStart($reunion->fecha,$reunion->hora);
-        $evento->setEnd($reunion->fecha,$reunion->hora,$request->duration);
-        if(!$request->direccion_id) {
-            $d = Direccion::where('id',$request->direccion_id)->first();
-            $d->update([
-                'contacto_id' => $request->contacto_id,
-                'full_name' => $request->full_name,
-                'direccion' => $request->ladireccion,
-                'telefono' => $request->telefono,
-                'cp' => $request->cp,
-                'poblacion' => $request->poblacion,
-                'provincia' => $request->provincia,
-                'pais' => $request->pais,
-            ]);
-        }else{
-            $d = new Direccion();
-            $d->contacto_id = $request->contacto_id;
-            $d->setFull_name($request->full_name);
-            $d->setDireccion($request->ladireccion);
-            $d->setTelefono($request->telefono);
-            $d->setCp($request->cp);
-            $d->setPoblacion($request->poblacion);
-            $d->setProvincia($request->provincia);
-            $d->setPais($request->pais);
-            $d->save();
-        }
-        
-        Log::info($d->id);
         $reunion->n_personas = $request->n_personas;
         $reunion->p_entrada = $request->p_entrada;
         $reunion->t_entradas = $request->t_entradas;
         $reunion->estado = $request->estado;
         $reunion->prepago = $request->boolean('prepago');
         $reunion->chicas = $request->boolean('chicas');
-        $reunion->update(['direccion_id' => $d->id]);
+        $reunion->direccion_id = $request->direccion_id;
+        $reunion->update();
+        $evento->setTitle($request->title);
+        $evento->setStart($reunion->fecha,$reunion->hora);
+        $evento->setEnd($reunion->fecha,$reunion->hora,$request->duration);
         $evento->update();
-        return response()->json($evento);
+        //return response()->json($evento);
+        return response()->json(['id'=>$evento->getId()]);
     }
 
     /**

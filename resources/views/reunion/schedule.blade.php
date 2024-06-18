@@ -1,14 +1,9 @@
 <div>
-    <script>
-        //alert("hola");
-        //console.log("hola");
-        //debugger;
-    </script>
     <div id='agenda'></div>
     <div class="modal fade" id="evento" tabindex="-1" 
         data-bs-backdrop="true" data-bs-keyboard="false"
         role="dialog" aria-labelledby="modalTitleId" aria-hidden="true"> 
-        <div role="document" class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md modal-fullscreen-sm-down">
+        <div role="document" class="modal-dialog modal-dialog-centered modal-md modal-fullscreen-sm-down">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalTitleId"></h5>
@@ -17,30 +12,27 @@
                 <div class="modal-nav">
                     <nav>
                         <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                            <button class="nav-link active" id="nav-evento-tab" 
-                                data-bs-toggle="tab" data-bs-target="#nav-evento" type="button" role="tab" 
-                                aria-controls="nav-evento" aria-selected="true">EVENTO</button>
+                            <button class="nav-link active" id="nav-reunion-tab" 
+                                data-bs-toggle="tab" data-bs-target="#nav-reunion" type="button" role="tab" 
+                                aria-controls="nav-reunion" aria-selected="true">REUNIÓN</button>
                             <button class="nav-link" id="nav-cliente-tab" 
                                 data-bs-toggle="tab" data-bs-target="#nav-cliente" type="button" role="tab" 
-                                aria-controls="nav-cliente" aria-selected="false">CLIENTE</button>
-                            <button class="nav-link" id="nav-reunion-tab" 
-                                data-bs-toggle="tab" data-bs-target="#nav-reunion" type="button" role="tab" 
-                                aria-controls="nav-reunion" aria-selected="false">REUNIÓN</button> 
+                                aria-controls="nav-cliente" aria-selected="false">ANFITRIÓN</button>
                         </div>
                     </nav>
                 </div>
                 <div class="modal-body">                       
                     <div class="tab-content border border-1 bs-border-color rounded-2 p-2 border-top-0 rounded-top-0" id="nav-tabContent">
                         {{-- EVENTO --}} 
-                        <div class="tab-pane fade show active" id="nav-evento" role="tabpanel" aria-labelledby="nav-evento-tab">
+                        <div class="tab-pane fade show active" id="nav-reunion" role="tabpanel" aria-labelledby="nav-reunion-tab">
                             <form action ="" id="formularioEvento">
                                 @csrf  
                                 <div class="flex">
                                     <input type="text" name="id" id="id" hidden/>
                                     <input type="datetime" name="start" id="start" hidden/>  
                                     <input type="datetime" name="end" id="end" hidden/> 
-                                    <input type="text" name="contacto_id" id="contacto_id"/>  
-                                    <input type="text" name="direccion_id" id="direccion_id"/>  
+                                    <input type="text" name="contacto_id" id="contacto_id" hidden/>  
+                                    <input type="text" name="direccion_id" id="direccion_id" hidden/>  
                                 </div>
                                 <div class="flex">
                                     <div class="form-floating mb-3">
@@ -65,42 +57,98 @@
                                         <small id="helpFecha" class="text-danger"></small>
                                         <small id="helpHora" class="text-danger"></small>
                                     </div>                                    
-                                    <div class="input-group mb-3">
-                                        <span class="input-group-text">Duración:</span>                                
-                                        <input type="time" id="duration" name="duration" 
-                                            class="form-control form-control-lg fs-6"
-                                            aria-describedby="helpDuration">
-                                        <small id="helpDuration" class="text-danger"></small> 
-                                    </div>
-                                </div>
-                                <div class="input-group">                                       
-                                    <button class="btn btn-success" type="button" id="btn_contacto_id_full">  
-                                        <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
-                                    </button>                                                                  
-                                    <input list="clientes" name="contacto_id_full" class="form-control"
-                                        id="contacto_id_full"
-                                        aria-label="Clientes" aria-describedby="helpContacto_id_full"
-                                        placeholder="Seleccione un Cliente">  
-                                    <datalist id="clientes"></datalist>      
-                                    <div class="input-group-append">
-                                        <button id="btnClear_contacto_id_full" type="button"
-                                            class="btn btn-outline-danger">
-                                            <i class="fa fa-times fa-lg" aria-hidden="true"></i>
-                                        </button>
+                                    <div class="row justify-content-end">
+                                        <div class="col-auto">
+                                            <div class="input-group">
+                                                <span class="input-group-text">Duración:</span>                                
+                                                <input type="time" id="duration" name="duration" 
+                                                    class="form-control form-control-lg fs-6"
+                                                    aria-describedby="helpDuration">
+                                                 
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                    <small id="helpDuration" class="text-danger"></small>                                    
+                                    <div class="ps-1 mt-2"><h6>Anfitrión/a:</h6></div> 
+                                    <div class="input-group">                                       
+                                        <button class="btn btn-success" type="button" id="btn_contacto_id_full">  
+                                            <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+                                        </button>                                                                  
+                                        <input list="clientes" name="contacto_id_full" class="form-control"
+                                            id="contacto_id_full"
+                                            aria-label="Clientes" aria-describedby="helpContacto_id_full"
+                                            placeholder="Seleccione un Cliente">  
+                                        <datalist id="clientes"></datalist>      
+                                        <div class="input-group-append">
+                                            <button id="btnClear_contacto_id_full" type="button"
+                                                class="btn btn-outline-danger">
+                                                <i class="fa fa-times fa-lg" aria-hidden="true"></i>
+                                            </button>
+                                        </div> 
                                     </div> 
-                                </div> 
-                                <div class="mb-3">                                   
+                                                                     
                                     <small id="helpContacto_id_full" class="text-danger"></small> 
-                                </div>
-                                <div class="input-group">  
-                                    <button class="btn btn-success" type="button" id="btn_direccion_id_full">
-                                        <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
-                                    </button>                                     
-                                    <select name="direccion_id_full" id="direccion_id_full" placeholder="Seleccione una Dirección." 
-                                        class="form-select" aria-describedby="helpDireccion_id_full"></select>
-                                </div>
-                                <div class="mb-3">
-                                    <small id="helpDireccion_id_full" class="text-danger mb-3"></small>
+                                    
+                                    <div class="ps-1 mt-2"><h6>Dirección:</h6></div> 
+                                    <div class="input-group">  
+                                        <button class="btn btn-success" type="button" id="btn_direccion_id_full">
+                                            <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+                                        </button>                                     
+                                        <select name="direccion_id_full" id="direccion_id_full" placeholder="Seleccione una Dirección." 
+                                            class="form-select" aria-describedby="helpDireccion_id_full"></select>
+                                    </div>                                
+                                    <div class="mb-3">
+                                        <small id="helpDireccion_id_full" class="text-danger mb-3"></small>
+                                    </div>                            
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-floating my-2"> 
+                                                <input type="text" class="form-control" placeholder=""
+                                                    name="p_entrada" id="p_entrada" aria-describedby="helpP_entrada"/>
+                                                <label for="p_entrada">Precio Entrada</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4"> 
+                                            <div class="form-floating my-2">
+                                                <input type="text" class="form-control" placeholder="" min="0" step="1" 
+                                                    name="n_personas" id="n_personas" aria-describedby="helpN_personas"/>
+                                                <label for="n_personas">Nº Personas</label>                                            
+                                            </div> 
+                                        </div> 
+                                        <div class="col-md-4">
+                                            <div class="form-floating my-2"> 
+                                                <input type="text" class="form-control" placeholder=""
+                                                    name="t_entradas" id="t_entradas" aria-describedby="helpT_entradas"/>
+                                                <label for="t_entradas">Total Entradas</label>       
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    <div>
+                                        <small id="helpP_entrada" class="text-danger"></small>
+                                        <small id="helpN_personas" class="text-danger"></small>
+                                        <small id="helpT_entradas" class="text-danger"></small>
+                                    </div>                                  
+                                    <div class="row align-items-center">
+                                        <div class="col-md form-floating">
+                                            <div class="input-group">
+                                                <span class="input-group-text">Estado:</span>  
+                                                <select name="estado" id="estado" class="form-select text-uppercase"></select>     
+                                            </div>   
+                                        </div>
+                                        <div class="col-auto form-floating">
+                                            <div class="row form-check form-switch fs-5 m-3">
+                                                <input type="checkbox" name="chicas" id="chicas" 
+                                                    class="form-check-input rounded-3"/>
+                                                <label class="form-check-label" for="chicas">Sólo Chicas</label>
+                                            </div>
+                                            <div class="row form-check form-switch fs-5 m-3">
+                                                <input type="checkbox" name="prepago" id="prepago" 
+                                                    class="form-check-input rounded-3"/>
+                                                <label class="form-check-label" for="prepago">Prepago</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <small id="helpEstado" class="text-danger"></small> 
                                 </div>
                             </form>
                         </div>
@@ -167,7 +215,7 @@
                                         <div class="form-floating">
                                             <input type="text" id="pais" name="pais" placeholder="País"
                                                 class="form-control rounded-3" aria-describedby="helpPais">
-                                            <label for="pais">País</label>
+                                            <label for="pais">País</label> 
                                         </div>                
                                     </div>
                                 </div>
@@ -215,71 +263,6 @@
                                     </div>
                                 </div>    
                                 <small id="helpViaje" class="text-danger"></small>
-                            </form>
-                        </div>
-                        {{-- REUNION --}}
-                        <div class="tab-pane fade" id="nav-reunion" role="tabpanel" aria-labelledby="nav-reunion-tab">
-                            <form id="formularioReunion" action="">     
-                                @csrf 
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-floating mb-3"> 
-                                            <input type="text" class="form-control" placeholder=""
-                                                name="p_entrada" id="p_entrada" aria-describedby="helpP_entrada"/>
-                                            <label for="p_entrada">Precio Entrada</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4"> 
-                                        <div class="form-floating mb-3">
-                                            <input type="text" class="form-control" placeholder="" min="0" step="1" 
-                                                name="n_personas" id="n_personas" aria-describedby="helpN_personas"/>
-                                            <label for="n_personas">Nº Personas</label>                                            
-                                        </div> 
-                                    </div> 
-                                    <div class="col-md-4">
-                                        <div class="form-floating mb-3"> 
-                                            <input type="text" class="form-control" placeholder=""
-                                                name="t_entradas" id="t_entradas" aria-describedby="helpT_entradas"/>
-                                            <label for="t_entradas">Total Entradas</label>       
-                                        </div>
-                                    </div>
-                                </div> 
-                                <div>
-                                    <small id="helpP_entrada" class="text-danger"></small>
-                                    <small id="helpN_personas" class="text-danger"></small>
-                                    <small id="helpT_entradas" class="text-danger"></small>
-                                </div>                                      
-                                <div class="row ${1| ,row-cols-2,row-cols-3, auto,justify-content-md-center,|}">
-                                    <div class="col form-floating">
-                                        <div class="form-check form-switch m-1 fs-5 mb-3">
-                                            <input type="checkbox" name="chicas" id="chicas" 
-                                                class="form-check-input rounded-3"/>
-                                            <label class="form-check-label" for="chicas">Sólo Chicas</label>
-                                        </div>
-                                    </div>
-                                    <div class="col form-floating">
-                                        <div class="form-check form-switch m-1 fs-5 mb-3">
-                                            <input type="checkbox" name="prepago" id="prepago" 
-                                                class="form-check-input rounded-3"/>
-                                            <label class="form-check-label" for="prepago">Prepago</label>
-                                        </div>
-                                    </div>    
-                                </div>
-                                <div class="row">
-                                    <div class="col-7 form-floating">
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text">Estado:</span>  
-                                            <select name="estado" id="estado" class="form-select text-uppercase"></select>     
-                                        </div>   
-                                    </div>
-                                    <div class="col">
-                                        <div class="mi-modal-footer">
-                                            <button type="button" class="btn btn-success" id="btnReunionGuardar">Guardar</button>
-                                            <button type="button" class="btn btn-secondary" id="btnReunionReset">Reset</button>
-                                        </div> 
-                                    </div>
-                                </div>
-                                <small id="helpEstado" class="text-danger"></small> 
                             </form>
                         </div>
                     </div>      

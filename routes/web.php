@@ -101,6 +101,9 @@ Route::middleware('admin')->group(function () {
     Route::get('/reunion/{id}/edit', 'App\Http\Controllers\ReunionController@edit')->name("reunion.edit");
     Route::post('/reunion/estados', 'App\Http\Controllers\ReunionController@estados')->name("reunion.estados");
 
+    Route::post('/reunion/store', 'App\Http\Controllers\ReunionController@store')->name("reunion.store");
+    Route::post('/reunion/update/{id}', 'App\Http\Controllers\ReunionController@update')->name("reunion.update");
+
     Route::get('/evento', 'App\Http\Controllers\EventoController@index')->name("evento.index");
     Route::get('/evento/list', 'App\Http\Controllers\EventoController@list')->name("evento.list");
     //Route::post('/evento/list', 'App\Http\Controllers\EventoController@list')->name("evento.list");
