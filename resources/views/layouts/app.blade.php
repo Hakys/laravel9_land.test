@@ -17,9 +17,9 @@
 </head>
 
 <body class="d-flex flex-column h-100">
-    <header class="masthead">    
+    <header class="masthead mb-2">    
         <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg bg-theme">     
+        <nav class="navbar navbar-dark navbar-expand-lg bg-theme">     
             <div class="container">
                 <a class="navbar-brand text-white" href="{{ route('home.index') }}">Diabla Roja App</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
@@ -27,29 +27,29 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav ms-auto">
-                        <!--<a class="nav-link active" href="{{ route('home.index') }}">Home</a>-->
+                    <div class="navbar-nav ms-auto">     
+                        <!--<a class="nav-link" href="{{ route('home.index') }}">Home</a>-->
                         @auth
-                        <a class="nav-link text-white active" href="{{ route('reunion.index') }}">Agenda TPS</a>
-                        <a class="nav-link active" href="{{ route('reunion.gestion') }}">Gestión TPS</a>
-                        <a class="nav-link active" href="{{ route('product.index') }}">Productos</a>
-                        <a class="nav-link active" href="{{ route('contacto.index') }}">Contactos</a>
-                        <a class="nav-link active" href="{{ route('prestashop.product.index') }}">Prestashop Products</a>
-                        <a class="nav-link active" href="{{ route('cart.index') }}">Cart</a>
+                        <a class="nav-link" href="{{ route('reunion.index') }}">Agenda TPS</a>
+                        <a class="nav-link" href="{{ route('reunion.gestion') }}">Gestión TPS</a>
+                        <a class="nav-link" href="{{ route('product.index') }}">Productos</a>
+                        <a class="nav-link" href="{{ route('contacto.index') }}">Contactos</a> 
+                        <a class="nav-link" href="{{ route('prestashop.product.index') }}">Prestashop Products</a>
+                        <a class="nav-link" href="{{ route('cart.index') }}">Cart</a>
                         @endauth
-                        <!--
-                        <a class="nav-link active" href="{{ route('home.about') }}">About</a>
-                        <a class="nav-link active" href="{{ route('home.landing') }}">Landing</a> 
+                        <!-- 
+                        <a class="nav-link" href="{{ route('home.about') }}">About</a>
+                        <a class="nav-link" href="{{ route('home.landing') }}">Landing</a> 
                         -->
                         <div class="vr bg-black mx-2 d-none d-lg-block"></div>
                         @guest
-                            <a class="nav-link active" href="{{ route('login') }}">{{ __('Login')}}</a>
-                            <!--<a class="nav-link active" href="{{ route('register') }}">Register</a>-->
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login')}}</a>
+                            <!--<a class="nav-link" href="{{ route('register') }}">Register</a>-->
                         @else
-                            <a class="nav-link active" href="{{ route('myaccount.orders') }}">My Orders</a>
-                            <a class="nav-link active" href="{{ route('admin.home.index') }}">Admin</a>
+                            <a class="nav-link" href="{{ route('myaccount.orders') }}">My Orders</a>
+                            <a class="nav-link" href="{{ route('admin.home.index') }}">Admin</a>
                             <form id="logout" action="{{ route('logout') }}" method="POST">
-                                <a role="button" class="nav-link active text-white"
+                                <a role="button" class="nav-link"
                                     onclick="document.getElementById('logout').submit();">Logout</a>
                                 @csrf
                             </form>
@@ -62,14 +62,14 @@
             @yield('header')
         </div>        
     </header>
-    <main class="flex-shrink-0 mb-3">
+    <main class="flex-shrink-0 mb-4">
         <div class="container-fluid container-md">
             @include('layouts.alert')
             @yield('content')
         </div>
     </main>
     <footer class="mt-auto fixed-bottom">
-        <div class="container mt-3">
+        <div class="container">
             <small class="text-muted">
                 Copyright - <a class="text-reset fw-bold text-decoration-none" target="_blank"
                     href="https://diablaroja.es">Diabla Roja</a> - <b>by Hakys</b>
