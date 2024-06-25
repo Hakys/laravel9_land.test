@@ -87,6 +87,7 @@ class DireccionController extends Controller
     {
         $direccion = Direccion::find($direccion_id);
         $response = [
+            'direccion_id' => $direccion->id,
             'full_name' => $direccion->full_name,
             'ladireccion' => $direccion->direccion,
             'telefono' => $direccion->telefono,

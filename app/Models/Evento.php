@@ -17,6 +17,10 @@ class Evento extends Model
         'end' => 'required',
         'fecha' => 'required',
         'hora' => 'required',
+        'duration' => 'required',
+        'p_entrada' => 'required',
+        'n_personas' => 'required',
+        't_entradas' => 'required',
     ];
 
     protected $fillable = ['title','start','end'];//,'duration'];

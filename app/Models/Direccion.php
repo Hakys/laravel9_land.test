@@ -15,7 +15,10 @@ class Direccion extends Model
         'full_name' => 'required',
         'telefono' => 'required',                
         'ladireccion' => 'required',                
-        'poblacion' => 'required',                
+        'poblacion' => 'required', 
+        'provincia' => 'required',
+        'cp' => 'required',               
+        'pais' => 'required',
     ]; 
 
     /**

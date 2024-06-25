@@ -7,7 +7,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalTitleId"></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button id="cerrar_modal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-nav">
                     <nav>
@@ -17,7 +17,7 @@
                                 aria-controls="nav-reunion" aria-selected="true">REUNIÓN</button>
                             <button class="nav-link" id="nav-cliente-tab" 
                                 data-bs-toggle="tab" data-bs-target="#nav-cliente" type="button" role="tab" 
-                                aria-controls="nav-cliente" aria-selected="false">ANFITRIÓN</button>
+                                aria-controls="nav-cliente" aria-selected="false">ANFITRIÓN/A</button>
                         </div>
                     </nav>
                 </div>
@@ -85,8 +85,7 @@
                                                 <i class="fa fa-times fa-lg" aria-hidden="true"></i>
                                             </button>
                                         </div> 
-                                    </div> 
-                                                                     
+                                    </div>               
                                     <small id="helpContacto_id_full" class="text-danger"></small> 
                                     
                                     <div class="ps-1 mt-2"><h6>Dirección:</h6></div> 
@@ -103,30 +102,30 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-floating my-2"> 
-                                                <input type="text" class="form-control" placeholder=""
+                                                <input type="number" class="form-control" min="0" step="1"
                                                     name="p_entrada" id="p_entrada" aria-describedby="helpP_entrada"/>
                                                 <label for="p_entrada">Precio Entrada</label>
                                             </div>
                                         </div>
                                         <div class="col-md-4"> 
-                                            <div class="form-floating my-2">
-                                                <input type="text" class="form-control" placeholder="" min="0" step="1" 
+                                            <div class="form-floating my-2"> 
+                                                <input type="number" class="form-control" min="0" step="1" 
                                                     name="n_personas" id="n_personas" aria-describedby="helpN_personas"/>
                                                 <label for="n_personas">Nº Personas</label>                                            
                                             </div> 
                                         </div> 
                                         <div class="col-md-4">
                                             <div class="form-floating my-2"> 
-                                                <input type="text" class="form-control" placeholder=""
+                                                <input type="number" class="form-control" 
                                                     name="t_entradas" id="t_entradas" aria-describedby="helpT_entradas"/>
                                                 <label for="t_entradas">Total Entradas</label>       
                                             </div>
                                         </div>
                                     </div> 
-                                    <div>
-                                        <small id="helpP_entrada" class="text-danger"></small>
-                                        <small id="helpN_personas" class="text-danger"></small>
-                                        <small id="helpT_entradas" class="text-danger"></small>
+                                    <div class="mx-3" hidden>
+                                        <small id="helpP_entrada" class="row text-danger"></small>
+                                        <small id="helpN_personas" class="row text-danger"></small>
+                                        <small id="helpT_entradas" class="row text-danger"></small>
                                     </div>                                  
                                     <div class="row align-items-center">
                                         <div class="col-md form-floating">
@@ -267,11 +266,10 @@
                         </div>
                     </div>      
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="btnGuardarTodo">Guardar Todo</button>
+                <div class="modal-footer"> 
+                    <button type="button" class="btn btn-secondary" id="btnCerrar" data-bs-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-danger" id="btnEliminarEvento">Eliminar Evento</button>
-                    <button type="button" class="btn btn-danger" id="btnPrueba">Prueba</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-success" id="btnGuardarTodo">Guardar Evento</button>
                 </div> 
             </div>
         </div>
