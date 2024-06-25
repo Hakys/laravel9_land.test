@@ -1,7 +1,9 @@
+@import "../node_modules/bootstrap/scss/functions";
+
 $enable-grid-classes: true;
 
 // Body
-$body-bg: #f8fafc;
+$body-bg: #137be2;
 
 // Typography
 $font-family-sans-serif: 'Nunito', sans-serif;
@@ -10,8 +12,11 @@ $line-height-base: 1.6;
 
 // Create your own map
 $custom-colors: (
-  "rojo": #900
+  "rojo": #900,
 );
 
 // Merge the maps
 $theme-colors: map-merge($theme-colors, $custom-colors);
+
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";

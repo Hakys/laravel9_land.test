@@ -8,7 +8,7 @@ import 'owl.carousel';
 import './select2.min';
 import './schedule';
 import '../css/app.css';
-import '../sass/app.scss'
+import '../sass/app.scss';
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
 import '@fortawesome/fontawesome-free/scss/brands.scss';
 import '@fortawesome/fontawesome-free/scss/regular.scss';

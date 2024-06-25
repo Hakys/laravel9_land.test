@@ -1,21 +1,16 @@
 @extends('layouts.app')
 @section('title', $viewData['title'])
 @section('header')
-    <div class="d-flex align-items-center flex-column bg-primary text-white text-center">
-        <h2>@yield('subtitle', 'Sex Shop Diabla Roja App')</h2>
-    </div>
-</header>
 @endsection
 @section('content')
     <div class="row">
-        <div class="col-md-6 col-lg-4 mb-2">
-            <img src="{{ asset('/img/game.png') }}" class="img-fluid rounded">
+        <div class="col text-center m-4"> 
+            <img src="{{ asset('/img/logo_diabla_roja.png') }}" 
+                class="img-fluid mx-auto my-auto d-block rounded" 
+                alt="Sex Shop Diabla Roja">
         </div>
-        <div class="col-md-6 col-lg-4 mb-2">
-            <img src="{{ asset('/img/safe.png') }}" class="img-fluid rounded">
-        </div>
-        <div class="col-md-6 col-lg-4 mb-2">
-            <img src="{{ asset('/img/submarine.png') }}" class="img-fluid rounded">
-        </div>
+    </div>
+    <div class="d-flex align-items-center flex-column bg-theme text-white text-center">
+        <h2>@yield('subtitle', 'App Sex Shop Diabla Roja')</h2>
     </div>
 @endsection

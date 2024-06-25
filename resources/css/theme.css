@@ -17,14 +17,14 @@
     background-color: #1a252f;
 }
 
-.bg-primary {
-    background-color: #1abc9c !important;
+.bg-theme {
+    background-color: #b70f0b !important;
 }
 
 nav {
     font-weight: 700;
 }
-
+.navbar-nav a .show { color: white;}
 .img-card {
     height: 18vw;
     object-fit: cover;
@@ -44,6 +44,7 @@ nav {
 .purple{ color: #6f42c1; }
 .pink{ color: #d63384; }
 .red{ color: #dc3545; }
+.rojo{ color: #900; } .bg-rojo{ background-color: #900;}
 .orange{ color: #fd7e14; }
 .yellow{ color: #ffc107; }
 .green{ color: #198754; }

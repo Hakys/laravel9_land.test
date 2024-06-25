@@ -1,7 +1,7 @@
-@import "/node_modules/bootstrap/scss/bootstrap.scss";
+@import url('theme.css');
+/*@import "/node_modules/bootstrap/scss/bootstrap.scss";*/
 @import "/node_modules/select2/dist/css/select2.css";
 @import "/node_modules/owl.carousel/dist/assets/owl.carousel.css";
 @import "/node_modules/owl.carousel/dist/assets/owl.theme.default.css";
 @import url('schedule.css');
-@import url('theme.css');
-@import url("admin.css");
+/* @import url("admin.css"); */
