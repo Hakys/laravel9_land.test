@@ -2,7 +2,7 @@
 @section('title', $viewData['title'])
 @section('subtitle', $viewData['subtitle'])
 @section('content')
-    <div class="card">
+    <div class="card"> 
         <div class="card-header d-flex gap-2">
             <div class="flex-grow-1"><h2>{{$viewData['subtitle']}}</h2></div>
             <!--<div class="md- hidd"><a class="btn btn-outline-secondary">
