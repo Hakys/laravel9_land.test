@@ -16,6 +16,7 @@ class ReunionController extends Controller
         $viewData["ant"] = "";        
         $viewData["hoy"] = Reunion::formatFecha(time());
         $viewData["reunions"] = Reunion::orderBy('fecha', 'DESC')->get();
+        $viewData["page"] = "reunion";
         return view("reunion.index")->with("viewData", $viewData);
     }
 

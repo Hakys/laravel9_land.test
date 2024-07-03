@@ -23,10 +23,15 @@ use Illuminate\Support\Facades\Auth;
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/', 'App\Http\Controllers\HomeController@index')->name("home.index");
+Route::get('/', function () { return view('index'); })->name("index");
 Route::get('/about', 'App\Http\Controllers\HomeController@about')->name("home.about");
-Route::get('/products', 'App\Http\Controllers\ProductController@index')->name("product.index");
-Route::get('/products/{id}', 'App\Http\Controllers\ProductController@show')->name("product.show");
+
+Route::middleware('admin')->group(function () {
+    Route::get('/dashboard', 'App\Http\Controllers\HomeController@index')->name("home.index");
+    
+    Route::get('/products', 'App\Http\Controllers\ProductController@index')->name("product.index");
+    Route::get('/products/{id}', 'App\Http\Controllers\ProductController@show')->name("product.show");
+});
 
 Route::get('/landing', function () {
     $viewData = [];

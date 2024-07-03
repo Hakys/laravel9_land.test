@@ -53,7 +53,7 @@ class EventoController extends Controller
      */
     public function store(Request $request)
     {   
-        Log::info($request->all());
+        //Log::info($request->all());
         request()->validate(Evento::$rules);
         request()->validate(Reunion::$rules);
         $reunion = new Reunion();
@@ -109,10 +109,12 @@ class EventoController extends Controller
         $evento = Evento::find($id);       
         //$evento->start = Carbon::createFromFormat('Y-m-d H:i:s', $evento->start)->format('Y-m-d');
         //$evento->end = Carbon::createFromFormat('Y-m-d H:i:s', $evento->end)->format('Y-m-d');
+        /*
         $contactos= DB::table('contactos as c')
         ->selectRaw('c.id')
         ->selectRaw('CONCAT(c.apodo," (",c.telefono,")") AS apodo')
         ->get();
+        */
     $response = [];
         $response = [
             'id' => $evento->getId(),
@@ -155,8 +157,8 @@ class EventoController extends Controller
      */
     public function update(Request $request, Evento $evento)
     {
-        Log::info($request->all());
-        Log::info($evento);
+        //Log::info($request->all());
+        //Log::info($evento);
         request()->validate(Evento::$rules);
         request()->validate(Reunion::$rules);
         $reunion = Reunion::where('id',$evento->eventoable->getId())->first();

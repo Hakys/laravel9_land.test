@@ -216,6 +216,9 @@
     }
 }
 
+.navbar-brand {
+    color:brown;
+}
 
 /*** Date Picker ***/
 .bootstrap-datetimepicker-widget.bottom {

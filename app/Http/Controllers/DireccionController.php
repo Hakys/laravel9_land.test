@@ -58,12 +58,12 @@ class DireccionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request,$id){
-    //public function update(Request $request, $id){ 
-        Log::info($request->all());
+        //Log::info($request->all());
         $d = Direccion::where('id',$id)->first();
         //$d = Direccion::where('id',$request->direccion_id)->first();
         request()->validate(Direccion::$rules);
         $d->update([
+            'direccion_id' => $id,
             'contacto_id' => $request->contacto_id,
             'full_name' => $request->full_name,
             'direccion' => $request->direccion,
