@@ -77,7 +77,7 @@
                                         <input list="clientes" name="contacto_id_full" class="form-control"
                                             id="contacto_id_full"
                                             aria-label="Clientes" aria-describedby="helpContacto_id_full"
-                                            placeholder="Seleccione un Cliente">  
+                                            placeholder="Nuevo anfitrión">  
                                         <datalist id="clientes"></datalist>      
                                         <div class="input-group-append">
                                             <button id="btnClear_contacto_id_full" type="button"
@@ -93,7 +93,7 @@
                                         <button class="btn btn-success" type="button" id="btn_direccion_id_full">
                                             <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
                                         </button>     
-                                        <select name="direccion_id_full" id="direccion_id_full" placeholder="Seleccione una Dirección." 
+                                        <select name="direccion_id_full" id="direccion_id_full" 
                                             class="form-select" aria-describedby="helpDireccion_id_full"></select>
                                     </div>                                
                                     <div class="mb-3">
