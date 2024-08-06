@@ -21,12 +21,12 @@
                         </div>
                     </nav>
                 </div>
-                <div class="modal-body">                       
-                    <div class="tab-content border border-1 bs-border-color rounded-2 p-2 border-top-0 rounded-top-0" id="nav-tabContent">
-                        {{-- EVENTO --}} 
-                        <div class="tab-pane fade show active" id="nav-reunion" role="tabpanel" aria-labelledby="nav-reunion-tab">
-                            <form action ="" id="formularioEvento">
-                                @csrf  
+                <div class="modal-body"> 
+                    <form action ="" id="formularioEvento">
+                        @csrf                       
+                        <div class="tab-content border border-1 bs-border-color rounded-2 p-2 border-top-0 rounded-top-0" id="nav-tabContent">
+                            {{-- EVENTO --}} 
+                            <div class="tab-pane fade show active" id="nav-reunion" role="tabpanel" aria-labelledby="nav-reunion-tab">
                                 <div class="flex">
                                     <input type="text" name="id" id="id" hidden/>
                                     <input type="datetime" name="start" id="start" hidden/>  
@@ -64,7 +64,7 @@
                                                 <input type="time" id="duration" name="duration" 
                                                     class="form-control form-control-lg fs-6"
                                                     aria-describedby="helpDuration">
-                                                 
+                                                    
                                             </div>
                                         </div>
                                     </div>                                    
@@ -149,122 +149,120 @@
                                     </div>
                                     <small id="helpEstado" class="text-danger"></small> 
                                 </div>
-                            </form>
-                        </div>
-                        {{-- CLIENTE --}}
-                        <div class="tab-pane fade" id="nav-cliente" role="tabpanel" aria-labelledby="nav-cliente-tab">
-                            <form id="formularioContacto" action="">     
-                                @csrf                                         
+                            </div>
+                            {{-- CLIENTE --}}
+                            <div class="tab-pane fade" id="nav-cliente" role="tabpanel" aria-labelledby="nav-cliente-tab">
                                 <div class="mt-2"><h6>Datos del Cliente:</h6></div>                                      
-                                <div class="form-floating mb-2">
-                                    <input type="text" id="apodo" name="apodo" placeholder="Nombre Completo" 
-                                        class="form-control rounded-3" aria-describedby="helpApodo">
-                                    <label for="apodo">Nombre Completo</label>
-                                    <small id=helpApodo class="text-danger"></small>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-floating">
-                                            <input type="text" id="telefono" name="telefono" placeholder="Teléfono" 
-                                                class="form-control rounded-3" aria-describedby="helpTelefono">
-                                            <label for="telefono">Teléfono</label>
-                                        </div>  
+                                    <div class="form-floating mb-2">
+                                        <input type="text" id="apodo" name="apodo" placeholder="Nombre Completo" 
+                                            class="form-control rounded-3" aria-describedby="helpApodo">
+                                        <label for="apodo">Nombre Completo</label>
+                                        <small id=helpApodo class="text-danger"></small>
                                     </div>
-                                    <div class="col mi-modal-footer">
-                                        <button class="btn btn-info text-white" type="button" id="btnContactoNuevo">
-                                            <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
-                                        </button> 
-                                        <button type="button" class="btn btn-success" id="btnContactoGuardar">Guardar</button>
-                                        <button type="button" class="btn btn-secondary" id="btnContactoReset">Reset</button>
-                                    </div>
-                                    <small id="helpTelefono" class="text-danger"></small>
-                                </div>
-                            </form>                             
-                            <form id="formularioDireccion" action="">  
-                                @csrf                                            
-                                <div class="mt-2"><h6>Dirección del Cliente:</h6></div> 
-                                <div class="form-floating">
-                                    <input type="text" id="full_name" name="full_name" placeholder="Nombre Completo" 
-                                        class="form-control rounded-3" aria-describedby="helpFull_name">
-                                    <label for="full_name">Nombre Completo</label>
-                                </div>    
-                                <div class="mb-2"><small id="helpFull_name" class="text-danger"></small> </div>   
-                                <div class="form-floating">
-                                    <input type="text" id="ladireccion" name="ladireccion" placeholder="Dirección Completa" 
-                                        class="form-control rounded-3" aria-describedby="helpLadireccion">
-                                    <label for="ladireccion">Dirección Completa</label>  
-                                </div>  
-                                <div class="mb-2"><small id="helpLadireccion" class="text-danger"></small></div>                                                    
-                                <div class="row mb-md-2">
-                                    <div class="col-md-4 mb-2 mb-md-0"> 
-                                        <div class="form-floating">
-                                            <input type="text" id="eltelefono" name="eltelefono" placeholder="Telefóno"  
-                                                class="form-control rounded-3" aria-describedby="helpEltelefono">
-                                            <label for="eltelefono">Telefóno</label>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-floating">
+                                                <input type="text" id="telefono" name="telefono" placeholder="Teléfono" 
+                                                    class="form-control rounded-3" aria-describedby="helpTelefono">
+                                                <label for="telefono">Teléfono</label>
+                                            </div>  
                                         </div>
-                                    </div>
-                                    <div class="col-6 col-md-4 mb-2 mb-md-0"> 
-                                        <div class="form-floating">
-                                            <input type="text" id="cp" name="cp" placeholder="Código Postal"  
-                                                class="form-control rounded-3" aria-describedby="helpCp">
-                                            <label for="cp">Código Postal</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-4 mb-2 mb-md-0">
-                                        <div class="form-floating">
-                                            <input type="text" id="pais" name="pais" placeholder="País"
-                                                class="form-control rounded-3" aria-describedby="helpPais">
-                                            <label for="pais">País</label> 
-                                        </div>                
-                                    </div>
-                                </div>
-                                <div>
-                                    <small id="helpEltelefono" class="text-danger"></small>
-                                    <small id="helpCp" class="text-danger"></small>
-                                    <small id="helpPais" class="text-danger"></small>
-                                </div>    
-                                <div class="row">
-                                    <div class="col-7">
-                                        <div class="form-floating">
-                                            <input type="text" id="poblacion" name="poblacion" placeholder="Población" 
-                                                class="form-control rounded-3" aria-describedby="helpPoblacion">
-                                            <label for="poblacion">Población</label> 
-                                        </div>                
-                                    </div>        
-                                    <div class="col-5"> 
-                                        <div class="form-floating">
-                                            <input type="text" id="provincia" name="provincia" placeholder="Provincia" 
-                                                class="form-control rounded-3" aria-describedby="helpProvincia">
-                                            <label for="provincia">Provincia</label>
-                                        </div>
-                                    </div>
-                                </div> 
-                                <div class="mb-2">
-                                    <small id="helpPoblacion" class="text-danger"></small>
-                                    <small id="helpProvincia" class="text-danger"></small>
-                                </div> 
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="input-group">
-                                            <span class="input-group-text">Ruta:</span>                                
-                                            <input type="text" id="viaje" name="viaje" 
-                                                class="form-control fs-6" aria-describedby="helpViaje">
-                                        </div>    
-                                    </div>                                
-                                    <div class="col">
-                                        <div class="mi-modal-footer">
-                                            <button class="btn btn-info text-white" type="button" id="btnDireccionNuevo">
+                                        <div class="col mi-modal-footer">
+                                            <!--
+                                            <button class="btn btn-info text-white" type="button" id="btnContactoNuevo">
                                                 <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-success" id="btnDireccionGuardar">Guardar</button>
-                                            <button type="button" class="btn btn-secondary" id="btnDireccionReset">Reset</button>
+                                            </button> 
+                                            <button type="button" class="btn btn-success" id="btnContactoGuardar">Guardar</button>
+                                            <button type="button" class="btn btn-secondary" id="btnContactoReset">Reset</button>
+                                            -->
                                         </div>
+                                        <small id="helpTelefono" class="text-danger"></small>
+                                    </div>                               
+                                    <div class="mt-2"><h6>Dirección del Cliente:</h6></div> 
+                                    <div class="form-floating">
+                                        <input type="text" id="full_name" name="full_name" placeholder="Nombre Completo" 
+                                            class="form-control rounded-3" aria-describedby="helpFull_name">
+                                        <label for="full_name">Nombre Completo</label>
+                                    </div>    
+                                    <div class="mb-2"><small id="helpFull_name" class="text-danger"></small> </div>   
+                                    <div class="form-floating">
+                                        <input type="text" id="ladireccion" name="ladireccion" placeholder="Dirección Completa" 
+                                            class="form-control rounded-3" aria-describedby="helpLadireccion">
+                                        <label for="ladireccion">Dirección Completa</label>  
+                                    </div>  
+                                    <div class="mb-2"><small id="helpLadireccion" class="text-danger"></small></div>                                                    
+                                    <div class="row mb-md-2">
+                                        <div class="col-md-4 mb-2 mb-md-0"> 
+                                            <div class="form-floating">
+                                                <input type="text" id="eltelefono" name="eltelefono" placeholder="Telefóno"  
+                                                    class="form-control rounded-3" aria-describedby="helpEltelefono">
+                                                <label for="eltelefono">Telefóno</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-md-4 mb-2 mb-md-0"> 
+                                            <div class="form-floating">
+                                                <input type="text" id="cp" name="cp" placeholder="Código Postal"  
+                                                    class="form-control rounded-3" aria-describedby="helpCp">
+                                                <label for="cp">Código Postal</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-md-4 mb-2 mb-md-0">
+                                            <div class="form-floating">
+                                                <input type="text" id="pais" name="pais" placeholder="País"
+                                                    class="form-control rounded-3" aria-describedby="helpPais">
+                                                <label for="pais">País</label> 
+                                            </div>                
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <small id="helpEltelefono" class="text-danger"></small>
+                                        <small id="helpCp" class="text-danger"></small>
+                                        <small id="helpPais" class="text-danger"></small>
+                                    </div>    
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <div class="form-floating">
+                                                <input type="text" id="poblacion" name="poblacion" placeholder="Población" 
+                                                    class="form-control rounded-3" aria-describedby="helpPoblacion">
+                                                <label for="poblacion">Población</label> 
+                                            </div>                
+                                        </div>        
+                                        <div class="col-5"> 
+                                            <div class="form-floating">
+                                                <input type="text" id="provincia" name="provincia" placeholder="Provincia" 
+                                                    class="form-control rounded-3" aria-describedby="helpProvincia">
+                                                <label for="provincia">Provincia</label>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    <div class="mb-2">
+                                        <small id="helpPoblacion" class="text-danger"></small>
+                                        <small id="helpProvincia" class="text-danger"></small>
+                                    </div> 
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="input-group">
+                                                <span class="input-group-text">Ruta:</span>                                
+                                                <input type="text" id="viaje" name="viaje" 
+                                                    class="form-control fs-6" aria-describedby="helpViaje">
+                                            </div>    
+                                        </div>                                
+                                        <div class="col">
+                                            <!--
+                                            <div class="mi-modal-footer">
+                                                <button class="btn btn-info text-white" type="button" id="btnDireccionNuevo">
+                                                    <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-success" id="btnDireccionGuardar">Guardar</button>
+                                                <button type="button" class="btn btn-secondary" id="btnDireccionReset">Reset</button>    
+                                            </div>
+                                            -->
                                     </div>
                                 </div>    
                                 <small id="helpViaje" class="text-danger"></small>
-                            </form>
-                        </div>
-                    </div>      
+                            </div>
+                        </div>   
+                    </form>    
                 </div>
                 <div class="modal-footer"> 
                     <button type="button" class="btn btn-secondary" id="btnCerrar" data-bs-dismiss="modal">Cerrar</button>

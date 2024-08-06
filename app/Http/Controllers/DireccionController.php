@@ -35,7 +35,7 @@ class DireccionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){ 
-        Log::info($request->all());
+        //Log::info($request->all());
         request()->validate(Direccion::$rules);
         $d = new Direccion();
         $d->contacto_id = $request->contacto_id;

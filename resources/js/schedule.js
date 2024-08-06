@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     let  formEvento = document.querySelector("#formularioEvento");             
-    let  formContacto = document.querySelector("#formularioContacto");  
-    let  formDireccion = document.querySelector("#formularioDireccion");   
+    //let  formContacto = document.querySelector("#formularioContacto");  
+    //let  formDireccion = document.querySelector("#formularioDireccion");   
     var myModal = new bootstrap.Modal(
         document.getElementById("evento"),{});  
     loadEstados(formEvento.estado);           
@@ -47,15 +47,13 @@ document.addEventListener('DOMContentLoaded', function() {
             modalTitleId.innerHTML = "Crear Nueva Reunión";
             btnEliminarEvento.hidden = true;
             formEvento.reset();
-            formContacto.reset();
-            formDireccion.reset();
             formEvento.start.value = info.dateStr+" 00:00:00";
             formEvento.end.value = info.dateStr+" 00:00:00"; 
             formEvento.fecha.value = info.dateStr;      
             formEvento.hora.value = "16:30";              
             formEvento.duration.value = "02:00"; 
             loadContacts();
-            reset_direccion();
+            reset_direccion(); 
             reset_ladireccion();
             formEvento.n_personas.value = 7;
             formEvento.p_entrada.value = 5;
@@ -104,9 +102,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     formEvento.contacto_id_full.list.appendChild(option);  
                     if(formEvento.contacto_id.value==clientes[i].id){
                         formEvento.contacto_id_full.value = clientes[i].full_apodo; 
-                        //formContacto.apodo.id = clientes[i].id;    
-                        formContacto.apodo.value = clientes[i].apodo;
-                        formContacto.telefono.value = clientes[i].telefono;   
+                        //formEvento.apodo.id = clientes[i].id;    
+                        formEvento.apodo.value = clientes[i].apodo;
+                        formEvento.telefono.value = clientes[i].telefono;   
                     }
                 }
                 
@@ -126,14 +124,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 formEvento.direccion_id_full.value = response.data.direccion_id;
                 
                 //LADIRECCION
-                formDireccion.full_name.value = response.data.full_name;
-                formDireccion.ladireccion.value = response.data.ladireccion;
-                formDireccion.eltelefono.value = response.data.telefono;
-                formDireccion.cp.value = response.data.cp;
-                formDireccion.poblacion.value = response.data.poblacion;
-                formDireccion.provincia.value = response.data.provincia;
-                formDireccion.pais.value = response.data.pais; 
-                formDireccion.viaje.value = response.data.viaje;       
+                formEvento.full_name.value = response.data.full_name;
+                formEvento.ladireccion.value = response.data.ladireccion;
+                formEvento.eltelefono.value = response.data.telefono;
+                formEvento.cp.value = response.data.cp;
+                formEvento.poblacion.value = response.data.poblacion;
+                formEvento.provincia.value = response.data.provincia;
+                formEvento.pais.value = response.data.pais; 
+                formEvento.viaje.value = response.data.viaje;       
                 
                 myModal.show();
             })
@@ -151,8 +149,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.getElementById("contacto_id_full").addEventListener("change",function(){
-        reset_direccion();
         loadDireccions();
+        reset_direccion();
         reset_ladireccion();
     });
 
@@ -170,6 +168,12 @@ document.addEventListener('DOMContentLoaded', function() {
         loadLadireccion();
     });
 
+    document.getElementById("btnGuardarTodo").addEventListener("click",storeEvento);
+
+    document.getElementById("p_entrada").addEventListener("input",calculator);
+    document.getElementById("n_personas").addEventListener("input",calculator);
+    document.getElementById("t_entradas").addEventListener("input",calculator_inv);
+/* 
     document.getElementById("btnContactoNuevo").addEventListener("click",function(){
         reset_contacto();
         reset_direccion();
@@ -186,22 +190,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById("btnDireccionGuardar").addEventListener("click",storeDireccion);
 
-    document.getElementById("btnGuardarTodo").addEventListener("click",function(){
-        storeContacto();
-        console.log("GuardarTodo "+formEvento.contacto_id.value)
-        storeDireccion();
-        storeEvento();
-    });
-
-    document.getElementById("p_entrada").addEventListener("input",calculator);
-    document.getElementById("n_personas").addEventListener("input",calculator);
-    document.getElementById("t_entradas").addEventListener("input",calculator_inv);
-
-/*
     document.getElementById("btnEliminar").addEventListener("click",function(){
         sendData("/evento/delete/"+formulario.id.value);
     });
-*/
+
 
     function storeContacto(){
         if(formEvento.contacto_id.value)
@@ -224,16 +216,15 @@ document.addEventListener('DOMContentLoaded', function() {
             loadLadireccion();
 
         }
-    }               // reset_ladireccion();
-    //loadLadireccion();
-
+    }               
+*/
     function storeEvento(){
         if(formEvento.id.value)
             sendDataEvento("/evento/update/"+formEvento.id.value);
         else
             sendDataEvento("/evento/store");
     }
-
+/*
     function sendDataContacto(url){
         reset_errors_contacto();
         const datos = new FormData(formContacto);
@@ -250,11 +241,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 //console.log(error);
                 if(!(typeof error.response.data.errors === 'undefined')){
                     if(!(typeof error.response.data.errors.apodo === 'undefined')){
-                        formContacto.apodo.classList.add("is-invalid");
+                        formEvento.apodo.classList.add("is-invalid");
                         $('#helpApodo').text(error.response.data.errors.apodo);
                     } 
                     if(!(typeof error.response.data.errors.telefono === 'undefined')){
-                        formContacto.telefono.classList.add("is-invalid");
+                        formEvento.telefono.classList.add("is-invalid");
                         $('#helpTelefono').text(error.response.data.errors.telefono); 
                     } 
                 }
@@ -267,8 +258,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const datos = new FormData(formDireccion);
         datos.append('id',formEvento.direccion_id.value);
         datos.append('contacto_id',formEvento.contacto_id.value);
-        datos.append('telefono',formDireccion.eltelefono.value);
-        datos.append('direccion',formDireccion.ladireccion.value);
+        datos.append('telefono',formEvento.eltelefono.value);
+        datos.append('direccion',formEvento.ladireccion.value);
         //console.log(datos);        
         axios.post(url,datos)
             .then(response => {
@@ -282,41 +273,49 @@ document.addEventListener('DOMContentLoaded', function() {
                     formEvento.direccion_id_full.classList.add("is-invalid");
                     $('#helpDireccion_id_full').text("La dirección es obligatoria.");
                     if(!(typeof error.response.data.errors.full_name === 'undefined')){
-                        formDireccion.full_name.classList.add("is-invalid");
+                        formEvento.full_name.classList.add("is-invalid");
                         //$('#helpFull_name').text(error.response.data.errors.full_name);
                     } 
                     if(!(typeof error.response.data.errors.ladireccion === 'undefined')){
-                        formDireccion.ladireccion.classList.add("is-invalid");
+                        formEvento.ladireccion.classList.add("is-invalid");
                         //$('#helpLadireccion').text(error.response.data.errors.ladireccion);
                     } 
                     if(!(typeof error.response.data.errors.telefono === 'undefined')){
-                        formDireccion.eltelefono.classList.add("is-invalid");
+                        formEvento.eltelefono.classList.add("is-invalid");
                         //$('#helpEltelefono').text(error.response.data.errors.telefono);
                     } 
                     if(!(typeof error.response.data.errors.cp === 'undefined')){
-                        formDireccion.cp.classList.add("is-invalid");
+                        formEvento.cp.classList.add("is-invalid");
                         //$('#helpCp').text(error.response.data.errors.cp);
                     } 
                     if(!(typeof error.response.data.errors.pais === 'undefined')){
-                        formDireccion.pais.classList.add("is-invalid");
+                        formEvento.pais.classList.add("is-invalid");
                         //$('#helpPais').text(error.response.data.errors.pais);
                     } 
                     if(!(typeof error.response.data.errors.poblacion === 'undefined')){
-                        formDireccion.poblacion.classList.add("is-invalid");
+                        formEvento.poblacion.classList.add("is-invalid");
                         //$('#helpPoblacion').text(error.response.data.errors.poblacion);
                     } 
                     if(!(typeof error.response.data.errors.provincia === 'undefined')){
-                        formDireccion.provincia.classList.add("is-invalid");
+                        formEvento.provincia.classList.add("is-invalid");
                         //$('#helpProvincia').text(error.response.data.errors.provincia);
                     } 
                 }
             });
     }
-
+*/
+        /*
+        const datos1 = new FormData(formEvento); 
+        for (const pair of datos1.entries()) {
+            console.log(pair[0], pair[1]);
+          }
+        */
     function sendDataEvento(url){ 
+        reset_errors_contacto();
+        reset_errors_ladireccion();
+        reset_errors_direccion();
         reset_errors_evento();
-        const datos = new FormData(formEvento); 
-        //console.log(datos);
+        const datos = new FormData(formEvento);
         axios.post(url,datos)
             .then(response => {
                 //console.log(response);
@@ -324,11 +323,53 @@ document.addEventListener('DOMContentLoaded', function() {
                 calendar.refetchEvents();
             })
             .catch(error => { 
-                console.log(error);
+                console.log(error);                
                 if(!(typeof error.response.data.errors === 'undefined')){
+                    //CONTACTO
+                    if(!(typeof error.response.data.errors.apodo === 'undefined')){
+                        formEvento.apodo.classList.add("is-invalid");
+                        $('#helpApodo').text(error.response.data.errors.apodo);
+                        $('#nav-cliente-tab').trigger( "click" );
+                    } 
+                    if(!(typeof error.response.data.errors.telefono === 'undefined')){
+                        formEvento.telefono.classList.add("is-invalid");
+                        $('#helpTelefono').text(error.response.data.errors.telefono); 
+                        $('#nav-cliente-tab').trigger( "click" );
+                    } 
+                    //DIRECCION
+                    if(!(typeof error.response.data.errors.full_name === 'undefined')){
+                        formEvento.full_name.classList.add("is-invalid");
+                        //$('#helpFull_name').text(error.response.data.errors.full_name);
+                    } 
+                    if(!(typeof error.response.data.errors.ladireccion === 'undefined')){
+                        formEvento.ladireccion.classList.add("is-invalid");
+                        //$('#helpLadireccion').text(error.response.data.errors.ladireccion);
+                    } 
+                    if(!(typeof error.response.data.errors.eltelefono === 'undefined')){
+                        formEvento.eltelefono.classList.add("is-invalid");
+                        //$('#helpEltelefono').text(error.response.data.errors.telefono);
+                    } 
+                    if(!(typeof error.response.data.errors.cp === 'undefined')){
+                        formEvento.cp.classList.add("is-invalid");
+                        //$('#helpCp').text(error.response.data.errors.cp);
+                    } 
+                    if(!(typeof error.response.data.errors.pais === 'undefined')){
+                        formEvento.pais.classList.add("is-invalid");
+                        //$('#helpPais').text(error.response.data.errors.pais);
+                    } 
+                    if(!(typeof error.response.data.errors.poblacion === 'undefined')){
+                        formEvento.poblacion.classList.add("is-invalid");
+                        //$('#helpPoblacion').text(error.response.data.errors.poblacion);
+                    } 
+                    if(!(typeof error.response.data.errors.provincia === 'undefined')){
+                        formEvento.provincia.classList.add("is-invalid");
+                        //$('#helpProvincia').text(error.response.data.errors.provincia);
+                    } 
+                    //EVENTO
                     if(!(typeof error.response.data.errors.title === 'undefined')){ 
                         formEvento.title.classList.add("is-invalid");
                         $('#helpTitle').text(error.response.data.errors.title);
+                        $('#nav-reunion-tab').trigger( "click" );
                     }
                     if(!(typeof error.response.data.errors.fecha === 'undefined')){
                         formEvento.fecha.classList.add("is-invalid");
@@ -345,17 +386,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     if(!(typeof error.response.data.errors.contacto_id === 'undefined')){
                         formEvento.contacto_id_full.classList.add("is-invalid");
                         $('#helpContacto_id_full').text("El campo anfitrión/a es obligatorio.");
-                    }        
+                    }
                     if(!(typeof error.response.data.errors.direccion_id === 'undefined')){
                         formEvento.direccion_id_full.classList.add("is-invalid");
                         $('#helpDireccion_id_full').text("El campo dirección es obligatorio.");
-                        /*
-                        var option = document.createElement('option');
-                        option.value = 0;
-                        option.text = "Seleccione una dirección";
-                        formEvento.direccion_id_full.appendChild(option);
-                        formEvento.direccion_id_full.value = formEvento.direccion_id.value;
-                        */
                     }            
                     if(!(typeof error.response.data.errors.p_entrada === 'undefined')){
                         formEvento.p_entrada.classList.add("is-invalid"); 
@@ -404,8 +438,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     option.value = clientes[i].full_apodo;
                     if(formEvento.contacto_id.value==clientes[i].id){
                         formEvento.contacto_id_full.value = clientes[i].full_apodo;   
-                        formContacto.apodo.value = clientes[i].apodo;
-                        formContacto.telefono.value = clientes[i].telefono;  
+                        formEvento.apodo.value = clientes[i].apodo;
+                        formEvento.telefono.value = clientes[i].telefono;  
                     }
                     datalist.appendChild(option);    
                 }
@@ -417,8 +451,8 @@ document.addEventListener('DOMContentLoaded', function() {
         axios.post("/contactos/"+formEvento.contacto_id_full.value+"/direccions")
             .then(response => { 
                 formEvento.contacto_id.value = response.data.id; 
-                formContacto.telefono.value = response.data.telefono;
-                formContacto.apodo.value = response.data.apodo;                    
+                formEvento.telefono.value = response.data.telefono;
+                formEvento.apodo.value = response.data.apodo;                    
                 var list = response.data.direccions;
                 for(var i=0;i<list.length;i++){
                     var option = document.createElement('option');
@@ -440,14 +474,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     //console.log(response.data); 
                     formEvento.direccion_id.value = response.data.direccion_id;
                     formEvento.direccion_id_full.value = response.data.direccion_id;
-                    formDireccion.full_name.value = response.data.full_name;
-                    formDireccion.ladireccion.value = response.data.ladireccion;
-                    formDireccion.eltelefono.value = response.data.telefono;
-                    formDireccion.cp.value = response.data.cp;
-                    formDireccion.poblacion.value = response.data.poblacion;
-                    formDireccion.provincia.value = response.data.provincia;
-                    formDireccion.pais.value = response.data.pais;
-                    formDireccion.viaje.value = response.data.viaje;
+                    formEvento.full_name.value = response.data.full_name;
+                    formEvento.ladireccion.value = response.data.ladireccion;
+                    formEvento.eltelefono.value = response.data.telefono;
+                    formEvento.cp.value = response.data.cp;
+                    formEvento.poblacion.value = response.data.poblacion;
+                    formEvento.provincia.value = response.data.provincia;
+                    formEvento.pais.value = response.data.pais;
+                    formEvento.viaje.value = response.data.viaje;
 
                 })
                 .catch(error => { console.log(error); });
@@ -466,8 +500,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function reset_contacto(){
         formEvento.contacto_id.value = "";
         formEvento.contacto_id_full.value = null;
-        formContacto.apodo.value = "";
-        formContacto.telefono.value = "";
+        formEvento.apodo.value = "";
+        formEvento.telefono.value = "";
     }
 
     function reset_direccion(){        
@@ -481,14 +515,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function reset_ladireccion(){
-        formDireccion.full_name.value = "";
-        formDireccion.ladireccion.value = "";
-        formDireccion.eltelefono.value = "";
-        formDireccion.cp.value = "";
-        formDireccion.poblacion.value = "";
-        formDireccion.provincia.value = "";
-        formDireccion.pais.value = "";
-        formDireccion.viaje.value = "";
+        formEvento.full_name.value = "";
+        formEvento.ladireccion.value = "";
+        formEvento.eltelefono.value = "";
+        formEvento.cp.value = "";
+        formEvento.poblacion.value = "";
+        formEvento.provincia.value = "";
+        formEvento.pais.value = "";
+        formEvento.viaje.value = "";
     }
 
     function reset_errors_evento(){
@@ -515,9 +549,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function reset_errors_contacto(){
         formEvento.contacto_id_full.classList.remove("is-invalid");
         $('#helpContacto_id_full').text("");
-        formContacto.telefono.classList.remove("is-invalid");
+        formEvento.telefono.classList.remove("is-invalid");
         $('#helpTelefono').text("");
-        formContacto.apodo.classList.remove("is-invalid");
+        formEvento.apodo.classList.remove("is-invalid");
         $('#helpApodo').text("");
     }
 
@@ -529,19 +563,19 @@ document.addEventListener('DOMContentLoaded', function() {
     function reset_errors_ladireccion(){      
         formEvento.contacto_id_full.classList.remove("is-invalid");
         $('#helpContacto_id_full').text("");
-        formDireccion.full_name.classList.remove("is-invalid");
+        formEvento.full_name.classList.remove("is-invalid");
         $('#helpFull_name').text("");
-        formDireccion.ladireccion.classList.remove("is-invalid");
+        formEvento.ladireccion.classList.remove("is-invalid");
         $('#helpLadireccion').text("");
-        formDireccion.eltelefono.classList.remove("is-invalid");
+        formEvento.eltelefono.classList.remove("is-invalid");
         $('#helpEltelefono').text("");
-        formDireccion.cp.classList.remove("is-invalid");
+        formEvento.cp.classList.remove("is-invalid");
         $('#helpCp').text("");
-        formDireccion.pais.classList.remove("is-invalid");
+        formEvento.pais.classList.remove("is-invalid");
         $('#helpPais').text("");
-        formDireccion.poblacion.classList.remove("is-invalid");
+        formEvento.poblacion.classList.remove("is-invalid");
         $('#helpPoblacion').text("");
-        formDireccion.provincia.classList.remove("is-invalid");
+        formEvento.provincia.classList.remove("is-invalid");
         $('#helpProvincia').text("");      
     }
 
