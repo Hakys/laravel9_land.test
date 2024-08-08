@@ -70,7 +70,7 @@ class ContactoController extends Controller
     }
 
     public function store(Request $request){ 
-        //Log::info($request->all());
+        Log::info($request->all());
         request()->validate(Contacto::$rules);
         $c = new Contacto();
         $c->setApodo($request->apodo);
@@ -80,7 +80,7 @@ class ContactoController extends Controller
     } 
 
     public function update(Request $request, $id){ 
-        //Log::info($request->all());
+        Log::info($request->all());
         $c = Contacto::where('id',$id)->first();
         $c->validator($request->all());
         $c->update([

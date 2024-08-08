@@ -31,8 +31,8 @@
                                     <input type="text" name="id" id="id" hidden/>
                                     <input type="datetime" name="start" id="start" hidden/>  
                                     <input type="datetime" name="end" id="end" hidden/> 
-                                    <input type="text" name="contacto_id" id="contacto_id"/>  
-                                    <input type="text" name="direccion_id" id="direccion_id"/>  
+                                    <input type="text" name="contacto_id" id="contacto_id" hidden/>  
+                                    <input type="text" name="direccion_id" id="direccion_id" hidden/>  
                                 </div>
                                 <div class="flex">
                                     <div class="form-floating mb-3">
@@ -70,10 +70,10 @@
                                     </div>                                    
                                     <small id="helpDuration" class="text-danger"></small>                                    
                                     <div class="ps-1 mt-2"><h6>Anfitrión/a:</h6></div> 
-                                    <div class="input-group">             
+                                    <div class="input-group">                                       
                                         <button class="btn btn-success" type="button" id="btn_contacto_id_full">  
                                             <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
-                                        </button>   
+                                        </button>                                                                  
                                         <input list="clientes" name="contacto_id_full" class="form-control"
                                             id="contacto_id_full"
                                             aria-label="Clientes" aria-describedby="helpContacto_id_full"
@@ -89,10 +89,10 @@
                                     <small id="helpContacto_id_full" class="text-danger"></small> 
                                     
                                     <div class="ps-1 mt-2"><h6>Dirección:</h6></div> 
-                                    <div class="input-group"> 
+                                    <div class="input-group">  
                                         <button class="btn btn-success" type="button" id="btn_direccion_id_full">
                                             <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
-                                        </button>     
+                                        </button>                                     
                                         <select name="direccion_id_full" id="direccion_id_full" placeholder="Seleccione una Dirección." 
                                             class="form-select" aria-describedby="helpDireccion_id_full"></select>
                                     </div>                                

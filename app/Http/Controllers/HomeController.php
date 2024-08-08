@@ -10,7 +10,6 @@ class HomeController extends Controller
     {
         $viewData = [];
         $viewData["title"] = "Home Page - Online Store";
-        $viewData["page"] = "dashboard";
         return view('home.index')->with("viewData", $viewData);
     }
     public function about()

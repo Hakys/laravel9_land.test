@@ -1,33 +1,9 @@
 @import "../node_modules/bootstrap/scss/functions";
-@import "../node_modules/bootstrap/scss/variables";
-@import "../node_modules/bootstrap/scss/mixins";
-
-/******* Customized Bootstrap ********/
-$primary: #009CFF;
-$light: #F3F6F9;
-$dark: #191C24;
-$font-family-base: 'Heebo', sans-serif;
-
-$body-bg: $light;
-
-$body-color: #757575;
-
-$headings-color: $dark;
-
-$headings-font-weight: 700;
-
-$enable-responsive-font-sizes: true;
-
-$border-radius: 5px;
-
-$link-decoration: none;
-
-$enable-negative-margins: true;
 
 $enable-grid-classes: true;
 
 // Body
-//$body-bg: #137be2;
+$body-bg: #137be2;
 
 // Typography
 $font-family-sans-serif: 'Nunito', sans-serif;
@@ -41,3 +17,6 @@ $custom-colors: (
 
 // Merge the maps
 $theme-colors: map-merge($theme-colors, $custom-colors);
+
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";
