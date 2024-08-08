@@ -310,7 +310,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
-    function sendDataEvento(url){ 
+    function sendDataEvento(url){
         reset_errors_evento();
         const datos = new FormData(formEvento); 
         //console.log(datos);
