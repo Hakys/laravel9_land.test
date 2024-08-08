@@ -55,8 +55,6 @@ document.addEventListener('DOMContentLoaded', function() {
             formEvento.hora.value = "16:30";              
             formEvento.duration.value = "02:00"; 
             loadContacts();
-            reset_direccion();
-            reset_ladireccion();
             formEvento.n_personas.value = 7;
             formEvento.p_entrada.value = 5;
             formEvento.t_entradas.value = 35;
@@ -188,7 +186,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById("btnGuardarTodo").addEventListener("click",function(){
         storeContacto();
-        console.log("GuardarTodo "+formEvento.contacto_id.value)
         storeDireccion();
         storeEvento();
     });
@@ -208,8 +205,8 @@ document.addEventListener('DOMContentLoaded', function() {
             sendDataContacto("/contactos/update/"+formEvento.contacto_id.value);
         else{
             sendDataContacto("/contactos/store");
-            //reset_direccion();
-            //reset_ladireccion();
+            reset_direccion();
+            reset_ladireccion();
         }
     }
 
@@ -272,7 +269,7 @@ document.addEventListener('DOMContentLoaded', function() {
         //console.log(datos);        
         axios.post(url,datos)
             .then(response => {
-                console.log(response);
+                //console.log(response);
                 formEvento.direccion_id.value = response.data.direccion_id;
                 formEvento.direccion_id_full.value = response.data.direccion_id; 
             })
@@ -474,9 +471,8 @@ document.addEventListener('DOMContentLoaded', function() {
         formEvento.direccion_id_full.innerHTML="";
         var option = document.createElement('option');
         option.value = 0;
-        option.text = "Nueva dirección";
+        option.text = "Añade o seleccione una dirección";
         formEvento.direccion_id_full.add(option,0);
-        formEvento.direccion_id.value = "";
         formEvento.direccion_id_full.value = 0;
     }
 

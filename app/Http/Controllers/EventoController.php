@@ -53,7 +53,7 @@ class EventoController extends Controller
      */
     public function store(Request $request)
     {   
-        Log::info($request->all());
+        //Log::info($request->all());
         request()->validate(Evento::$rules);
         request()->validate(Reunion::$rules);
         $reunion = new Reunion();
