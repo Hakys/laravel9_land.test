@@ -10,20 +10,10 @@ class Direccion extends Model
 {
     use HasFactory;
 
-    static $rules_new = [
-        'full_name' => 'required',
-        'eltelefono' => 'required',                
-        'ladireccion' => 'required',                
-        'poblacion' => 'required', 
-        'provincia' => 'required',
-        'cp' => 'required',               
-        'pais' => 'required',
-    ]; 
-
     static $rules = [
         'contacto_id' => 'required|exists:contactos,id',
         'full_name' => 'required',
-        'eltelefono' => 'required',                
+        'telefono' => 'required',                
         'ladireccion' => 'required',                
         'poblacion' => 'required', 
         'provincia' => 'required',
