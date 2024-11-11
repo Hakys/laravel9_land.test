@@ -21,4 +21,13 @@ class HomeController extends Controller
         $viewData["author"] = "Developed by Hakys";
         return view('home.about')->with("viewData", $viewData);
     }
+    public function links()
+    {
+        $viewData = [];
+        $viewData["title"] = "Enlces Interes - Online Store";
+        $viewData["subtitle"] = "Enlcaes de Interes";
+        $viewData["description"] = "";
+        $viewData["author"] = "Developed by Hakys";
+        return view('home.links')->with("viewData", $viewData);
+    }
 }

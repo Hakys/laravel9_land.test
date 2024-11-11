@@ -3,8 +3,8 @@
 @section('header')
 @endsection
 @section('content')
-    <div class="row">
-        <div class="col text-center m-4"> 
+    <div class="row justify-content-md-center">
+        <div class="col-4 text-center m-4"> 
             <img src="{{ asset('/img/logo_diabla_roja.png') }}" 
                 class="img-fluid mx-auto my-auto d-block rounded" 
                 alt="Sex Shop Diabla Roja">

@@ -6,6 +6,7 @@
         <div role="document" class="modal-dialog modal-dialog-centered modal-md modal-fullscreen-sm-down">
             <div class="modal-content">
                 <div class="modal-header">
+                    <i class="fa fa-calendar-o fa-lg me-2" aria-hidden="true"></i>
                     <h5 class="modal-title" id="modalTitleId"></h5>
                     <button id="cerrar_modal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -14,10 +15,10 @@
                         <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                             <button class="nav-link active" id="nav-reunion-tab" 
                                 data-bs-toggle="tab" data-bs-target="#nav-reunion" type="button" role="tab" 
-                                aria-controls="nav-reunion" aria-selected="true">REUNIÓN</button>
+                                aria-controls="nav-reunion" aria-selected="true">DETALLES</button>
                             <button class="nav-link" id="nav-cliente-tab" 
                                 data-bs-toggle="tab" data-bs-target="#nav-cliente" type="button" role="tab" 
-                                aria-controls="nav-cliente" aria-selected="false">ANFITRIÓN/A</button>
+                                aria-controls="nav-cliente" aria-selected="false">DIRECCIÓN</button>
                         </div>
                     </nav>
                 </div>
@@ -25,7 +26,7 @@
                     <div class="tab-content border border-1 bs-border-color rounded-2 p-2 border-top-0 rounded-top-0" id="nav-tabContent">
                         {{-- EVENTO --}} 
                         <div class="tab-pane fade show active" id="nav-reunion" role="tabpanel" aria-labelledby="nav-reunion-tab">
-                            <form action ="" id="formularioEvento">
+                            <form action="" id="formularioEvento">
                                 @csrf  
                                 <div class="flex">
                                     <input type="text" name="id" id="id" hidden/>
@@ -35,16 +36,19 @@
                                     <input type="text" name="direccion_id" id="direccion_id" hidden/>  
                                 </div>
                                 <div class="flex">
+                                    <!--
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control" aria-describedby="helpTitle"
                                             name="title" id="title" />
                                         <label for="title">Título / Descripción:</label>                                
                                         <small id="helpTitle" class="text-danger"></small>
                                     </div>
+                                    -->
                                     <div class="input-group">
-                                        <span class="input-group-text">Día y Hora:</span>
+                                        <span class="input-group-text">Día:</span>
                                         <input type="date" id="fecha" name="fecha" aria-describedby="helpFecha"
                                             class="form-control form-control-lg">
+                                            <span class="input-group-text">Hora:</span>
                                         <input type="time" id="hora" name="hora" list="horas" 
                                             class="form-control form-control-lg" aria-describedby="helpHora">
                                         <datalist id="horas" class="w-100">
@@ -58,22 +62,30 @@
                                         <small id="helpHora" class="text-danger"></small>
                                     </div>                                    
                                     <div class="row justify-content-end">
+                                        <div class="col">
+                                            <div class="input-group">
+                                                <span class="input-group-text">Estado:</span>  
+                                                <select name="estado" id="estado" class="form-select text-uppercase"></select>     
+                                            </div> 
+                                            <small id="helpEstado" class="text-danger"></small> 
+                                        </div>
                                         <div class="col-auto">
                                             <div class="input-group">
                                                 <span class="input-group-text">Duración:</span>                                
                                                 <input type="time" id="duration" name="duration" 
                                                     class="form-control form-control-lg fs-6"
                                                     aria-describedby="helpDuration">
-                                                 
                                             </div>
                                         </div>
                                     </div>                                    
                                     <small id="helpDuration" class="text-danger"></small>                                    
                                     <div class="ps-1 mt-2"><h6>Anfitrión/a:</h6></div> 
-                                    <div class="input-group">                                       
+                                    <div class="input-group">  
+                                        <!--                                     
                                         <button class="btn btn-success" type="button" id="btn_contacto_id_full">  
-                                            <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+                                            <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
                                         </button>                                                                  
+                                        -->
                                         <input list="clientes" name="contacto_id_full" class="form-control"
                                             id="contacto_id_full"
                                             aria-label="Clientes" aria-describedby="helpContacto_id_full"
@@ -86,15 +98,14 @@
                                             </button>
                                         </div> 
                                     </div>               
-                                    <small id="helpContacto_id_full" class="text-danger"></small> 
-                                    
+                                    <small id="helpContacto_id_full" class="text-danger"></small>                                     
                                     <div class="ps-1 mt-2"><h6>Dirección:</h6></div> 
-                                    <div class="input-group">  
-                                        <button class="btn btn-success" type="button" id="btn_direccion_id_full">
-                                            <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
-                                        </button>                                     
+                                    <div class="input-group">                                       
                                         <select name="direccion_id_full" id="direccion_id_full" placeholder="Seleccione una Dirección." 
                                             class="form-select" aria-describedby="helpDireccion_id_full"></select>
+                                        <button class="btn btn-outline-success" type="button" id="btn_direccion_id_full">
+                                            <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
+                                        </button>
                                     </div>                                
                                     <div class="mb-3">
                                         <small id="helpDireccion_id_full" class="text-danger mb-3"></small>
@@ -129,17 +140,13 @@
                                     </div>                                  
                                     <div class="row align-items-center">
                                         <div class="col-md form-floating">
-                                            <div class="input-group">
-                                                <span class="input-group-text">Estado:</span>  
-                                                <select name="estado" id="estado" class="form-select text-uppercase"></select>     
-                                            </div>   
-                                        </div>
-                                        <div class="col-auto form-floating">
                                             <div class="row form-check form-switch fs-5 m-3">
                                                 <input type="checkbox" name="chicas" id="chicas" 
                                                     class="form-check-input rounded-3"/>
                                                 <label class="form-check-label" for="chicas">Sólo Chicas</label>
                                             </div>
+                                        </div>
+                                        <div class="col-auto form-floating">
                                             <div class="row form-check form-switch fs-5 m-3">
                                                 <input type="checkbox" name="prepago" id="prepago" 
                                                     class="form-check-input rounded-3"/>
@@ -147,39 +154,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <small id="helpEstado" class="text-danger"></small> 
+                                    
                                 </div>
                             </form>
                         </div>
-                        {{-- CLIENTE --}}
-                        <div class="tab-pane fade" id="nav-cliente" role="tabpanel" aria-labelledby="nav-cliente-tab">
-                            <form id="formularioContacto" action="">     
-                                @csrf                                         
-                                <div class="mt-2"><h6>Datos del Cliente:</h6></div>                                      
-                                <div class="form-floating mb-2">
-                                    <input type="text" id="apodo" name="apodo" placeholder="Nombre Completo" 
-                                        class="form-control rounded-3" aria-describedby="helpApodo">
-                                    <label for="apodo">Nombre Completo</label>
-                                    <small id=helpApodo class="text-danger"></small>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-floating">
-                                            <input type="text" id="telefono" name="telefono" placeholder="Teléfono" 
-                                                class="form-control rounded-3" aria-describedby="helpTelefono">
-                                            <label for="telefono">Teléfono</label>
-                                        </div>  
-                                    </div>
-                                    <div class="col mi-modal-footer">
-                                        <button class="btn btn-info text-white" type="button" id="btnContactoNuevo">
-                                            <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
-                                        </button> 
-                                        <button type="button" class="btn btn-success" id="btnContactoGuardar">Guardar</button>
-                                        <button type="button" class="btn btn-secondary" id="btnContactoReset">Reset</button>
-                                    </div>
-                                    <small id="helpTelefono" class="text-danger"></small>
-                                </div>
-                            </form>                             
+                        {{-- DIRECCION --}}
+                        <div class="tab-pane fade" id="nav-cliente" role="tabpanel" aria-labelledby="nav-cliente-tab">                        
                             <form id="formularioDireccion" action="">  
                                 @csrf                                            
                                 <div class="mt-2"><h6>Dirección del Cliente:</h6></div> 
@@ -253,11 +233,15 @@
                                     </div>                                
                                     <div class="col">
                                         <div class="mi-modal-footer">
+                                            <!--
                                             <button class="btn btn-info text-white" type="button" id="btnDireccionNuevo">
                                                 <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
                                             </button>
-                                            <button type="button" class="btn btn-success" id="btnDireccionGuardar">Guardar</button>
+                                            -->
+                                            <button type="button" class="btn btn-success" id="btnDireccionGuardar">Guardar Dirección https://fontawesome.com/v4/icons/</button>
+                                            <!--
                                             <button type="button" class="btn btn-secondary" id="btnDireccionReset">Reset</button>
+                                            -->
                                         </div>
                                     </div>
                                 </div>    
@@ -267,7 +251,9 @@
                     </div>      
                 </div>
                 <div class="modal-footer"> 
+                    <!--
                     <button type="button" class="btn btn-secondary" id="btnCerrar" data-bs-dismiss="modal">Cerrar</button>
+                    -->
                     <button type="button" class="btn btn-danger" id="btnEliminarEvento">Eliminar Evento</button>
                     <button type="button" class="btn btn-success" id="btnGuardarTodo">Guardar Evento</button>
                 </div> 

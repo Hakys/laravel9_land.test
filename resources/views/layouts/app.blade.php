@@ -9,7 +9,7 @@
     <title>@yield('title', ' - Diabla Roja')</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="favicon.ico" /> 
-    @vite(['resources/js/app.js'])
+    @vite(['resources/js/app.js', 'resources/css/app.scss'])
     @livewireStyles
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"     
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -36,6 +36,7 @@
                         <a class="nav-link" href="{{ route('contacto.index') }}">Contactos</a> 
                         <a class="nav-link" href="{{ route('prestashop.product.index') }}">Prestashop Products</a>
                         <a class="nav-link" href="{{ route('cart.index') }}">Cart</a>
+                        <a class="nav-link" href="{{ route('home.links') }}">Links</a>
                         @endauth
                         <!-- 
                         <a class="nav-link" href="{{ route('home.about') }}">About</a>

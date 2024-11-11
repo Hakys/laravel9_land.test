@@ -13,6 +13,7 @@
             <div><a class="btn btn-info text-white" href="{{route('reunion.gestion')}}">                    
                 <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
                 </a></div>-->
+                @livewire('contacto.form-modal',['op'=>'create','to'=>'reunion.index'])
         </div>
         <div class="card-body">
             <div class="row">
