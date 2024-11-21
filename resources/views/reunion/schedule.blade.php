@@ -18,7 +18,9 @@
                                 aria-controls="nav-reunion" aria-selected="true">DETALLES</button>
                             <button class="nav-link" id="nav-cliente-tab" 
                                 data-bs-toggle="tab" data-bs-target="#nav-cliente" type="button" role="tab" 
-                                aria-controls="nav-cliente" aria-selected="false">DIRECCIÓN</button>
+                                aria-controls="nav-cliente" aria-selected="false">
+                                <i class="fa fa-address-card-o fa-lg me-2" aria-hidden="true"></i>
+                                DIRECCIÓN</button>
                         </div>
                     </nav>
                 </div>
@@ -238,7 +240,10 @@
                                                 <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
                                             </button>
                                             -->
-                                            <button type="button" class="btn btn-success" id="btnDireccionGuardar">Guardar Dirección https://fontawesome.com/v4/icons/</button>
+                                            <button type="button" class="btn btn-outline-success" id="btnDireccionGuardar">
+                                                <i class="fa fa-address-card-o fa-lg me-2" aria-hidden="true"></i>
+                                                Guardar
+                                            </button>
                                             <!--
                                             <button type="button" class="btn btn-secondary" id="btnDireccionReset">Reset</button>
                                             -->
@@ -254,8 +259,10 @@
                     <!--
                     <button type="button" class="btn btn-secondary" id="btnCerrar" data-bs-dismiss="modal">Cerrar</button>
                     -->
-                    <button type="button" class="btn btn-danger" id="btnEliminarEvento">Eliminar Evento</button>
-                    <button type="button" class="btn btn-success" id="btnGuardarTodo">Guardar Evento</button>
+                    <button type="button" class="btn btn-outline-danger" id="btnEliminarEvento">
+                        <i class="fa fa-calendar-o fa-lg me-2" aria-hidden="true"></i>Eliminar</button>
+                    <button type="button" class="btn btn-outline-success" id="btnGuardarTodo">
+                        <i class="fa fa-calendar-o fa-lg me-2" aria-hidden="true"></i>Guardar</button>
                 </div> 
             </div>
         </div>

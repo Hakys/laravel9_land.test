@@ -1,53 +1,58 @@
 <div>
-  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#DireccionFormModal{{$id_dir}}" >
+  <button type="button" class="btn btn-outline-success text-nowrap" data-bs-toggle="modal" data-bs-target="#DireccionFormModal{{$id_dir}}" >
     @if ($op=="create")
-      <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
+      <i class="fa fa-plus fa-lg me-2" aria-hidden="true"></i><i class="fa fa-address-card-o fa-lg" aria-hidden="true"></i>
     @else
       <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
     @endif
   </button>
-  <div wire:ignore.self class="modal fade" id="DireccionFormModal{{$id_dir}}" tabindex="-1" 
+  <div wire:ignore.self class="modal fade" id="DireccionFormModal{{$id_dir}}" tabindex="-1"
     aria-labelledby="DireccionFormModalLabel{{$id_dir}}" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
+      <div class="modal-content p-2">
         <form>
-        <div class="modal-header">
-          <h5 class="modal-title" id="DireccionFormModalLabel{{$id_dir}}">{{$titleform}}</h5>
+        <div class="modal-header d-flex justify-content-between">
+            <i class="fa fa-address-card-o fa-lg me-2 mh-100" aria-hidden="true"></i>
+            <div>
+                <h5 class="modal-title text-start" id="DireccionFormModalLabel{{$id_dir}}">
+                    {{$titleform}}</h5>
+                <h6>{{$contacto->getApodo()}}</h6>
+            </div>
           <button wire:click="close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body" x-data="{ recoge: @entangle('recoge') }">          
+        <div class="modal-body" x-data="{ recoge: @entangle('recoge') }">
           <div class="form-floating mb-2">
-            <input wire:model="telefono" type="text" id="telefono" name="telefono" placeholder="Teléfono" 
+            <input wire:model="telefono" type="text" id="telefono" name="telefono" placeholder="Teléfono"
                 value="{{ old('telefono') }}"
                 class="form-control rounded-3 @error('telefono') is-invalid @enderror">
             <label for="telefono">Teléfono</label>
             @error('telefono')<small class="text-danger">{{ $message }}</small>@enderror
           </div>
-          <div class="d-flex align-items-start mb-2">              
-            <input wire:model="recoge" type="checkbox" id="recoge" name="recoge" 
+          <div class="d-flex align-items-start mb-2">
+            <input wire:model="recoge" type="checkbox" id="recoge" name="recoge"
                 value="" @if(old('recoge')) checked @endif
                 class="form-check-input rounded-3 me-2 @error('recoge') is-invalid @enderror">
             <label for="recoge" class="form-check-label">Entrega en Mano, Recoge Huelva</label>
             @error('recoge')<small class="text-danger">{{ $message }}</small>@enderror
           </div>
           <div class="form-floating mb-2">
-              <input wire:model="full_name" type="text" id="full_name" name="full_name" placeholder="Nombre Completo" 
+              <input wire:model="full_name" type="text" id="full_name" name="full_name" placeholder="Nombre Completo"
                   value="{{ old('full_name') }}" @disabled(old('recoge'))
                   class="form-control rounded-3 @error('full_name') is-invalid @enderror" >
               <label for="full_name">Nombre Completo</label>
               @error('full_name')<small class="text-danger">{{ $message }}</small>@enderror
-          </div>            
+          </div>
           <div class="form-floating mb-2">
-            <input wire:model="ladireccion" type="text" id="ladireccion" name="ladireccion" placeholder="Dirección Completa" 
+            <input wire:model="ladireccion" type="text" id="ladireccion" name="ladireccion" placeholder="Dirección Completa"
                 value="{{ old('ladireccion') }}"
                 class="form-control rounded-3 @error('ladireccion') is-invalid @enderror">
             <label for="ladireccion">Dirección Completa</label>
             @error('ladireccion')<small class="text-danger">{{ $message }}</small>@enderror
-          </div>            
+          </div>
           <div class="row">
-            <div class="col-md-4"> 
+            <div class="col-md-4">
               <div class="form-floating mb-2">
-                <input wire:model="cp" type="text" id="cp" name="cp" placeholder="Código Postal" 
+                <input wire:model="cp" type="text" id="cp" name="cp" placeholder="Código Postal"
                     value="{{ old('cp') }}" @disabled($recoge)
                     class="form-control rounded-3 @error('cp') is-invalid @enderror">
                 <label for="cp">Código Postal</label>
@@ -56,18 +61,18 @@
             </div>
             <div class="col">
               <div class="form-floating mb-2">
-                <input wire:model="poblacion" type="text" id="poblacion" name="poblacion" placeholder="Población" 
+                <input wire:model="poblacion" type="text" id="poblacion" name="poblacion" placeholder="Población"
                     value="{{ old('poblacion') }}"
                     class="form-control rounded-3 @error('poblacion') is-invalid @enderror">
                 <label for="poblacion">Población</label>
                 @error('poblacion')<small class="text-danger">{{ $message }}</small>@enderror
-              </div>                
+              </div>
             </div>
           </div>
           <div class="row">
-            <div class="col"> 
+            <div class="col">
               <div class="form-floating mb-2">
-                <input wire:model="provincia" type="text" id="provincia" name="provincia" placeholder="Provincia" 
+                <input wire:model="provincia" type="text" id="provincia" name="provincia" placeholder="Provincia"
                     value="{{ old('provincia') }}" @disabled($recoge)
                     class="form-control rounded-3 @error('provincia') is-invalid @enderror">
                 <label for="provincia">Provincia</label>
@@ -76,18 +81,18 @@
             </div>
             <div class="col-md-4">
               <div class="form-floating mb-2">
-                <input wire:model="pais" type="text" id="pais" name="pais" placeholder="País" 
+                <input wire:model="pais" type="text" id="pais" name="pais" placeholder="País"
                     value="{{ old('pais') }}" @disabled($recoge)
                     class="form-control rounded-3 @error('pais') is-invalid @enderror">
                 <label for="pais">Pais</label>
                 @error('pais')<small class="text-danger">{{ $message }}</small>@enderror
-              </div>                
+              </div>
             </div>
           </div>
           <div class="row">
-            <div class="col-md-4"> 
+            <div class="col-md-4">
               <div class="form-floating mb-2">
-                <input wire:model="nif" type="text" id="nif" name="nif" placeholder="NIF ó CIF" 
+                <input wire:model="nif" type="text" id="nif" name="nif" placeholder="NIF ó CIF"
                     value="{{ old('nif') }}" @disabled($recoge)
                     class="form-control rounded-3 @error('nif') is-invalid @enderror">
                 <label for="nif">NIF ó CIF</label>
@@ -96,22 +101,22 @@
             </div>
             <div class="col">
               <div class="form-floating mb-2">
-                <input wire:model="email" type="text" id="email" name="email" placeholder="Correo Electrónico" 
+                <input wire:model="email" type="text" id="email" name="email" placeholder="Correo Electrónico"
                     value="{{ old('email') }}" @disabled($recoge)
                     class="form-control rounded-3 @error('email') is-invalid @enderror">
                 <label for="email">Correo Electrónico</label>
                 @error('email')<small class="text-danger">{{ $message }}</small>@enderror
-              </div>                
+              </div>
             </div>
-          </div>                     
+          </div>
         </div>
-        <div class="modal-footer d-flex">                   
+        <div class="modal-footer d-flex">
           @if($op=='edit')
-          <button id='btn_delete' type="button" class="btn btn-danger" wire:click="delete">
-            <i class="bi-trash"></i>
+          <button id='btn_delete' type="button" class="btn btn-outline-danger" wire:click="delete">
+            <i class="fa fa-trash"></i>
           </button>
           @endif
-          <button wire:click="submit" type="button" class="btn rounded-3 btn-primary">Guardar</button>
+          <button wire:click="submit" type="button" class="btn rounded-3 btn-outline-primary">Guardar</button>
         </div>
         </form>
       </div>

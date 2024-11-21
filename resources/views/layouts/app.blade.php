@@ -30,10 +30,11 @@
                     <div class="navbar-nav ms-auto">     
                         <!--<a class="nav-link" href="{{ route('home.index') }}">Home</a>-->
                         @auth
-                        <a class="nav-link" href="{{ route('reunion.index') }}">Agenda TPS</a>
+                        <a class="nav-link" href="{{ route('contacto.index') }}">Contactos</a> 
+                        <a class="nav-link" href="{{ route('reunion.index') }}">Calendario TPS</a>
                         <a class="nav-link" href="{{ route('reunion.gestion') }}">Gestión TPS</a>
                         <a class="nav-link" href="{{ route('product.index') }}">Productos</a>
-                        <a class="nav-link" href="{{ route('contacto.index') }}">Contactos</a> 
+                        
                         <a class="nav-link" href="{{ route('prestashop.product.index') }}">Prestashop Products</a>
                         <a class="nav-link" href="{{ route('cart.index') }}">Cart</a>
                         <a class="nav-link" href="{{ route('home.links') }}">Links</a>

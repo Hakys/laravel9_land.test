@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Log;
 class ReunionController extends Controller
 {
     public function index(){
-        $viewData["title"] = "Reuniones Tuppersex";
-        $viewData["subtitle"] = "Agenda Tuppersex";
+        $viewData["title"] = "Reuniones";
+        $viewData["subtitle"] = "Calendario Tuppersex";
         $viewData["ant"] = "";        
         $viewData["hoy"] = Reunion::formatFecha(time());
         $viewData["reunions"] = Reunion::orderBy('fecha', 'DESC')->get();

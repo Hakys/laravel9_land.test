@@ -2,7 +2,9 @@
     <div class="table-responsive">
         <table class="table table-bordered table-hover table-striped align-middle caption-top ">
             <thead>
-                <caption><h5>Direciones Asociadas</h5></caption>
+                <caption><h5> 
+                    <i class="fa fa-address-card-o fa-lg me-2" aria-hidden="true"></i>
+                    Direciones Asociadas</h5></caption>
                 <tr class="text-center">
                     <th scope="col">Nombre Completo</th>
                     <th scope="col">Dirección</th>
@@ -12,7 +14,7 @@
             </thead>
             <tbody class="table-group-divider">
                 @forelse ($contacto->direccions as $item)
-                    <tr>
+                    <tr class="text-nowrap">
                         <td scope="row" class="text-start">{{$item->GetFull_name()}}</td>
                         <td>{{$item->getDireccion()}}</td>
                         <td>{{$item->getPoblacion()}}</td>

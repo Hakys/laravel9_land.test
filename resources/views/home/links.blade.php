@@ -9,16 +9,16 @@
                 <li class="list-group-item">
                     <h2>DISEÑO</h2> 
                     <div class="list-group text-start">
-                        <a href="https://photokit.com/colors/color-wheel/?lang=es" 
+                        <a href="https://photokit.com/colors/color-wheel/?lang=es" target="_blank" 
                             class="list-group-item list-group-item-action" aria-current="true">
                             Rueda de Color
                         </a>
-                        <a href="https://getbootstrap.com/docs/5.3/getting-started/introduction/" 
+                        <a href="https://getbootstrap.com/docs/5.3/getting-started/introduction/" target="_blank" 
                             class="list-group-item list-group-item-action">Bootstrap v5.3 Docs
                         </a>
-                        <!--
-                        <a href="#" class="list-group-item list-group-item-action">A third link item</a>
-                        <a href="#" class="list-group-item list-group-item-action">A fourth link item</a>
+                        <a href=" https://fontawesome.com/v4/icons/" target="_blank"
+                            class="list-group-item list-group-item-action">Iconos Fontawesome</a>
+                        <!-- <a href="#" class="list-group-item list-group-item-action">A fourth link item</a>
                         <a class="list-group-item list-group-item-action disabled" aria-disabled="true">A disabled link item</a>
                         -->
                     </div>

@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
     calendar.render();
 
     document.getElementById("cerrar_modal").addEventListener("click",clear_form);
-    document.getElementById("btnCerrar").addEventListener("click",clear_form);
+    //document.getElementById("btnCerrar").addEventListener("click",clear_form);
 /*
     document.getElementById("btn_contacto_id_full").addEventListener("click",function(){
         $('#nav-cliente-tab').trigger( "click" );

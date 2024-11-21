@@ -55,7 +55,7 @@ class FormModal extends Component
             ];
             $this->apodo = $contacto->getApodo();
             $this->telefono = $contacto->getTelefono();
-            $this->titleform ="Editar Contacto: ".$this->telefono;
+            $this->titleform ="Editar Contacto";
         }
     }
 

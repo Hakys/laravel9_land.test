@@ -1,7 +1,15 @@
 //aqui las pesonalizaciones
 $body-bg: #ffffff;
 //$primary: #999999;
+.fa-6 {
+    font-size: 8em;
+    border: 1;
+}
 
+.mitable {
+    text-decoration: none;
+    white-space: nowrap; 
+}
 // Fonts
 @import url('https://fonts.bunny.net/css?family=Nunito');
 

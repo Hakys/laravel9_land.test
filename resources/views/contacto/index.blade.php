@@ -10,9 +10,7 @@
             @livewire('contacto.form-modal',['op'=>'create','to'=>'contacto.index'])
         </div>
         <div class="card-body">
-            <div class="row">
-                @livewire('contacto.index')
-            </div>
+            @livewire('contacto.index')
         </div>
     </div>
 @endsection

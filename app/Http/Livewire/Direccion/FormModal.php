@@ -54,11 +54,11 @@ class FormModal extends Component
             'contacto_id' => 'required|exists:contactos,id'
         ]; 
         if($this->op=="create"){
-            $this->titleform ="Nueva Dirección para ".$this->contacto->getApodo();              
+            $this->titleform ="Nueva Dirección para";              
             $this->telefono = $this->contacto->getTelefono();
             $this->full_name = $this->contacto->getApodo();
         }else if(($this->op=="edit")&& ($direccion)){  
-            $this->titleform ="Editar Dirección de ".$this->contacto->getApodo();
+            $this->titleform ="Editar Dirección de";
             $this->direccion = $direccion;
             $this->id_dir = $direccion->getId();  
             $this->telefono = $direccion->getTelefono();          
@@ -84,7 +84,8 @@ class FormModal extends Component
             }            
             $this->ladireccion = 'Recoge'; 
             $this->poblacion = 'Huelva';
-            $this->reset(['cp','provincia','pais','email','nif']);
+            $this->pais = 'España';
+            $this->reset(['cp','provincia','email','nif']);
         }else{
             if($this->op=="create"){
                 $this->reset(['ladireccion','poblacion']);

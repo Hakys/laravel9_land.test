@@ -17,8 +17,8 @@ class ContactoSeeder extends Seeder
     public function run()
     {
         $contactos = [
-            ["apodo" => "Antonio", "telefono" => "653178954"],
-            ["apodo" => "Julia", "telefono" => "695811711"],
+            ["apodo" => "00 Antonio", "telefono" => "653178954"],
+            ["apodo" => "00 Julia", "telefono" => "695811711"],
         ];
         foreach($contactos as $contacto){
             $c = Contacto::Create($contacto);
@@ -27,7 +27,7 @@ class ContactoSeeder extends Seeder
             $d = Direccion::factory()->create(["contacto_id" => $c->getId()]);
         }
 
-        $contactos = Contacto::factory(10)->create();
+        $contactos = Contacto::factory(100)->create();
         foreach($contactos as $c){
             Direccion::factory()->create(["contacto_id" => $c->getId()]);
             Direccion::factory()->create(["contacto_id" => $c->getId()]);
