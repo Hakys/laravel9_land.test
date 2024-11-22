@@ -38,9 +38,10 @@
             </div>
         </div>
         <div class="row">
-            <table class="mitable table table-bordered table-striped">
+            <table class="mitable table table-responsive table-bordered table-striped align-middle">
                 <thead class="table-light">
                     <tr class="text-center bg-">
+                        <th></th>
                         <th scope="col">Nombre / Apodo</th>
                         <th scope="col">Teléfono</th>
                         <th scope="col"><i class="fa fa-address-card-o fa-lg" aria-hidden="true"></i></th>
@@ -49,6 +50,10 @@
                 <tbody>
                     @foreach ($contactos as $contacto)
                         <tr class='clickable-row' data-href='{{ route("contacto.show", ['telefono' => $contacto->getTelefono()]) }}'>
+                            <td class="cell-con-imagen bor" style="background-image: url('{{ $contacto->getAvatar() }}');">
+                                <!-- <img src="{{ $contacto->getAvatar() }}" alt=""
+                                     class="img_avatar img-fluid object-cover d-block mx-auto"> -->
+                            </td>
                             <td class="text-start">{{ $contacto->getApodo() }}</td>
                             <td class="text-end">{{ $contacto->getTelefono() }}</td>
                             <td class="text-center">{{ $contacto->direccions->count()}}</td>
@@ -63,8 +68,16 @@
     .clickable-row{
         cursor: pointer;
     }
+    .img_avatar{
+        height:30px;
+    }
     .mano{
         cursor: pointer;
+    }
+    .cell-con-imagen {
+      background-size: cover;
+      background-position: center;
+      width: 50px;
     }
 </style>
 <script>

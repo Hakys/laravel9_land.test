@@ -9,10 +9,10 @@
   <div wire:ignore.self class="modal fade" id="DireccionFormModal{{$id_dir}}" tabindex="-1"
     aria-labelledby="DireccionFormModalLabel{{$id_dir}}" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content p-2">
+      <div class="modal-content px-2 pb-2">
         <form>
         <div class="modal-header d-flex justify-content-between">
-            <i class="fa fa-address-card-o fa-lg me-2 mh-100" aria-hidden="true"></i>
+            <i class="fa fa-address-card-o fa-2x me-2" aria-hidden="true"></i>
             <div>
                 <h5 class="modal-title text-start" id="DireccionFormModalLabel{{$id_dir}}">
                     {{$titleform}}</h5>

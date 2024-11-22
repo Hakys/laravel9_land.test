@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use App\Repositories\Utilities\UIAvatar;
 
 class Contacto extends Model
 {
@@ -69,15 +70,17 @@ class Contacto extends Model
 
     public function getApodo(){ return strtoupper($this->attributes['apodo']); }
     public function setApodo($apodo){ $this->attributes['apodo'] = $apodo; }
-    
-    public function getTelefono()
-    {
-        return $this->attributes['telefono'];
+
+    public function getTelefono(){ return $this->attributes['telefono']; }
+    public function setTelefono($telefono){ $this->attributes['telefono'] = $telefono; }
+
+    public function getAvatar(){ return UIAvatar::img_avatar_route($this->attributes['apodo']); }
+    public function setAvatar(){
+        $avatar = new UIAvatar();
+        $avatar->gen_avatar_random($this->attributes['apodo']);
+        $this->attributes['avatar'] = $avatar->img_avatar_name($this->attributes['apodo']);
     }
-    public function setTelefono($telefono)
-    {
-        $this->attributes['telefono'] = $telefono;
-    }
+
     public function getCreatedAt()
     {
         return $this->attributes['created_at'];

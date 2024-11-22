@@ -4,8 +4,14 @@
 @section('content')
     <div class="card mb-3 p-3">
         <div class="d-flex mb-3">
+            <div class="flex-shrink-0">
+                <a href="javascript://" onclick="history.back();" class="btn btn-outline-gray" role="button">
+                    <i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
+                </a>
+            </div>
             <div class="flex-shrink-0 border p-3">
-                <i class="fa fa-user fa-6" aria-hidden="true"></i>
+                <img src="{{ '/img/avatar/'.Str::slug($viewData['contacto']->getApodo()).'.png' }}"
+                    alt="" class="w-full h-80 object-cover object-center">
             </div>
             <div class="flex-grow-1 d-flex mb-3">
                 <div class="card-body me-auto">

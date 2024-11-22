@@ -16,15 +16,21 @@ class FormModal extends Component
 
     public $rules;
 
+    public function gen_avatar(){
+        $avatar = new UIAvatar();
+        $avatar->gen_avatar_random($this->apodo);
+        return redirect()->route('contacto.show',$this->contacto->getTelefono())->with('success', 'Contacto Actualizado.');
+    }
+
     public function submit(){
         if($this->op=="create"){
             $this->validate();
-            Contacto::create(['apodo'=>$this->apodo,'telefono'=>$this->telefono]);   
+            Contacto::create(['apodo'=>$this->apodo,'telefono'=>$this->telefono]);
             if($this->to){
                 return redirect()->route($this->to)->with('success', 'Nuevo Contacto Añadido.');
             }else{
-                
-            }         
+
+            }
         }else if($this->op=="edit"){
             $this->validate();
             $this->contacto->SetApodo($this->apodo);
@@ -32,7 +38,7 @@ class FormModal extends Component
             $this->contacto->save();
             return redirect()->route('contacto.show',$this->contacto->getTelefono())->with('success', 'Contacto Actualizado.');
         }
-    }   
+    }
 
     public function close(){
         if($this->op=="create")
@@ -40,14 +46,14 @@ class FormModal extends Component
     }
 
     public function mount($op,Contacto $contacto = null){
-        $this->op=$op;        
+        $this->op=$op;
         if($this->op=="create"){
             $this->rules=[
                 'apodo' => 'required|unique:contactos',
                 'telefono' => 'required|unique:contactos',
             ];
             $this->titleform ="Nuevo Contacto";
-        }else if(($this->op=="edit") && ($contacto)){  
+        }else if(($this->op=="edit") && ($contacto)){
             $this->contacto = $contacto;
             $this->rules=[
                 'apodo' => 'required|unique:contactos,apodo,'.$contacto->getId(),

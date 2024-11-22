@@ -7,6 +7,8 @@ use App\Models\Direccion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+use App\Repositories\Utilities\UIAvatar;
 
 class ContactoController extends Controller
 {
@@ -46,6 +48,7 @@ class ContactoController extends Controller
         $viewData["contacto"] = $c;
         $viewData["title"] = $c->getApodo()." - Online Store";
         $viewData["subtitle"] = "Información del Contacto ".$c->getApodo();
+        $viewData["avatar"] = UIAvatar::img_avatar_name($c->getApodo());
         return view('contacto.show')->with("viewData", $viewData);
     }
 /*
@@ -69,7 +72,7 @@ class ContactoController extends Controller
         return response()->json($response);
     }
 
-    public function store(Request $request){ 
+    public function store(Request $request){
         Log::info($request->all());
         request()->validate(Contacto::$rules);
         $c = new Contacto();
@@ -77,9 +80,9 @@ class ContactoController extends Controller
         $c->setTelefono($request->telefono);
         $c->save();
         return response()->json(['contacto_id'=>$c->getId()]);
-    } 
+    }
 
-    public function update(Request $request, $id){ 
+    public function update(Request $request, $id){
         Log::info($request->all());
         $c = Contacto::where('id',$id)->first();
         $c->validator($request->all());
@@ -88,7 +91,7 @@ class ContactoController extends Controller
             'telefono' => $request->telefono,
         ]);
         return response()->json(['contacto_id'=>$c->getId()]);
-    } 
+    }
 
     /**
      * Remove the specified resource from storage.
