@@ -31,27 +31,42 @@ class Reunion extends Model
         'p_entrada','t_entradas','direccion_id','estado'
     ];
 
-    public static function getEstados(){ 
-        return ['solicitada','reservada','confirmada','realizada','cancelada']; 
+    public static function getEstados(){
+        return ['solicitada','reservada','confirmada','realizada','cancelada'];
     }
 
     static function formatFecha($fecha){
         $f = new Carbon($fecha);
         $f->parse();
-        return ucwords($f->dayName.", ".$f->day)." de ".ucwords($f->monthName);//." de ".$f->year;        
+        return ucwords($f->dayName.", ".$f->day)." de ".ucwords($f->monthName);//." de ".$f->year;
+        //return date("l, j ",strtotime($this->fecha))." de ".date("F",strtotime($this->fecha));
+    }
+
+    static function formatFechaTabla($fecha){
+        $f = new Carbon($fecha);
+        $f->parse();
+        return ucwords($f->shortDayName.", ".$f->day)."/".ucwords($f->shortMonthName);//." de ".$f->year;
+        //return ucwords($f->dayName.", ".$f->day)."/".ucwords($f->shortMonthName);//." de ".$f->year;
         //return date("l, j ",strtotime($this->fecha))." de ".date("F",strtotime($this->fecha));
     }
 
     public function fechaDia(){
-        return $this->formatFecha($this->fecha);
+        return $this->formatFecha($this->getFecha());
+    }
+
+    public function fechaDiaTabla(){
+        return $this->formatFechaTabla($this->getFecha());
     }
 
     public function fechaHora(){
         return $this->duracion(2);
     }
+    public function fechaHoraTabla(){
+        return $this->duracion2(2);
+    }
 
     public function hora(){
-        $f = new Carbon($this->getFecha());
+        $f = new Carbon($this->getHora());
         return $f->format("H:i");
     }
 
@@ -60,8 +75,13 @@ class Reunion extends Model
     }
 
     public function duracion($horas){
-        $f = new Carbon($this->getFecha());
+        $f = new Carbon($this->getHora());
         return $f->format("H:i")." - ".$f->addHours($horas)->format("H:i");
+    }
+
+    public function duracion2($horas){
+        $f = new Carbon($this->getHora());
+        return $f->format("H:i");
     }
 
     public function direccion(){
@@ -75,11 +95,11 @@ class Reunion extends Model
 
     public function getEstado(){ return $this->attributes['estado']; }
     public function setEstado($value){
-        if(in_array($value,$this->estados)) $this->attributes['estado'] = $value; }   
+        if(in_array($value,$this->estados)) $this->attributes['estado'] = $value; }
 
     public function getId(){ return $this->attributes['id']; }
     public function setId($id){ $this->attributes['id'] = $id; }
-    
+
     public function getFecha(){ return $this->attributes['fecha']; }
     public function setFecha($value){ $this->attributes['fecha'] = $value; }
 
@@ -91,7 +111,7 @@ class Reunion extends Model
 
     public function getPrepago(){ return $this->attributes['prepago']; }
     public function setPrepago($value){ $this->attributes['prepagp'] = $value; }
-    
+
     public function getN_personas(){ return $this->attributes['n_personas']; }
     public function setN_personas($value){ $this->attributes['n_personas'] = $value; }
 

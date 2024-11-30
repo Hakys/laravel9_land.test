@@ -68,7 +68,9 @@ class UIAvatar
     }
 
     public static function img_avatar_route($nombre){
-
-        return '/img/avatar/'.UIAvatar::img_avatar_name($nombre);
+        $rutaCompleta = '/img/avatar/'.UIAvatar::img_avatar_name($nombre);
+        if(!is_file(public_path($rutaCompleta)))
+            $rutaCompleta = "/img/avatar/no-avatar.png";
+        return $rutaCompleta;
     }
 }

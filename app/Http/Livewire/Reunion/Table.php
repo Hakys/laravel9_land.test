@@ -11,7 +11,7 @@ class Table extends Component
 
     public function render()
     {
-        $this->reunions = Reunion::all();
+        $this->reunions = Reunion::orderBy('fecha','desc')->orderBy('hora','asc')->get();
         return view('livewire.reunion.table');
     }
 }

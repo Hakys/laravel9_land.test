@@ -10,7 +10,7 @@
                 </a>
             </div>
             <div class="flex-shrink-0 border p-3">
-                <img src="{{ '/img/avatar/'.Str::slug($viewData['contacto']->getApodo()).'.png' }}"
+                <img src="{{ $viewData['contacto']->getAvatar() }}"
                     alt="" class="w-full h-80 object-cover object-center">
             </div>
             <div class="flex-grow-1 d-flex mb-3">

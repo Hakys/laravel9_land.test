@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Contacto;
 
 use App\Models\Contacto;
 use Livewire\Component;
+use App\Repositories\Utilities\UIAvatar;
 
 class FormModal extends Component
 {

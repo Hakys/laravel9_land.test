@@ -3,67 +3,110 @@
 namespace App\Http\Livewire\Contacto;
 
 use Livewire\Component;
+use Livewire\Attributes\Url;
+use Livewire\WithPagination;
 use App\Models\Contacto;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 class Index extends Component
 {
-    public $letra = "";
-    public $letras = [];
-    public $numero = "__";
-    public $numeros = [];
-    public $search = "";
-    public $contactos;
+    use WithPagination;
 
-    public function updateSearch(){
-        $this->search = "";
-        $this->updatedSearch();
+    #[Url(as: 'q')]
+    public $search = "";
+
+    #[Url]
+    public $numero = "__";
+    #[Url]
+    public $letra = "";
+
+    /*
+    public $filas = 10;
+
+    //public $letras = [];
+
+    //public $numeros = [];
+
+    //public $contactos;
+*/
+    public function resetNumero(){
+        $this->numero = "__";
+        $this->resetPage();
     }
 
+    public function resetLetra(){
+        $this->letra = "";
+        $this->resetPage();
+    }
+
+    public function resetSearch(){
+        $this->search = "";
+        $this->resetPage();
+    }
+/*
     public function updatedSearch(){
         $this->letra = "";
-        $this->letras = [];
+        //$this->letras = [];
         $this->numero = "__";
-        $this->numeros = [];
-        $this->updateIndice();
+        //$this->numeros = [];
+        $this->render();
     }
 
     public function updatedNumero(){
         $this->letra = "";
-        $this->letras = [];
-        $this->updateIndice();
+        //$this->letras = [];
+        $this->render();
     }
 
     public function updatedLetra(){
-        $this->updateIndice();
+        $this->submit();
     }
-
-    public function updateIndice(){
-        if($this->search!=""){
-            $this->contactos = Contacto::where(function($query){
-                    $query->where('apodo','like','%'.$this->search.'%')
-                    ->orwhere('telefono','like','%'.$this->search.'%');
-                })
-                ->where('apodo','like',$this->numero.'_'.$this->letra.'%')
-                ->orderBy('apodo','asc')->get();
-        }else{
-            $this->contactos = Contacto::where('apodo','like',$this->numero.'_'.$this->letra.'%')
-                ->orderBy('apodo','asc')->get();
-        }
-        foreach ($this->contactos as $contacto) {
-            $this->numeros[] = $contacto->apodo[0].$contacto->apodo[1];
-            if (ctype_alpha($contacto->apodo[3]))
-                $this->letras[] = $contacto->apodo[3];
-        }
-        $this->numeros = array_unique($this->numeros);
-        $this->letras = array_unique($this->letras);
-        sort($this->numeros);
-        sort($this->letras);
-    }
-    public function mount(){
-        $this->updateIndice();
-    }
-
+*/
     public function render(){
-        return view('livewire.contacto.index');
+        $query = $contactos = Contacto::orderBy('apodo','asc');
+
+        $query->when($this->search, function($q) use ($query){
+            $q->where('apodo','like','%'.$this->search.'%')
+                ->orwhere('telefono','like','%'.$this->search.'%');
+        });
+
+        $query->when($this->numero, function($q) use ($query){
+            $q->where('apodo','like',$this->numero.'%');
+        });
+
+        $query->when($this->letra, function($q) use ($query){
+            $q->where('apodo','like','___'.$this->letra.'%');
+        });
+
+        $contactos = $query->paginate(7000);
+        $numeros=[];
+        $letras=[];
+        foreach ($contactos as $contacto) {
+            try{
+                $palabras = preg_split("/[\s,.]+/",$contacto->getApodo());
+                if($palabras==false) Log::info("Palabras: ".$contacto);
+                else{
+                    if(ctype_digit($palabras[0])){
+                        $numeros[] = $palabras[0];
+                        $letras[] = Str::upper($palabras[1][0]);
+                    }else{
+                        $letras[] = Str::upper($palabras[0][0]);
+                    }
+                }
+            }catch(Exception $e){
+                print_f($e->getMessage());
+            }
+        }
+
+        $numeros = array_unique($numeros);
+        $letras = array_unique($letras);
+        sort($numeros);
+        sort($letras);
+        return view('livewire.contacto.index',[
+            'numeros' => $numeros,
+            'letras' => $letras,
+            'contactos' => $contactos
+        ]);
     }
 }
