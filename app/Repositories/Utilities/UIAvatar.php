@@ -47,12 +47,17 @@ class UIAvatar
                     mkdir(dirname($rutaCompleta), 0755, true);
                 }
 
+                // Guardar la imagen
+                file_put_contents($rutaCompleta, $imageData);
+
+                /*
                 // Guardar la imagen sino existe
                 if(!is_file($rutaCompleta)){
-                    file_put_contents($rutaCompleta, $imageData);
+
                 }else{
                     Log::info("La imagen de Avatar ya existe: " . $rutaCompleta);
                 }
+                */
             }else{
                 // Manejar errores
                 Log::info("Error al generar el avatar: " . $response->getStatusCode());
@@ -68,9 +73,6 @@ class UIAvatar
     }
 
     public static function img_avatar_route($nombre){
-        $rutaCompleta = '/img/avatar/'.UIAvatar::img_avatar_name($nombre);
-        if(!is_file(public_path($rutaCompleta)))
-            $rutaCompleta = "/img/avatar/no-avatar.png";
-        return $rutaCompleta;
+        return '/img/avatar/'.UIAvatar::img_avatar_name($nombre);
     }
 }

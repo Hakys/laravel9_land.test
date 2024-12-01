@@ -74,7 +74,13 @@ class Contacto extends Model
     public function getTelefono(){ return $this->attributes['telefono']; }
     public function setTelefono($telefono){ $this->attributes['telefono'] = $telefono; }
 
-    public function getAvatar(){ return UIAvatar::img_avatar_route($this->attributes['apodo']); }
+    public function getAvatar(){
+        $rutaCompleta = UIAvatar::img_avatar_name($this->attributes['apodo']);
+        if(!is_file(public_path($rutaCompleta)))
+            $rutaCompleta = "/img/avatar/no-avatar.png";
+        return $rutaCompleta;
+
+        return UIAvatar::img_avatar_route($this->attributes['apodo']); }
     public function setAvatar(){
         $avatar = new UIAvatar();
         $avatar->gen_avatar_random($this->attributes['apodo']);

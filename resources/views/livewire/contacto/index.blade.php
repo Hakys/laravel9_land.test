@@ -1,10 +1,5 @@
 <div>
 <div class="row">
-
-    <div wire:loading class="spinner-border text-danger" role="status">
-        <span class="visually-hidden">Ten paciencia churrita...</span>
-    </div>
-
     <div class="col-auto me-2 d-inline-flex flex-column text-center fs-5 fw-bold border rounded">
         <div>
             <input class="form-check-input" hidden type="radio" name="numero" id="numeroX" value="__"
@@ -52,7 +47,10 @@
             <table class="mitable table table-responsive table-bordered table-striped align-middle">
                 <thead class="table-light">
                     <tr class="text-center bg-">
-                        <th>{{$contactos->count()}}</th>
+                        <th>
+                            <div wire:loading><div class="spinner-border text-danger"></div></div>
+                            <div wire:loading.remove>{{$contactos->count()}}</div>
+                        </th>
                         <th scope="col">Nombre / Apodo</th>
                         <th scope="col">Teléfono</th>
                         <th scope="col"><i class="fa fa-address-card-o fa-lg" aria-hidden="true"></i></th>
@@ -94,7 +92,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         jQuery(document).ready(function($) {
             $(".clickable-row").click(function() {
-                window.location = $(this).data("href");
+                window.location = $(this).attr('data-href');
             });
         });
     });

@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Contacto;
 
 use App\Models\Contacto;
 use Livewire\Component;
-use App\Repositories\Utilities\UIAvatar;
 
 class FormModal extends Component
 {
@@ -18,8 +17,7 @@ class FormModal extends Component
     public $rules;
 
     public function gen_avatar(){
-        $avatar = new UIAvatar();
-        $avatar->gen_avatar_random($this->apodo);
+        $this->contacto->setAvatar();
         return redirect()->route('contacto.show',$this->contacto->getTelefono())->with('success', 'Contacto Actualizado.');
     }
 
@@ -30,7 +28,7 @@ class FormModal extends Component
             if($this->to){
                 return redirect()->route($this->to)->with('success', 'Nuevo Contacto Añadido.');
             }else{
-
+                return redirect()->route('contacto.show',$this->contacto->getTelefono())->with('success', 'Nuevo Contacto Añadido.');
             }
         }else if($this->op=="edit"){
             $this->validate();
