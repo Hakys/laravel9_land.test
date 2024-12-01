@@ -21,8 +21,8 @@ class UIAvatar
 
     public function gen_avatar_random($nombre){
         //$nombre2 = implode(" ",array_slice(explode(' ',$nombre),1));
-        $array = array_slice(explode(' ',$nombre),1);
-        $nombre_slug = $array[0]." ".$array[1];
+        $array = explode(' ',$nombre);
+        $nombre_slug = $array[1]." ".$array[2];
         //Log::info($nombre3[0]." ".$nombre3[1]);
         $query= ['query' => [
                 'name' => $nombre_slug,
@@ -40,7 +40,7 @@ class UIAvatar
                 $imageData = $response->getBody()->getContents();
 
                 // Crear la ruta completa del archivo
-                $rutaCompleta = public_path($this->img_avatar_route($nombre));
+                $rutaCompleta = public_path("/img/avatar/".Str::slug($nombre).'.png');
 
                 // Crear la carpeta sino existe
                 if (!is_dir(dirname($rutaCompleta))) {
@@ -48,7 +48,8 @@ class UIAvatar
                 }
 
                 // Guardar la imagen
-                file_put_contents($rutaCompleta, $imageData);
+                if(file_put_contents($rutaCompleta, $imageData))
+                    Log::info("Avatar creado con exito: ".$rutaCompleta);
 
                 /*
                 // Guardar la imagen sino existe
@@ -64,12 +65,16 @@ class UIAvatar
             }
         }catch (\Exception $e) {
             // Manejar excepciones
-            Log::info("Error: " . $e->getMessage());
+            Log::info("Avatar Error: " . $e->getMessage());
         }
     }
 
     public static function img_avatar_name($nombre){
-        return Str::slug($nombre).'.png';
+        $namefile = Str::slug($nombre).'.png';
+        if(is_file(public_path("/img/avatar/".$namefile)))
+            return $namefile;
+        else
+            return "no-avatar.png";
     }
 
     public static function img_avatar_route($nombre){

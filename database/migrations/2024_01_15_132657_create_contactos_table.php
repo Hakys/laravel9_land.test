@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('apodo')->unique();
             $table->string('telefono')->unique();
-            $table->string('avatar')->unique();
+            //$table->string('avatar')->unique();
             $table->timestamps();
         });
     }
