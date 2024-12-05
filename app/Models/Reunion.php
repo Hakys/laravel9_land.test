@@ -93,6 +93,8 @@ class Reunion extends Model
         return $this->morphOne(Evento::class, 'eventoable');
     }
 
+    public function pagos(){ return $this->hasMany(Pago::class); }
+
     public function getEstado(){ return $this->attributes['estado']; }
     public function setEstado($value){
         if(in_array($value,$this->estados)) $this->attributes['estado'] = $value; }

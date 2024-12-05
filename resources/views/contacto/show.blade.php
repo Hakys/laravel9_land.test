@@ -43,6 +43,5 @@
                 @livewire('direccion.index',['contacto'=> $viewData['contacto']])
             </div>
         </div>
-
     </div>
 @endsection

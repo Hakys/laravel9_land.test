@@ -17,7 +17,7 @@ class Index extends Component
     public $search = "";
 
     #[Url]
-    public $numero = "__";
+    public $numero = "";
     #[Url]
     public $letra = "";
 
@@ -31,7 +31,7 @@ class Index extends Component
     //public $contactos;
 */
     public function resetNumero(){
-        $this->numero = "__";
+        $this->numero = "";
         $this->resetPage();
     }
 
@@ -64,22 +64,26 @@ class Index extends Component
     }
 */
     public function render(){
-        $query = $contactos = Contacto::orderBy('apodo','asc');
+        if(empty($this->search) && empty($this->numero) && empty($this->letra)){
+            $query = Contacto::orderBy('created_at','desc');
+        }else{
+            $query = Contacto::orderBy('apodo','asc');
 
-        $query->when($this->search, function($q) use ($query){
-            $q->where('apodo','like','%'.$this->search.'%')
-                ->orwhere('telefono','like','%'.$this->search.'%');
-        });
+            $query->when($this->search, function($q) use ($query){
+                $q->where('apodo','like','%'.$this->search.'%')
+                    ->orwhere('telefono','like','%'.$this->search.'%');
+            });
 
-        $query->when($this->numero, function($q) use ($query){
-            $q->where('apodo','like',$this->numero.'%');
-        });
+            $query->when($this->numero, function($q) use ($query){
+                $q->where('apodo','like',$this->numero.'%');
+            });
 
-        $query->when($this->letra, function($q) use ($query){
-            $q->where('apodo','like','___'.$this->letra.'%');
-        });
+            $query->when($this->letra, function($q) use ($query){
+                $q->where('apodo','like','___'.$this->letra.'%');
+            });
 
-        $contactos = $query->paginate(7000);
+        }
+        $contactos = $query->paginate(100);
         $numeros=[];
         $letras=[];
         foreach ($contactos as $contacto) {
@@ -98,7 +102,6 @@ class Index extends Component
                 print_f($e->getMessage());
             }
         }
-
         $numeros = array_unique($numeros);
         $letras = array_unique($letras);
         sort($numeros);

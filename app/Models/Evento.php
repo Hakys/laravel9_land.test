@@ -24,27 +24,31 @@ class Evento extends Model
     ];
 
     protected $fillable = ['title','start','end'];//,'duration'];
-    
+
     public function eventoable(): MorphTo { return $this->morphTo(); }
 
-    public function getId(){ return $this->id; } 
+    public function getId(){ return $this->id; }
 
     public function setTitle($title){
-        $this->attributes['title'] = $title; } 
-    
+        $this->attributes['title'] = $title; }
+
     public function setStart($fecha,$hora){
         $this->attributes['start'] = Carbon::parse($fecha." ".$hora)->format('Y-m-d H:i:s');
     }
 
-    public function setEnd($fecha,$hora,$duration){ 
+    public function setEnd($fecha,$hora,$duration){
         $f = Carbon::parse($fecha." ".$hora);
         $f->addHours(explode(":",$duration)[0]);
         $f->addMinutes(explode(":",$duration)[1]);
-        if($fecha!=$f->format("Y-m-d")) 
+        if($fecha!=$f->format("Y-m-d"))
             $f = Carbon::parse($fecha." 23:59:59");
         $this->attributes['end'] = $f->format('Y-m-d H:i:s');
     }
 
     //public function setDuration($duration){ $this->attributes['duration'] = $duration; }
 
+    public function getCreatedAt(){ return $this->attributes['created_at']; }
+    public function setCreatedAt($createdAt){ $this->attributes['created_at'] = $createdAt; }
+    public function getUpdatedAt(){ return $this->attributes['updated_at']; }
+    public function setUpdatedAt($updatedAt){ $this->attributes['updated_at'] = $updatedAt; }
 }

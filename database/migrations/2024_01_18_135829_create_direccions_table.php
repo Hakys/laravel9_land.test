@@ -28,7 +28,8 @@ return new class extends Migration
             $table->integer('distance_value')->nullable();
             $table->string('duration_text')->nullable();
             $table->integer('duration_value')->nullable();
-            $table->foreignId('contacto_id')->index();
+            $table->unsignedBigInteger('contacto_id');
+            $table->foreign('contacto_id')->references('id')->on('contactos')->onDelete('cascade');
             $table->timestamps();
         });
     }

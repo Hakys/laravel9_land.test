@@ -19,46 +19,161 @@
 <body class="d-flex flex-column h-100">
     <header class="masthead mb-2">
         <!-- Navigation-->
-        <nav class="navbar navbar-dark navbar-expand-lg bg-theme">
-            <div class="container">
-                <a class="navbar-brand text-white" href="{{ route('home.index') }}">Diabla Roja App</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav ms-auto">
-                        <!--<a class="nav-link" href="{{ route('home.index') }}">Home</a>-->
-                        @auth
-                        <a class="nav-link" href="{{ route('contacto.index') }}">Contactos</a>
-                        <a class="nav-link" href="{{ route('reunion.index') }}">Calendario TPS</a>
-                        <a class="nav-link" href="{{ route('reunion.gestion') }}">Gestión TPS</a>
-                        <a class="nav-link" href="{{ route('product.index') }}">Productos</a>
+        <nav class="navbar navbar-expand-sm navbar-dark bg-theme">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Diabla Roja App</a>
+            <button
+                class="navbar-toggler d-lg-none"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapsibleNavId"
+                aria-controls="collapsibleNavId"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-flex" id="collapsibleNavId">
+                <ul class="navbar-nav w-100 me-auto mt-2 mt-lg-0 align-items-end">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" aria-current="page">Inicio
+                            <span class="visually-hidden">(current)</span></a
+                        >
+                    </li>
+                    @guest
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login')}}</a>
+                    </li>
+                    @else
+                    <li class="nav-item dropdown">
+                        <a
+                            class="nav-link dropdown-toggle"
+                            href="#"
+                            id="ddContactos"
+                            data-bs-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            >Contactos</a
+                        >
+                        <div
+                            class="dropdown-menu align-self-center"
+                            aria-labelledby="ddContactos"
+                        >
+                            <a class="dropdown-item"
+                                href="{{ route('contacto.index') }}"
+                                ><i class="fa fa-list me-2" aria-hidden="true"></i>Lista de Contactos</a
+                            >
+                            <a class="dropdown-item" href="#"
+                                ><i class="fa fa-user-plus me-2" aria-hidden="true"></i
+                                    >Nuevo Contacto</a
+                            >
+                            <a class="dropdown-item" href="#"
+                                ><i class="fa fa-download me-2" aria-hidden="true"></i>Importar CSV</a
+                            >
+                        </div>
+                    </li>
 
-                        <a class="nav-link" href="{{ route('prestashop.product.index') }}">Prestashop Products</a>
-                        <a class="nav-link" href="{{ route('cart.index') }}">Cart</a>
-                        <a class="nav-link" href="{{ route('home.links') }}">Links</a>
-                        @endauth
-                        <!--
-                        <a class="nav-link" href="{{ route('home.about') }}">About</a>
-                        <a class="nav-link" href="{{ route('home.landing') }}">Landing</a>
-                        -->
-                        <div class="vr bg-black mx-2 d-none d-lg-block"></div>
-                        @guest
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login')}}</a>
-                            <!--<a class="nav-link" href="{{ route('register') }}">Register</a>-->
-                        @else
-                            <a class="nav-link" href="{{ route('myaccount.orders') }}">My Orders</a>
-                            <a class="nav-link" href="{{ route('admin.home.index') }}">Admin</a>
-                            <form id="logout" action="{{ route('logout') }}" method="POST">
-                                <a role="button" class="nav-link"
-                                    onclick="document.getElementById('logout').submit();">Logout</a>
-                                @csrf
-                            </form>
-                        @endguest
-                    </div>
-                </div>
+                    <li class="nav-item dropdown">
+                        <a
+                            class="nav-link dropdown-toggle"
+                            href="#"
+                            id="ddTuppersexs"
+                            data-bs-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            >Tuppersex</a
+                        >
+                        <div
+                            class="dropdown-menu align-self-center" aria-labelledby="ddTuppersexs"
+                        >
+                            <a class="dropdown-item"
+                                href="{{ route('reunion.index') }}"
+                                ><i class="fa fa-calendar me-2" aria-hidden="true"></i>Calendario</a
+                            >
+                            <a class="dropdown-item"
+                                href="{{ route('reunion.gestion') }}"
+                                ><i class="fa fa-list me-2" aria-hidden="true"></i>Gestión</a
+                            >
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a
+                            class="nav-link dropdown-toggle"
+                            href="#"
+                            id="ddProductos"
+                            data-bs-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            >Productos</a
+                        >
+                        <div
+                            class="dropdown-menu align-self-center" aria-labelledby="ddProductos"
+                        >
+                            <a class="dropdown-item"
+                                href="{{ route('product.index') }}"
+                                ><i class="fa fa-table me-2" aria-hidden="true"></i>Catálogo</a
+                            >
+                            <a class="dropdown-item"
+                                href="#"
+                                ><i class="fa fa-list me-2" aria-hidden="true"></i>Gestión</a
+                            >
+                            <a class="dropdown-item" href="{{ route('prestashop.product.index') }}"
+                                ><i class="fa fa-download me-2" aria-hidden="true"></i>Importar de Prestashop</a
+                            >
+                        </div>
+                    </li>
+                    <!--<li class="nav-item">
+                        <a class="nav-link" href="{{ route('home.links') }}">Recursos Web</a>
+                    </li>-->
+                    <li class="nav-item dropdown">
+                        <a
+                            class="nav-link dropdown-toggle"
+                            href="#"
+                            id="ddAdmin"
+                            data-bs-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            >Admin</a
+                        >
+                        <div
+                            class="dropdown-menu"
+                            aria-labelledby="ddAdmin"
+                        >
+                            <a class="dropdown-item" href="{{ route('admin.home.index') }}">Dashboard</a>
+                            <a class="dropdown-item" href="{{ route('register') }}">Registrar Usuario</a>
+                            <a class="dropdown-item" href="{{ route('cart.index') }}">Mi Carrito</a>
+                            <a class="dropdown-item" href="{{ route('myaccount.orders') }}">Mis Pedidos</a>
+                            <a class="dropdown-item" href="{{ route('home.about') }}">About</a>
+                            <a class="dropdown-item" href="{{ route('home.landing') }}">Landing</a>
+                            <a class="dropdown-item" href="{{ route('home.links') }}">Recursos Web</a>
+                        </div>
+                    </li>
+                    <li class="nav-item ms-auto me-2">
+                        <form id="logout" action="{{ route('logout') }}" method="POST">
+                            <a class="nav-link" role="button"
+                                onclick="document.getElementById('logout').submit();">Salir</a
+                            >
+                            @csrf
+                        </form>
+                    </li>
+                    @endguest
+                </ul>
+                <form class="flex-shrink-1 d-flex my-2 my-lg-0 input-group w-25">
+                    <input
+                        class="form-control me-sm-2"
+                        type="text"
+                        placeholder="Buscar"
+                    />
+                    <button
+                        class="btn btn-primary my-2 my-sm-0"
+                        type="submit"
+                    >
+                        Buscar
+                    </button>
+                </form>
             </div>
+        </div>
         </nav>
         <div class="container">
             @yield('header')
@@ -71,7 +186,7 @@
         </div>
     </main>
     <footer class="mt-auto fixed-bottom">
-        <div class="container">
+        <div class="container-fluid">
             <small class="text-muted">
                 Copyright - <a class="text-reset fw-bold text-decoration-none" target="_blank"
                     href="https://diablaroja.es">Diabla Roja</a> - <b>by Hakys</b>

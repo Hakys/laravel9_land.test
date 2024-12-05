@@ -13,10 +13,17 @@ class ReunionController extends Controller
     public function index(){
         $viewData["title"] = "Reuniones";
         $viewData["subtitle"] = "Calendario Tuppersex";
-        $viewData["ant"] = "";        
+        $viewData["ant"] = "";
         $viewData["hoy"] = Reunion::formatFecha(time());
         $viewData["reunions"] = Reunion::orderBy('fecha', 'DESC')->get();
         return view("reunion.index")->with("viewData", $viewData);
+    }
+
+    public function show($id){
+        $viewData["title"] = "Reuniones";
+        $viewData["subtitle"] = "Detalles Reuniones Tuppersex";
+        $viewData["reunion"] = Reunion::find($id)->first();
+        return view("reunion.show")->with("viewData", $viewData);
     }
 
     public function create(Request $request){
@@ -29,8 +36,8 @@ class ReunionController extends Controller
     public function edit($id){
         $viewData["title"] = "Reuniones";
         $viewData["subtitle"] = "Editar Info. Reuniones Tuppersex";
-        $reunion = Reunion::find($id)->first(); 
-        $viewData["reunion"] = $reunion; 
+        $reunion = Reunion::find($id)->first();
+        $viewData["reunion"] = $reunion;
         $viewData["direccion_id"] = $reunion->direccion->getId();
         return view("reunion.edit")->with("viewData", $viewData);
     }
@@ -52,7 +59,7 @@ class ReunionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request){ 
+    public function store(Request $request){
         Log::info($request->all());
         request()->validate(Reunion::$rules);
         $reunion = new Reunion();
@@ -67,7 +74,7 @@ class ReunionController extends Controller
         $reunion->chicas = $request->boolean('chicas');
         $reunion->save();
         return response()->json(['reunion_id'=>$reunion->getId()]);
-    } 
+    }
 
     /**
      * Update the specified resource in storage.
@@ -92,5 +99,12 @@ class ReunionController extends Controller
             'chicas' => $request->boolean('chicas'),
         ]);
         return response()->json(['reunion_id'=>$r->getId()]);
-    } 
+    }
+
+    public function delete($id)
+    {
+        $reunion = Reunion::find($id)->first();
+        Reunion::destroy($reunion->getId());
+        return redirect()->route('reunion.index')->with('success', 'Reunion Borrada.');
+    }
 }

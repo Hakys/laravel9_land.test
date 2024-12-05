@@ -8,7 +8,6 @@
             <div><a class="btn btn-outline-secondary">
                 <b>Nº de Contactos:</b> {{ $viewData['contactos']->count() }}</a></div>
             @livewire('contacto.form-modal',['op'=>'create','to'=>'contacto.index'])
-
         </div>
         <div class="card-body">
             @livewire('contacto.index')

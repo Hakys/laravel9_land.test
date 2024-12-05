@@ -10,6 +10,23 @@ $body-bg: #ffffff;
     text-decoration: none;
     white-space: nowrap;
 }
+
+.clickable-row{
+    cursor: pointer;
+}
+.img_avatar{
+    height:30px;
+}
+.mano{
+    cursor: pointer;
+}
+.cell-con-imagen {
+  background-size: cover;
+  background-position: center;
+  height: 50px;
+  width: 50px;
+}
+
 // Fonts
 @import url('https://fonts.bunny.net/css?family=Nunito');
 

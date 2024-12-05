@@ -23,7 +23,7 @@ class Item extends Model
      * $this->order - Order - contains the associated Order
      * $this->product - Product - contains the associated Product
      */
-    
+
     public static function validate($request)
     {
         $request->validate([
@@ -73,22 +73,11 @@ class Item extends Model
     {
         $this->attributes['product_id'] = $productId;
     }
-    public function getCreatedAt()
-    {
-        return $this->attributes['created_at'];
-    }
-    public function setCreatedAt($createdAt)
-    {
-        $this->attributes['created_at'] = $createdAt;
-    }
-    public function getUpdatedAt()
-    {
-        return $this->attributes['updated_at'];
-    }
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->attributes['updated_at'] = $updatedAt;
-    }
+    public function getCreatedAt(){ return $this->attributes['created_at']; }
+    public function setCreatedAt($createdAt){ $this->attributes['created_at'] = $createdAt; }
+    public function getUpdatedAt(){ return $this->attributes['updated_at']; }
+    public function setUpdatedAt($updatedAt){ $this->attributes['updated_at'] = $updatedAt; }
+
     public function order()
     {
         return $this->belongsTo(Order::class);

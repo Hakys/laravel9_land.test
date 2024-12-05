@@ -1,4 +1,5 @@
-<form>
+<form class="w-100" method="POST" action="{{route('contacto.store')}}">
+    @csrf
     <div class="form-floating mb-3">
         <input wire:model="apodo" type="text" id="apodo" name="apodo" placeholder="Apodo"
             value="{{ old('apodo') }}"
@@ -21,10 +22,9 @@
             </div>
         </div>
         <div class="col">
-            <button wire:click="gen_avatar" type="button" class="btn btn-outline-primary float-end">Generar Imagen Avatar</button>
+
         </div>
     </div>
     <!--<small class="text-body-secondary">By clicking Sign up, you agree to the terms of use.</small>-->
-    <button wire:click="submit" type="button" class="w-100 mb-2 btn btn-lg rounded-3 btn-outline-success">
-        <i class="fa fa-user fa-lg me-2" aria-hidden="true"></i> Guardar</button>
+    <button type="submit" class="w-100 mb-2 btn btn-lg rounded-3 btn-outline-success">Guardar</button>
  </form>

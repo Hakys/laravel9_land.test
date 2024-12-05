@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DateTime;
 use App\Models\Product;
+use App\Repositories\Utilities\CSVtoSQL;
 
 class ImportController extends Controller
 {
@@ -14,5 +15,10 @@ class ImportController extends Controller
         $hoy = gmdate("d-m-Y H:i:s", $hoyunix);
         $productos = Product::all();
         return view('import.index',compact('hoy','productos'));
+    }
+
+    public function importContacto(){
+        $import = new CSVtoSQL();
+        $import->importCSV();
     }
 }

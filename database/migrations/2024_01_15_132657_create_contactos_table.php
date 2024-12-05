@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('contactos', function (Blueprint $table) {
             $table->id();
-            $table->string('apodo')->unique();
-            $table->string('telefono')->unique();
+            $table->string('apodo')->unique()->nullable(false);
+            $table->string('telefono')->unique()->nullable(false);
             //$table->string('avatar')->unique();
             $table->timestamps();
         });

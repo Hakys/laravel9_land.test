@@ -57,46 +57,28 @@ class Contacto extends Model
         ->get();
     }
 
-    public function direccions(){
-        return $this->hasMany(Direccion::class);
-    }
+    public function direccions(){ return $this->hasMany(Direccion::class); }
 
-    public function getFullApodoAttribute(){
-        return "{$this->apodo} {$this->telefono}";
-    }
+    public function pagos(){ return $this->hasMany(Pago::class); }
 
     public function getId(){ return $this->attributes['id']; }
     public function setId($id){ $this->attributes['id'] = $id; }
 
     public function getApodo(){ return strtoupper($this->attributes['apodo']); }
+    public function getFullApodoAttribute(){ return $this->getApodo()." ".$this->getTelefono(); }
     public function setApodo($apodo){ $this->attributes['apodo'] = $apodo; }
 
     public function getTelefono(){ return $this->attributes['telefono']; }
     public function setTelefono($telefono){ $this->attributes['telefono'] = $telefono; }
 
-    public function getAvatar(){
-        return UIAvatar::img_avatar_route($this->attributes['apodo']);
-    }
-
+    public function getAvatar(){ return UIAvatar::img_avatar_route($this->attributes['apodo']); }
     public function setAvatar(){
         $avatar = new UIAvatar();
         $avatar->gen_avatar_random($this->attributes['apodo']);
     }
 
-    public function getCreatedAt()
-    {
-        return $this->attributes['created_at'];
-    }
-    public function setCreatedAt($createdAt)
-    {
-        $this->attributes['created_at'] = $createdAt;
-    }
-    public function getUpdatedAt()
-    {
-        return $this->attributes['updated_at'];
-    }
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->attributes['updated_at'] = $updatedAt;
-    }
+    public function getCreatedAt(){ return $this->attributes['created_at']; }
+    public function setCreatedAt($createdAt){ $this->attributes['created_at'] = $createdAt; }
+    public function getUpdatedAt(){ return $this->attributes['updated_at']; }
+    public function setUpdatedAt($updatedAt){ $this->attributes['updated_at'] = $updatedAt; }
 }

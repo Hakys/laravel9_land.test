@@ -57,37 +57,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($contactos as $contacto)
-                        <tr class='clickable-row' data-href='{{ route("contacto.show", ['telefono' => $contacto->getTelefono()]) }}'>
+                    @forelse($contactos as $contacto)
+                         <tr class='clickable-row' data-href='{{ route("contacto.show", ['telefono' => $contacto->getTelefono()]) }}'>
                             <td class="cell-con-imagen bor" style="background-image: url('{{ $contacto->getAvatar() }}');"></td>
                             <td class="text-start">{{ $contacto->getApodo() }}</td>
                             <td class="text-end">{{ $contacto->getTelefono() }}</td>
                             <td class="text-center">{{ $contacto->direccions->count()}}</td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr><td colspan="4"> Selecciona un contacto por número, por letra o por un criterio de busqueda.</td></tr>
+                    @endforelse
                 </tbody>
             </table>
             {{ $contactos->links('vendor.livewire.bootstrap')}}
         </div>
     </div>
 </div>
-<style>
-    .clickable-row{
-        cursor: pointer;
-    }
-    .img_avatar{
-        height:30px;
-    }
-    .mano{
-        cursor: pointer;
-    }
-    .cell-con-imagen {
-      background-size: cover;
-      background-position: center;
-      height: 50px;
-      width: 50px;
-    }
-</style>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         jQuery(document).ready(function($) {

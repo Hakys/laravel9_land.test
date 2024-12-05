@@ -4,8 +4,11 @@
     <div class="container">
         <div class="d-flex justify-content-star fs-2 gap-4">
             <div class="fw-bolder">PROVEEDORES: </div>
-            <div><a href="{{route('dreamlove.index')}}">DREAMLOVE</a></div>
-            <div><a href="{{route('lovecherry.index')}}">LOVECHERRY</a></div>
+            <ul>
+            <li><a href="{{route('import.contacto')}}">Google Contacts</a></li>
+            <li><a href="{{route('dreamlove.index')}}">DREAMLOVE</a></li>
+            <li><a href="{{route('lovecherry.index')}}">LOVECHERRY</a></li>
+            </ul>
         </div>
     </div>
 

@@ -13,14 +13,20 @@ class FormModal extends Component
     public $telefono;
     public Contacto $contacto;
     public $to;
+    public $contactos = [];
 
     public $rules;
 
+    public function updatedApodo(){
+        $this->contactos = Contacto::where('apodo','like','%'.$this->apodo.'%')->orderBy('apodo','asc')->get();
+    }
+
+/*
     public function gen_avatar(){
         $this->contacto->setAvatar();
         return redirect()->route('contacto.show',$this->contacto->getTelefono())->with('success', 'Contacto Actualizado.');
     }
-
+*/
     public function submit(){
         if($this->op=="create"){
             $this->validate();

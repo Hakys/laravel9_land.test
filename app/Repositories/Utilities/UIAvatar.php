@@ -10,6 +10,8 @@ class UIAvatar
 {
     protected Client $client;
 
+    const NO_IMAGE = "/img/avatar/no-avatar.png";
+
     public function __construct(){
         //https://ui-avatars.com/api/?name=00+Antonio&background=random&color=random&size=512
         // Crear un cliente GuzzleHttp
@@ -69,7 +71,7 @@ class UIAvatar
         }
     }
 
-    public static function img_avatar_name($nombre){
+    public static function img_avatar_name(&$nombre){
         $namefile = Str::slug($nombre).'.png';
         if(is_file(public_path("/img/avatar/".$namefile)))
             return $namefile;
@@ -77,7 +79,11 @@ class UIAvatar
             return "no-avatar.png";
     }
 
-    public static function img_avatar_route($nombre){
-        return '/img/avatar/'.UIAvatar::img_avatar_name($nombre);
+    public static function img_avatar_route(&$nombre){
+        return '/img/avatar/'.self::img_avatar_name($nombre);
+    }
+
+    public static function no_avatar_route(){
+        return public_path("/img/avatar/no-avatar.png");
     }
 }

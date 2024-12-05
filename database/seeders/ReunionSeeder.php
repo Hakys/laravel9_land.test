@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Evento;
 use App\Models\Reunion;
+use App\Models\Pago;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -23,7 +24,8 @@ class ReunionSeeder extends Seeder
             $evento->setStart($reunion->fecha,$reunion->hora);
             $evento->setEnd($reunion->fecha,$reunion->hora,"02:00");
             $reunion->evento()->save($evento);
+            Pago::Factory(random_int(1,5))->create(['reunion_id'=>$reunion->getId()]);
         }
-        
+
     }
 }

@@ -56,26 +56,12 @@ class Show extends Component
         $this->provincia = $dir->getProvincia();
     }
 
-    public function render()
-    {   
-        $this->rules = [
-            'direccion_id' => 'required|exists:direccions,id',
-            'fecha' => 'required|date',
-            'n_personas' => 'required|integer|min:0',
-            'p_entrada' => 'required|numeric|min:0',
-            't_entradas' => 'required|numeric|min:0',
-            'estado' => 'required',
-        ];
-        $this->estados = Reunion::getEstados();
-        return view('livewire.reunion.show');
-    }
-
-    public function submit(){ 
-        
+    public function submit(){
         $this->validate();
         $reunion = Reunion::create([
             'direccion_id' => $this->direccion_id,
             'fecha' => $this->fecha,
+            'hora' => $this->hora,
             'chicas' => $this->chicas,
             'prepago' => $this->prepago,
             'n_personas' => $this->n_personas,
@@ -90,6 +76,20 @@ class Show extends Component
             'end' => $end->addHours(2),
         ]);
         $msg = 'Nueva Reunión Añadida.';
-        return redirect()->route('reunion.index')->with('success', $msg);   
+        return redirect()->route('reunion.index')->with('success', $msg);
     }
+
+    public function render(){
+        $this->rules = [
+            'direccion_id' => 'required|exists:direccions,id',
+            'fecha' => 'required|date',
+            'n_personas' => 'required|integer|min:0',
+            'p_entrada' => 'required|numeric|min:0',
+            't_entradas' => 'required|numeric|min:0',
+            'estado' => 'required',
+        ];
+        $this->estados = Reunion::getEstados();
+        return view('livewire.reunion.show');
+    }
+
 }

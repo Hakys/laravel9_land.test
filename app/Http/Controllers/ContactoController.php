@@ -35,6 +35,21 @@ class ContactoController extends Controller
 
     }
 
+/**
+     * Register new contacto.
+     *
+     * @param  \App\Models\Contacto  $contacto
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $viewData = [];
+        $viewData["title"] = "Nuevo Contacto - Online Store";
+        $viewData["subtitle"] = "Información del Nuevo Contacto ";
+        $viewData["no_image"] = UIAvatar::NO_IMAGE;
+        return view('contacto.create')->with("viewData", $viewData);
+    }
+
     /**
      * Display the specified resource.
      *
@@ -48,7 +63,6 @@ class ContactoController extends Controller
         $viewData["contacto"] = $c;
         $viewData["title"] = $c->getApodo()." - Online Store";
         $viewData["subtitle"] = "Información del Contacto ".$c->getApodo();
-        $viewData["avatar"] = UIAvatar::img_avatar_name($c->getApodo());
         return view('contacto.show')->with("viewData", $viewData);
     }
 /*
@@ -73,7 +87,7 @@ class ContactoController extends Controller
     }
 
     public function store(Request $request){
-        Log::info($request->all());
+        //Log::info($request->all());
         request()->validate(Contacto::$rules);
         $c = new Contacto();
         $c->setApodo($request->apodo);
@@ -83,7 +97,7 @@ class ContactoController extends Controller
     }
 
     public function update(Request $request, $id){
-        Log::info($request->all());
+        //Log::info($request->all());
         $c = Contacto::where('id',$id)->first();
         $c->validator($request->all());
         $c->update([
