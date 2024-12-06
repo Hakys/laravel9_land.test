@@ -32,7 +32,7 @@ class Product extends Model
         'price',
         'image',
     ];
-*/     
+*/
     protected $fillable = [
         'referencia','stock','coste','price','vat','title',
         'slug','new','available','url','released_at',
@@ -61,6 +61,19 @@ class Product extends Model
             $total = $total + ($product->getPrice() * $productsInSession[$product->getId()]);
         }
         return $total;
+    }
+
+    public function items()
+    {
+        return $this->hasMany(Item::class);
+    }
+    public function getItems()
+    {
+        return $this->items;
+    }
+    public function setItems($items)
+    {
+        $this->items = $items;
     }
 
     public function getId(){ return $this->attributes['id']; }
@@ -93,18 +106,4 @@ class Product extends Model
     public function setCreatedAt($createdAt){ $this->attributes['created_at'] = $createdAt; }
     public function getUpdatedAt(){ return $this->attributes['updated_at']; }
     public function setUpdatedAt($updatedAt) { $this->attributes['updated_at'] = $updatedAt; }
-
-    public function items()
-    {
-        return $this->hasMany(Item::class);
-    }
-    public function getItems()
-    {
-        return $this->items;
-    }
-    public function setItems($items)
-    {
-        $this->items = $items;
-    }
-    
 }

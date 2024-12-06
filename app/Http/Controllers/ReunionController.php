@@ -19,6 +19,12 @@ class ReunionController extends Controller
         return view("reunion.index")->with("viewData", $viewData);
     }
 
+    public function gestion(){
+        $viewData["title"] = "Reuniones";
+        $viewData["subtitle"] = "Gestión Reuniones Tuppersex";
+        return view("reunion.gestion")->with("viewData", $viewData);
+    }
+    
     public function show($id){
         $viewData["title"] = "Reuniones";
         $viewData["subtitle"] = "Detalles Reuniones Tuppersex";
@@ -42,12 +48,6 @@ class ReunionController extends Controller
         return view("reunion.edit")->with("viewData", $viewData);
     }
 
-    public function gestion(){
-        $viewData["title"] = "Reuniones";
-        $viewData["subtitle"] = "Gestión Reuniones Tuppersex";
-        return view("reunion.gestion")->with("viewData", $viewData);
-    }
-
     public function estados(){
         $response = ['estados' => Reunion::getEstados()];
         return response()->json($response);
@@ -60,7 +60,7 @@ class ReunionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-        Log::info($request->all());
+        //Log::info($request->all());
         request()->validate(Reunion::$rules);
         $reunion = new Reunion();
         $reunion->fecha = $request->fecha;
@@ -84,7 +84,7 @@ class ReunionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request,$id){
-        Log::info($request->all());
+        //Log::info($request->all());
         $r = Reunion::where('id',$id)->first();
         request()->validate(Reunion::$rules);
         $r->update([

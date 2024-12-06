@@ -21,8 +21,7 @@
                 <th>Entrada</th>
                 <th>Total</th>
                 <th>Reserva</th>
-                <th>Dirección</th>
-                <th></th>
+                <th>Detalles</th>
             </tr>
         </thead>
         <tbody class="align-middle">
@@ -68,10 +67,6 @@
                         <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="{{$reunion->getDireccion()}}">
                             <i class="fa fa-address-card-o fa-lg" aria-hidden="true"></i>
                         </span>
-                    </td>
-                    <td class="flex justify-content-center gap-2">
-                        <a href="#editEmployeeModal" data-toggle="modal">
-                            <i class="fa fa-pencil fa-lg" aria-hidden="true" title="Editar"></i></a>
                     </td>
                 </tr>
             @endforeach

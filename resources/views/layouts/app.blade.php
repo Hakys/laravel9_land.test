@@ -140,6 +140,7 @@
                             class="dropdown-menu"
                             aria-labelledby="ddAdmin"
                         >
+                            <a class="dropdown-item" href="{{ route('import.index') }}">Importador</a>
                             <a class="dropdown-item" href="{{ route('admin.home.index') }}">Dashboard</a>
                             <a class="dropdown-item" href="{{ route('register') }}">Registrar Usuario</a>
                             <a class="dropdown-item" href="{{ route('cart.index') }}">Mi Carrito</a>

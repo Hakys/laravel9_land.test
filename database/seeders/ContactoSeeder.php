@@ -21,13 +21,25 @@ class ContactoSeeder extends Seeder
             ["apodo" => "00 Antonio Vigo", "telefono" => "653178954"],
             ["apodo" => "00 Julia Ch", "telefono" => "695811711"],
         ];
+
         foreach($contactos as $contacto){
             $c = Contacto::Create($contacto);
-            $d = Direccion::factory()->create(["contacto_id" => $c->getId()]);
-            $d = Direccion::factory()->create(["contacto_id" => $c->getId()]);
-            $d = Direccion::factory()->create(["contacto_id" => $c->getId()]);
+            $direccion = [
+                'full_name' => 'Antonio Vigo',
+                'telefono' => '653178954',                
+                'direccion' => 'Avenida Cristobal Colon, 103',                
+                'poblacion' => 'Huelva', 
+                'provincia' => 'Huelva',
+                'cp' => '21002',               
+                'pais' => 'España',
+                'contacto_id' => $c->getId()
+            ];
+            Direccion::create($direccion);
+            Direccion::factory()->create(["contacto_id" => $c->getId()]);
+            Direccion::factory()->create(["contacto_id" => $c->getId()]);
+            Direccion::factory()->create(["contacto_id" => $c->getId()]);
         }
-
+       
         $contactos = Contacto::factory(100)->create();
         foreach($contactos as $c){
             Direccion::factory()->create(["contacto_id" => $c->getId()]);

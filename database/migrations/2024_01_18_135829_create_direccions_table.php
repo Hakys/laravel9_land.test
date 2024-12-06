@@ -24,10 +24,6 @@ return new class extends Migration
             $table->string('poblacion')->default('Huelva');
             $table->string('provincia')->nullable();
             $table->string('pais')->default('España');
-            $table->string('distance_text')->nullable();
-            $table->integer('distance_value')->nullable();
-            $table->string('duration_text')->nullable();
-            $table->integer('duration_value')->nullable();
             $table->unsignedBigInteger('contacto_id');
             $table->foreign('contacto_id')->references('id')->on('contactos')->onDelete('cascade');
             $table->timestamps();

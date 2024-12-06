@@ -24,6 +24,14 @@ class ReunionSeeder extends Seeder
             $evento->setStart($reunion->fecha,$reunion->hora);
             $evento->setEnd($reunion->fecha,$reunion->hora,"02:00");
             $reunion->evento()->save($evento);
+            Pago::create([
+                'concepto' => 'reserva',
+                'fecha'=>$reunion->getFecha(),
+                'metodo' => 'bizum',
+                'contacto_id' => $reunion->direccion->contacto->id,
+                'reunion_id' => $reunion->getId(),
+                'importe' => $reunion->t_entradas,
+            ]);
             Pago::Factory(random_int(1,5))->create(['reunion_id'=>$reunion->getId()]);
         }
 

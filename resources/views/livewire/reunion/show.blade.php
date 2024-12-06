@@ -50,8 +50,8 @@
             <label for="t_entradas">Total Entradas</label>
         </div>
     </div>
-    <div class="row ${1| ,row-cols-2,row-cols-3, auto,justify-content-md-center,|}">
-        <div class="col-md-4 mb-3">
+    <div class="row ${1| ,row-cols-2,row-cols-4, auto,justify-content-md-center,align-items-center|} mb-3">
+        <div class="col-md-4">
             <label for="estado" class="form-label">Estado</label>
             <select wire:model="estado" name="estado" id="estado"
                 @if(!$direccion_id) disabled @endif value="{{ old('estado') }}"
@@ -61,7 +61,7 @@
                 @endforeach
             </select>
         </div>
-        <div class="col-md-4 form-floating">
+        <div class="col-md-3 form-floating">
             <div class="form-check form-switch m-3 fs-5">
                 <input wire:model="chicas" type="checkbox" name="chicas" id="chicas"
                     @if(!$direccion_id) disabled @endif value="{{ old('chicas') }}"
@@ -69,7 +69,7 @@
                 <label class="form-check-label" for="chicas">Sólo Chicas</label>
             </div>
         </div>
-        <div class="col-md-4 form-floating">
+        <div class="col-md-3 form-floating">
             <div class="form-check form-switch m-3 fs-5">
                 <input wire:model="prepago" type="checkbox" name="prepago" id="prepago"
                     @if(!$direccion_id) disabled @endif value="{{ old('prepago') }}"
@@ -77,10 +77,8 @@
                 <label class="form-check-label" for="prepago">Con Prepago</label>
             </div>
         </div>
-    </div>
-    <div class="row ${1| ,row-cols-2,row-cols-3, auto,justify-content-md-center,|}">
-        <div class="col-md-12 d-flex flex-row-reverse">
-            <button wire:click="submit" type="button" class="btn rounded-3 btn-primary">Guardar</button>
+        <div class="col-md-2">
+            <button wire:click="submit" type="button" class="btn rounded-3 btn-primary ms-5 mt-4">Guardar</button>
         </div>
     </div>
     </form>
