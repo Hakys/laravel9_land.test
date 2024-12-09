@@ -35,7 +35,7 @@ class DireccionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){ 
-        Log::info($request->all());
+        //Log::info($request->all());
         request()->validate(Direccion::$rules);
         $d = new Direccion();
         $d->contacto_id = $request->contacto_id;
@@ -59,7 +59,7 @@ class DireccionController extends Controller
      */
     public function update(Request $request,$id){
     //public function update(Request $request, $id){ 
-        Log::info($request->all());
+        //Log::info($request->all());
         $d = Direccion::where('id',$id)->first();
         //$d = Direccion::where('id',$request->direccion_id)->first();
         request()->validate(Direccion::$rules);

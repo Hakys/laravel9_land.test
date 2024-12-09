@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Repositories\Distance\Distancematrix;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
+use App\Models\Pago;
 
 class ReunionController extends Controller
 {
@@ -24,7 +25,7 @@ class ReunionController extends Controller
         $viewData["subtitle"] = "Gestión Reuniones Tuppersex";
         return view("reunion.gestion")->with("viewData", $viewData);
     }
-    
+
     public function show($id){
         $viewData["title"] = "Reuniones";
         $viewData["subtitle"] = "Detalles Reuniones Tuppersex";
@@ -73,6 +74,14 @@ class ReunionController extends Controller
         $reunion->prepago = $request->boolean('prepago');
         $reunion->chicas = $request->boolean('chicas');
         $reunion->save();
+        Pago::create([
+            'concepto' => 'reserva',
+            'fecha'=>$reunion->getFecha(),
+            'metodo' => ($request->boolean('prepago')?'bizum':'efectivo'),
+            'contacto_id' => $reunion->direccion->contacto->id,
+            'reunion_id' => $reunion->getId(),
+            'importe' => $reunion->t_entradas,
+        ]);
         return response()->json(['reunion_id'=>$reunion->getId()]);
     }
 

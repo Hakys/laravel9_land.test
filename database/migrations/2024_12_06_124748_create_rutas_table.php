@@ -19,10 +19,10 @@ return new class extends Migration
             $table->integer('distance_value')->nullable();
             $table->string('duration_text')->nullable();
             $table->integer('duration_value')->nullable();
-            $table->unsignedBigInteger('origen')->default(1);
-            $table->foreign('origen')->references('id')->on('direccions');
+            $table->unsignedBigInteger('origen');
+            $table->foreign('origen')->references('id')->on('direccions')->onDelete('cascade');
             $table->unsignedBigInteger('destino');
-            $table->foreign('destino')->references('id')->on('direccions');
+            $table->foreign('destino')->references('id')->on('direccions')->onDelete('cascade');
             $table->timestamps();
         });
     }

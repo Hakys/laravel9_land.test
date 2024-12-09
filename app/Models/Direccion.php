@@ -58,14 +58,37 @@ class Direccion extends Model
     protected $fillable = [
         'full_name', 'telefono', 'email', 'nif', 'direccion', 
         'cp', 'poblacion', 'provincia', 'pais', 'contacto_id',
-        'distance_text','distance_value','duration_text','duration_value'
     ];
 
-    public function contacto(){
-        return $this->belongsTo(Contacto::class);
+    protected static function booted()
+    {
+        static::created(function ($direccion) {
+            $matrix = new Distancematrix();
+            $matrix->desdeCasa($direccion);
+            $direccion->rutas()->create([
+                'distance_text' => $matrix->distance_text,
+                'distance_value' => $matrix->distance_value,
+                'duration_text' => $matrix->duration_text,
+                'duration_value' => $matrix->duration_value,
+                'origen' => 1,
+            ]);
+        });
+
+        static::updated(function ($direccion) {
+            $matrix = new Distancematrix();
+            $matrix->desdeCasa($direccion);
+            $direccion->rutas()->update([
+                'distance_text' => $matrix->distance_text,
+                'distance_value' => $matrix->distance_value,
+                'duration_text' => $matrix->duration_text,
+                'duration_value' => $matrix->duration_value,
+            ]);
+        });
     }
 
-    public function getContacto(){ return $this->contacto(); }
+    public function contacto(){ return $this->belongsTo(Contacto::class); }
+
+    public function rutas(){ return $this->hasMany(Ruta::class,'destino'); }
 
     public function getId(){ return $this->attributes['id']; }
     public function setId($id){ $this->attributes['id'] = $id; }
@@ -96,24 +119,6 @@ class Direccion extends Model
 
     public function getPais(){ return $this->attributes['pais']; }
     public function setPais($pais){ $this->attributes['pais'] = $pais; }
-
-    public function getDistance_text(){ return $this->attributes['distance_text']; }
-    public function getDistance_value(){ return $this->attributes['distance_value']; }   
-    public function getDuration_text(){ return $this->attributes['duration_text']; }
-    public function getDuration_value(){ return $this->attributes['duration_value']; }
-    public function setMatrix(){ 
-        $matrix = new Distancematrix();
-        $m = $matrix->desdeCasa(
-            $this->attributes['direccion'].", ".
-            $this->attributes['poblacion'].", ".
-            $this->attributes['provincia'].", ".
-            $this->attributes['pais']
-        );       
-        $this->attributes['distance_text'] = $m->distance->text; 
-        $this->attributes['distance_value'] = $m->distance->value; 
-        $this->attributes['duration_text'] = $m->duration->text; 
-        $this->attributes['duration_value'] = $m->duration->value; 
-    }
 
     public function getCreatedAt(){ return $this->attributes['created_at']; }
     public function setCreatedAt($createdAt){ $this->attributes['created_at'] = $createdAt; }

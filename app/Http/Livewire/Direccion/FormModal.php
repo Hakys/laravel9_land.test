@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Direccion;
 use App\Models\Contacto;
 use Livewire\Component;
 use App\Models\Direccion;
+use App\Models\Ruta;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
@@ -106,7 +107,7 @@ class FormModal extends Component
     public function submit(){        
         if($this->op=="create"){
             $this->validate();
-            $d = Direccion::create([
+            Direccion::create([
                 'full_name' => $this->full_name,
                 'telefono' => $this->telefono,
                 'email' => $this->email,
@@ -118,8 +119,6 @@ class FormModal extends Component
                 'pais' => $this->pais,
                 'contacto_id' => $this->contacto->getId(),
             ]);
-            $d->setMatrix();
-            $d->save();
             $msg = 'Nueva Dirección Añadida.';
             return redirect()->route($this->to,$this->contacto->getTelefono())->with('success', $msg);            
         }else if($this->op=="edit"){
@@ -133,7 +132,6 @@ class FormModal extends Component
             $this->direccion->setPais($this->pais);
             $this->direccion->setNif($this->nif);
             $this->direccion->setEmail($this->email);
-            $this->direccion->setMatrix();
             $this->direccion->save();
             $msg = "Dirección Actualizada.";
             return redirect()->route('contacto.show',$this->contacto->getTelefono())->with('success', $msg);
@@ -142,7 +140,8 @@ class FormModal extends Component
     }
     
     public function delete(){
-        Direccion::destroy($this->direccion->getId());
+        $d = Direccion::findOrFail($this->direccion->getId());
+        $d->delete();
         return redirect()->route('contacto.show',$this->contacto->getTelefono())->with('success', 'Dirección Borrada.');
     }       
 }

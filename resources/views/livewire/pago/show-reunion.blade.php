@@ -52,7 +52,7 @@
                             @endif
                         -->
                     </td>
-                    <td class="text-nowrap">{{ $item->getImporte() }} €</td>
+                    <td class="text-end text-nowrap">{{ $item->getImporteEuro() }}</td>
                     <td class="flex justify-content-center gap-2">
                         <a href="#" data-toggle="modal">
                             <i class="fa fa-pencil fa-lg" aria-hidden="true" title="Editar"></i></a>

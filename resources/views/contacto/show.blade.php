@@ -37,11 +37,9 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-2">
-            </div>
-            <div class="col-md-10">
+
                 @livewire('direccion.index',['contacto'=> $viewData['contacto']])
-            </div>
+
         </div>
     </div>
 @endsection

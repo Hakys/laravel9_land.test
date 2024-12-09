@@ -8,7 +8,7 @@
     <meta name="author" content="by Hakys" />
     <title>@yield('title', ' - Diabla Roja')</title>
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     @vite(['resources/js/app.js', 'resources/css/app.scss'])
     @livewireStyles
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -59,16 +59,8 @@
                             class="dropdown-menu align-self-center"
                             aria-labelledby="ddContactos"
                         >
-                            <a class="dropdown-item"
-                                href="{{ route('contacto.index') }}"
+                            <a class="dropdown-item" href="{{ route('contacto.index') }}"
                                 ><i class="fa fa-list me-2" aria-hidden="true"></i>Lista de Contactos</a
-                            >
-                            <a class="dropdown-item" href="#"
-                                ><i class="fa fa-user-plus me-2" aria-hidden="true"></i
-                                    >Nuevo Contacto</a
-                            >
-                            <a class="dropdown-item" href="#"
-                                ><i class="fa fa-download me-2" aria-hidden="true"></i>Importar CSV</a
                             >
                         </div>
                     </li>
