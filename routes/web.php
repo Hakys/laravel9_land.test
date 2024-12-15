@@ -26,17 +26,21 @@ Auth::routes();
 /* HOME */
 
 Route::get('/', 'App\Http\Controllers\HomeController@index')->name("home.index");
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/about', 'App\Http\Controllers\HomeController@about')->name("home.about");
-Route::get('/links', 'App\Http\Controllers\HomeController@links')->name("home.links");
-
-Route::get('/landing', function () {
-    $viewData = [];
-    $viewData["title"] = "Landing Page - Online Store";
-    return view('home.landing')->with("viewData", $viewData);
-})->name("home.landing");
+Route::get('/tpvs/{key}','App\Http\Controllers\TpvController@landing')->name('tpv.landing');
+Route::post('/tpvs/{key}','App\Http\Controllers\TpvController@update')->name('tpv.pagar');
+Route::get('/tpvs/pago_realizado','App\Http\Controllers\TpvController@pagado')->name('tpv.pagado');
 
 Route::middleware('auth')->group(function () {
+    //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/about', 'App\Http\Controllers\HomeController@about')->name("home.about");
+    Route::get('/links', 'App\Http\Controllers\HomeController@links')->name("home.links");
+
+    Route::get('/landing', function () {
+        $viewData = [];
+        $viewData["title"] = "Landing Page - Online Store";
+        return view('home.landing')->with("viewData", $viewData);
+    })->name("home.landing");
+
     Route::get('/cart/purchase', 'App\Http\Controllers\CartController@purchase')->name("cart.purchase");
     Route::get('/my-account/orders', 'App\Http\Controllers\MyAccountController@orders')->name("myaccount.orders");
     Route::get('/cart', 'App\Http\Controllers\CartController@index')->name("cart.index");
@@ -45,9 +49,10 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('admin')->group(function () {
+    /* TPV */
+    Route::get('/tpvs','App\Http\Controllers\TpvController@index')->name('tpv.index');
 
     /* CONTACTO */
-
     Route::get('/contactos', 'App\Http\Controllers\ContactoController@index')->name("contacto.index");
     Route::get('/contactos/create', 'App\Http\Controllers\ContactoController@create')->name("contacto.create");
     Route::post('/contactos/store', 'App\Http\Controllers\ContactoController@store')->name("contacto.store");

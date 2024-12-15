@@ -39,7 +39,7 @@ nav {
     font-size: 0.7em;
 }
 
-.blue{ color: #0d6efd; } 
+.blue{ color: #0d6efd; }
 .indigo{ color: #6610f2; }
 .purple{ color: #6f42c1; }
 .pink{ color: #d63384; }
@@ -61,67 +61,89 @@ nav {
 .false{ color: #6c757d; }
 
 /*SOLICITADA*/
-.solicitada{ 
-    color: #ffdb00;  
-    font-weight: bold; 
+.solicitada{
+    color: #ffdb00;
+    font-weight: bold;
 }
-.bg-solicitada { 
-    color: white; 
+.bg-solicitada {
+    color: white;
     background-color: #ffdb00;
     font-weight: bold;
-    padding-left: 0.5rem; 
-    padding-right: 0.5rem; 
-} 
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
 
 /*CONFIRMADA*/
-.confirmada{ 
+.confirmada{
     color: #ff8d00;
-    font-weight: bold; 
-} 
-.bg-confirmada { 
-    color: white; 
+    font-weight: bold;
+}
+.bg-confirmada {
+    color: white;
     background-color: #ff8d00;
     font-weight: bold;
-    padding-left: 0.5rem; 
-    padding-right: 0.5rem; 
-}  
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
 
 
  /*RESERVADA*/
-.reservada{ 
-    color:  #00d619; 
-    font-weight: bold; 
+.reservada{
+    color:  #00d619;
+    font-weight: bold;
 }
-.bg-reservada { 
-    color: white; 
+.bg-reservada {
+    color: white;
     background-color: #00d619;
-    font-weight: bold;  
-    padding-left: 0.5rem; 
-    padding-right: 0.5rem; 
+    font-weight: bold;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
 }
 
  /*REALIZADA*/
-.realizada{ 
+.realizada{
     color: #009fff;
-    font-weight: bold; 
+    font-weight: bold;
 }
-.bg-realizada { 
-    color: white; 
-    background-color:  #009fff; 
-    font-weight: bold; 
-    padding-left: 0.5rem; 
-    padding-right: 0.5rem; 
+.bg-realizada {
+    color: white;
+    background-color:  #009fff;
+    font-weight: bold;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
 }
 
  /*CANCELADA*/
-.cancelada{ 
-    color: #ff0000; 
-    font-weight: bold; 
+.cancelada{
+    color: #ff0000;
+    font-weight: bold;
 }
-.bg-cancelada { 
-    color: white; 
+.bg-cancelada {
+    color: white;
     background-color: #ff0000;
-    font-weight: bold;   
-    padding-left: 0.5rem; 
-    padding-right: 0.5rem; 
+    font-weight: bold;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+.bg-landing  {
+    position: relative;
+    height: 400px; /* Ajusta la altura del div según sea necesario */
+    width: 100%; /* Ajusta el ancho del div según sea necesario */
+    overflow: hidden; /* Asegura que el contenido no se desborde */
+}
+
+.bg-landing::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/img/logo_diabla_roja.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.8; /* 80% de transparencia */
+    z-index: -1; /* Asegura que el pseudo-elemento esté detrás del contenido */
 }

@@ -1,17 +1,18 @@
 <div>
     <div class="row">
-        <div class="col"><label for="contactoselect2">Cliente</label></div>
-        <div class="col"><label for="direccionselect">Dirección del Cliente</label></div>
+        <div class="col"><label for="contactoselect2">Cliente</label>[{{ $contacto_id }}]  </div>
+        <div class="col"><label for="direccionselect">Dirección del Cliente</label>[{{ $direccion_id }}]</div>
     </div>
     <div class="row ${1| ,row-cols-2,row-cols-3, auto,justify-content-md-center,|}">
         <div class="col-md-6 form-floating mb-3" wire:ignore>
             <div class="flex d-flex gap-2 " >
-                <div class="flex-grow-1" >                    
+                <div class="flex-grow-1" >               
                     <select class="select2 form-control"
                         id="contactoselect2" wire:model='contacto_id'>
                         <option value="">Selecciona o Crea un Cliente</option>
                         @foreach ($contactos as $item)
-                            <option value="{{$item->getId()}}">{{$item->getApodo()}} - {{$item->getTelefono()}}</option>
+                            <option value="{{$item->getId()}}" {{ ($item->getId()==$contacto_id)?"selected='selected'":'' }}
+                                >{{$item->getApodo()}} - {{$item->getTelefono()}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -25,7 +26,8 @@
                         @if(!$contacto_id) disabled @endif>
                         <option value="">Selecciona una Dirección</option>
                         @foreach ($direcciones as $item)
-                            <option value="{{$item->getId()}}">{{$item->getDireccion()}} - {{$item->getPoblacion()}}</option>
+                            <option value="{{$item->getId()}}" {{ ($item->getId()==$direccion_id)?"selected='selected'":'' }} 
+                                >{{$item->getDireccion()}} - {{$item->getPoblacion()}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -38,7 +40,7 @@
         </div>   
         <script>
             document.addEventListener('livewire:load', function(){
-                $('#contactoselect2').select2();
+                $('#contactoselect2').select2('data',{id:'{{ $contacto->getId() }}',text: '{{ $contacto->getApodo() }}'});
                 $('#contactoselect2').on('change', function(){
                     @this.set('contacto_id',this.value);
                 });
@@ -49,12 +51,3 @@
         </script>
     </div>
 </div>
-<!--
-    <input wire:model='contacto_nombre' list="contactoOptions" id="contactoselect" 
-        class="form-control" placeholder="Selecciona o Crea un Cliente"/>
-    <datalist id="contactoOptions">
-        @foreach ($contactos as $item)
-            <option value="{{$item->getApodo()}} - {{$item->getTelefono()}}">
-        @endforeach
-    </datalist>
--->

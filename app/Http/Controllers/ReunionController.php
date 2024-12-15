@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Reunion;
 use Illuminate\Http\Request;
-use App\Repositories\Distance\Distancematrix;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
+use App\Models\Reunion;
 use App\Models\Pago;
+
 
 class ReunionController extends Controller
 {
@@ -29,8 +29,8 @@ class ReunionController extends Controller
     public function show($id){
         $viewData["title"] = "Reuniones";
         $viewData["subtitle"] = "Detalles Reuniones Tuppersex";
-        $viewData["reunion"] = Reunion::find($id)->first();
-        return view("reunion.show")->with("viewData", $viewData);
+        $viewData["reunion"] = Reunion::findOrFail($id);
+        return view("reunion.show", compact("viewData", 'id'));
     }
 
     public function create(Request $request){

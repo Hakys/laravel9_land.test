@@ -8,19 +8,18 @@ use Livewire\Component;
 
 class Select2 extends Component
 {
+    public $direccion_id;
+    public $contacto_id;
     public $contactos;
-    public $contacto_id=0;
     public $contacto;
-
     public $direcciones=[];
-    public $direccion_id=0;
 
     //protected $listeners = ['DireccionSelect2' => 'render'];
 
     public function mount($id=null){
         if($id){
-            $direccion = Direccion::find($id)->first(); 
-            $this->direccion_id =$direccion->getId();
+            $this->direccion_id = $id;
+            $direccion = Direccion::find($id); 
             $this->contacto = $direccion->contacto;
             $this->contacto_id = $this->contacto->getId();
             $this->direcciones = Direccion::where('contacto_id',$this->contacto_id)->get(); 
@@ -29,7 +28,7 @@ class Select2 extends Component
     }
 
     public function updated(){
-        $this->contacto = Contacto::find($this->contacto_id)->first();
+        $this->contacto = Contacto::findOrFail($this->contacto_id);
         $this->direcciones = Direccion::where('contacto_id',$this->contacto_id)->get();  
         $this->emitTo('ReunionShow','SetDireccion',$this->direccion_id); 
     }

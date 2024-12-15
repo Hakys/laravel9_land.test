@@ -5,13 +5,13 @@
         role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
         <div role="document" class="modal-dialog modal-dialog-centered modal-md modal-fullscreen-sm-down">
             <div class="modal-content">
-                <div class="modal-header">
-                    <i class="fa fa-calendar-o fa-lg me-2" aria-hidden="true"></i>
+                <div class="modal-header bg-theme mb-1">
+                    <i class="fa fa-calendar-o fa-lg ms-2 me-2" aria-hidden="true"></i>
                     <div>
                         <h5 class="modal-title" id="modalTitleId"></h5>
                         <h6 id="title"></h6>
                     </div>
-                    <button id="cerrar_modal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button id="cerrar_modal" type="button" class="btn-close me-2" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-nav">
                     <nav>
@@ -145,14 +145,14 @@
                                     </div>
                                     <div class="row align-items-center">
                                         <div class="col-md form-floating">
-                                            <div class="row form-check form-switch fs-5 m-3">
+                                            <div class="row form-check form-switch fs-5 mx-3">
                                                 <input type="checkbox" name="chicas" id="chicas"
                                                     class="form-check-input rounded-3"/>
                                                 <label class="form-check-label" for="chicas">Sólo Chicas</label>
                                             </div>
                                         </div>
                                         <div class="col-auto form-floating">
-                                            <div class="row form-check form-switch fs-5 m-3">
+                                            <div class="row form-check form-switch fs-5 mx-3">
                                                 <input type="checkbox" name="prepago" id="prepago"
                                                     class="form-check-input rounded-3"/>
                                                 <label class="form-check-label" for="prepago">Prepago</label>

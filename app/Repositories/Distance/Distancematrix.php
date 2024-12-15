@@ -62,12 +62,9 @@ class Distancematrix
     }
 
     public function distance($origin,$destination){
-        $this->distance_text = "0 km";
-        $this->distance_value = 0; 
-        $this->duration_text = "00:00 h."; 
-        $this->duration_value = 0; 
         $query= ['query'=>[
-            'key' => 'j085NeT5pvSDqCKsT6KXzTuPC2ySGi9Kau6gIP6szAf7eMg0jdblEUghNNRMvlc2',
+            'key' => 'FDy8rwocdOaYhNT628pRqHKOgFBKFZYs827WOlAyxym1STSo2eJTDnJvqQAjm0la',
+            //'key' => 'j085NeT5pvSDqCKsT6KXzTuPC2ySGi9Kau6gIP6szAf7eMg0jdblEUghNNRMvlc2',
             'origins' => $origin,
             'destinations' => $destination,]
         ];
@@ -85,27 +82,29 @@ class Distancematrix
 
             // Decodificar el contenido JSON (si es JSON)
             $data = json_decode($contents);
-
+            
             // Procesar los datos
             if (json_last_error() === JSON_ERROR_NONE) {
+                if($data->status == "REQUEST_DENIED"){
+                    Log::error("STATUS: ".$data->status,['data' =>$data]);
+                }else
                 // Los datos se decodificaron correctamente
                 if($data->rows[0]->elements[0]->status!="ZERO_RESULTS"){
                     $this->distance_text = $data->rows[0]->elements[0]->distance->text;
                     $this->distance_value = $data->rows[0]->elements[0]->distance->value;
-                    $this->duration_text = $this->convertTimeFormat($data->rows[0]->elements[0]->duration->value);
+                    $this->duration_text = $data->rows[0]->elements[0]->duration->text;
+                    //$this->duration_text = $this->convertTimeFormat($data->rows[0]->elements[0]->duration->text);
                     $this->duration_value = $data->rows[0]->elements[0]->duration->value; 
-                }else{
-                    print_r($data);
                 }
             } else {
                 // Hubo un error al decodificar el JSON
-                echo "Error al decodificar JSON: " . json_last_error_msg();
+                Log::error("Error al decodificar JSON: " . json_last_error_msg());
                 $this->distance_text = "ERROR";
             }
 
         } catch (ConnectException $e) {
             // Manejar errores de solicitud
-            echo "Error de solicitud: " . $e->getMessage();
+            Log::error("Error de solicitud: " . $e->getMessage());
             $this->distance_text = "ERROR";
         }
     }
@@ -153,11 +152,42 @@ class Distancematrix
     }
 
     public function convertTimeFormat($timeValue) {
+        // Crear un objeto Carbon con los segundos
+        $carbonTime = Carbon::createFromTimestamp($timeValue);
+
+        // Formatear el tiempo en el formato deseado
+        Log::info($carbonTime->format('H:i') . 'h');
+        return $carbonTime->format('H:i') . 'h';
+        /*
+        // Inicializar variables para horas y minutos
+        $hours = 0;
+        $minutes = 0;
+
+        // Dividir la cadena en partes
+        $parts = explode(' ', $duration_text);
+
+        // Recorrer las partes para extraer horas y minutos
+        foreach ($parts as $part) {
+            if (strpos($part, 'hour') !== false) {
+                $hours = (int) filter_var($part, FILTER_SANITIZE_NUMBER_INT);
+            } elseif (strpos($part, 'mins') !== false) {
+                $minutes = (int) filter_var($part, FILTER_SANITIZE_NUMBER_INT);
+            }
+        }
+
+        // Crear un objeto Carbon con las horas y minutos
+        $carbonTime = Carbon::createFromTime($hours, $minutes);
+
+        // Formatear el tiempo en el formato deseado
+        $this->duration_text = $carbonTime->format('H:i') . 'h';
+        */
+   
+
          // Crear un objeto Carbon con los segundos
-         $carbonTime = Carbon::createFromTimestamp($timeValue);
+         //$carbonTime = Carbon::createFromTimestamp($timeValue);
 
          // Formatear el tiempo en el formato deseado
          //Log::info($carbonTime->format('H:i') . 'h');
-         return $carbonTime->format('H:i') . 'h';
+         //return $carbonTime->format('H:i') . 'h';
     }
 }
