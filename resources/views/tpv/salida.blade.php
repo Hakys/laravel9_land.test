@@ -102,6 +102,9 @@
             color:red;
             font-size: 1.5ch;
         }
+        .granerror{
+            color:red;
+        }
     </style>
     <div class="payment-container">
         <div class="payment-box">
@@ -114,7 +117,7 @@
                 <p><strong>Pedido:</strong> {{ $viewData['tpv']->getPedido() }}</p>
                 <p><strong>Fecha:</strong> {{ $viewData['tpv']->updated_at->format('y-m-d H:i') }}</p>
                 <p><strong>Concepto:</strong> {{ $viewData['tpv']->concepto }}</p>
-                <h4 class="text-center red">
+                <h4 class="text-center red granerror">
                     El cargo no se hace inmediato. Recibirá una notificación cuando se realice el cargo.</h4>
                 <div class="logos">
                     <img src="{{ asset('/img/visa.png') }}" alt="Visa">
