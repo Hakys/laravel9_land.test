@@ -51,6 +51,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware('admin')->group(function () {
     /* TPV */
     Route::get('/tpvs','App\Http\Controllers\TpvController@index')->name('tpv.index');
+    Route::get('/tpvs/{key}/detalles','App\Http\Controllers\TpvController@show')->name('tpv.show');
 
     /* CONTACTO */
     Route::get('/contactos', 'App\Http\Controllers\ContactoController@index')->name("contacto.index");

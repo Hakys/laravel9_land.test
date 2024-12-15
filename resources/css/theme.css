@@ -39,6 +39,11 @@ nav {
     font-size: 0.7em;
 }
 
+.error{
+    font-size: 0.6em;
+    color: #900;
+}
+
 .blue{ color: #0d6efd; }
 .indigo{ color: #6610f2; }
 .purple{ color: #6f42c1; }

@@ -14,7 +14,7 @@ class Table extends Component
 
     public function mount()
     {
-        $this->tpvs = Tpv::all();
+        $this->tpvs = Tpv::orderBy('updated_at','desc')->get();
     }
 
     public function refreshTpvs()
@@ -25,7 +25,7 @@ class Table extends Component
     public function deleteTpv($id)
     {
         Tpv::find($id)->delete();
-        $this->tpvs = Tpv::all();
+        $this->tpvs = Tpv::orderBy('updated_at','desc')->get();
     }
 
     public function render()

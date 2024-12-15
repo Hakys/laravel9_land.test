@@ -2,5 +2,5 @@
 @section('title', $viewData['title'])
 @section('subtitle', $viewData['subtitle'])
 @section('content')
-    @livewire('tpv.pasarela',['key'=>$viewData['tpv']->key])</div>
+    @livewire('tpv.pasarela',['key'=>$viewData['tpv']->key])
 @endsection

@@ -10,7 +10,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 75vh;
         }
         .payment-box {
             display: flex;
@@ -32,8 +32,8 @@
             margin-bottom: 10px;
         }
         .payment-details p {
-            margin: 5px 0;
-            font-size: 14px;
+            margin: 10px 0;
+            font-size: 15px;
         }
         .payment-details .amount {
             background-color: #0073e6;
@@ -87,12 +87,17 @@
             color: #fff;
         }
         .logos img {
-            width: 50px;
+            width: 60px;
             margin-right: 10px;
         }
         .error{
             color:red;
             font-size: 1.5ch;
+        }
+        .logossup img{
+            height: 100%;
+            width: 128px;
+            margin-right: 10px;
         }
     </style>
     <div class="payment-container">
@@ -102,51 +107,53 @@
                 <h2>Importe:</h2>
                 <div class="amount">{{ $amount }} &euro;</div>
                 <p><strong>Comercio:</strong> Sex Shop Diabla Roja</p>
-                <p><strong>Terminal:</strong> 335255568-1</p>
-                <p><strong>Pedido:</strong> 000051894416</p>
-                <p><strong>Fecha:</strong> {{ now() }}</p>
+                <p><strong>Terminal:</strong> 333856102-1</p>
+                <p><strong>Pedido:</strong> {{ $pedido }}</p>
+                <p><strong>Fecha:</strong> {{ now()->format('y-m-d H:i') }}</p>
                 <p><strong>Concepto:</strong> {{ $concepto }}</p>
+                <div class="logossup">
+                    <img src="{{ asset('/img/verified-visa.png') }}" alt="Verified by VISA">
+                    <img src="{{ asset('/img/securecode.png') }}" alt="MasterCard SecureCode">
+                </div>
                 <div class="logos">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Mastercard_2019_logo.svg" alt="MasterCard">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo_%282018%29.svg" alt="Amex">
+                    <img src="{{ asset('/img/visa.png') }}" alt="Visa">
+                    <img src="{{ asset('/img/visa-electron.png') }}" alt="Visa Electron">
+                    <img src="{{ asset('/img/mastercard.png') }}" alt="MasterCard">
+                    <img src="{{ asset('/img/maestro.png') }}" alt="Maestro">
                 </div>
             </div>
 
             <!-- Right Section -->
             <div class="payment-form">
                 <h3>PAGAR CON TARJETA</h3>
-                <form action="{{ route('tpv.pagar', ['key' => $key]) }}" method="POST">
-                    @csrf
-                    <input type="hidden" wire:model="key">
+                <form wire:submit.prevent="submit">
+                    <input type="hidden" id="key" name="key" wire:model="key">
                     <div class="form-group">
-                        <label for="card-number">Titular de la Tarjeta</label>
-                        <input type="text" id="card_holder" value="{{ old('card_holder') }}"
-                            placeholder="Nombre completo como se muestra en la tarjeta">
+                        <label for="card-holder">Titular de la Tarjeta</label>
+                        <input type="text" id="card_holder" name="card_holder" value="{{ old('card_holder') }}"
+                            placeholder="Como se muestra en la tarjeta" wire:model="card_holder">
                         @error('card_holder') <span class="error">{{ $message }}</span> @enderror
                     </div>
-
                     <div class="form-group">
                         <label for="card-number">N&uacute;mero de Tarjeta</label>
-                        <input type="text" id="card_number" value="{{ old('card_number') }}"
-                            placeholder="1234 5678 9012 3456">
+                        <input type="text" id="card_number" name="card_number" value="{{ old('card_number') }}"
+                            placeholder="1234 5678 9012 3456" wire:model="card_number">
                         @error('card_number') <span class="error">{{ $message }}</span> @enderror
                     </div>
                     <div class="form-group">
-                        <label for="expiry">Caducidad</label>
-                        <input type="text" id="expiration_date" value="{{ old('expiration_date') }}"
-                            placeholder="MM/YY">
+                        <label for="expiration_date">Caducidad</label>
+                        <input type="text" id="expiration_date" name="expiration_date" value="{{ old('expiration_date') }}"
+                            placeholder="MM/YY" wire:model="expiration_date">
                         @error('expiration_date') <span class="error">{{ $message }}</span> @enderror
                     </div>
                     <div class="form-group">
                         <label for="cvv">C&oacute;d. Seguridad</label>
-                        <input type="text" id="cvv" value="{{ old('cvv') }}"
-                            placeholder="123">
+                        <input type="text" id="cvv" name="cvv" value="{{ old('cvv') }}"
+                            placeholder="123" wire:model="cvv">
                         @error('cvv') <span class="error">{{ $message }}</span> @enderror
                     </div>
-                    <div class="buttons">
-                        <button type="button" class="btn">CANCELAR</button>
-                        <button type="submit" class="btn btn-primary">PAGAR</button>
+                    <div class="button d-grid">
+                        <button class="btn btn-primary" type="submit" >PAGAR</button>
                     </div>
                 </form>
             </div>

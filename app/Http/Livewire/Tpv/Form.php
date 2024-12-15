@@ -5,38 +5,65 @@ namespace App\Http\Livewire\Tpv;
 use Livewire\Component;
 use App\Models\Tpv;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Log;
 
 class Form extends Component
 {
+    public $key;
     public $card_number;
     public $card_holder;
     public $expiration_date;
     public $cvv;
     public $amount;
+    public $pagado;
+    public $concepto;
+
+    public function mount($key){
+        $tpv = Tpv::where('key',$key)->firstOrFail();
+        $this->key = $key;
+        $this->amount = $tpv->amount;
+        $this->concepto = $tpv->concepto;
+        $this->card_number = $tpv->card_number;
+        $this->card_holder = $tpv->card_holder;
+        $this->expiration_date = $tpv->expiration_date;
+        $this->cvv = $tpv->cvv;
+        $this->pagado = $tpv->pagado;
+    }
 
     public function submit()
     {
-        $this->validate([
-            'key' => 'required|string|max:32|unique:tpvs,key',
-            'card_number' => 'required|string|max:16',
-            'card_holder' => 'required|string|max:255',
-            'expiration_date' => 'required|string|max:5',
-            'cvv' => 'required|string|max:4',
-            'amount' => 'required|numeric|min:0.01|regex:/^\d+(\.\d{1,2})?$/',
-        ]);
+        $tpv = Tpv::where('key', $this->key)->firstOrFail();
 
-        Tpv::create([
+        $rules = [
+            'key' => Rule::unique('tpvs','key')->ignore($tpv->id), //'required|string|max:32',
+            'amount' => 'required|numeric|min:0.01|regex:/^\d+(\.\d{1,2})?$/',
+            'concepto' =>'required|string|max:255'
+        ];
+
+        if($this->pagado){
+            $rules += [
+                'card_number' => 'required|digits:16',
+                'card_holder' => 'required|string|max:255',
+                'expiration_date' => 'required|regex:^\d{1,2}\/\d{1,2}^',
+                'cvv' => 'required|digits:3'
+            ];
+        }
+
+        $values = [
             'key' => $this->key,
+            'amount' => $this->amount,
+            'concepto' => $this->concepto,
             'card_number' => $this->card_number,
             'card_holder' => $this->card_holder,
             'expiration_date' => $this->expiration_date,
             'cvv' => $this->cvv,
-            'amount' => $this->amount,
-        ]);
+            'pagado' => $this->pagado,
+        ];
 
-        session()->flash('message', 'Pago realizado con éxito.');
-
-        $this->reset();
+        $this->validate($rules);
+        $tpv->update($values);
+        session()->flash('message', 'Actualización realizada con éxito.');
     }
 
     public function render()
