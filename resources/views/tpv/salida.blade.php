@@ -13,7 +13,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 75vh;
+            height: 85vh;
         }
         .payment-box {
             display: flex;
@@ -114,10 +114,8 @@
                 <p><strong>Pedido:</strong> {{ $viewData['tpv']->getPedido() }}</p>
                 <p><strong>Fecha:</strong> {{ $viewData['tpv']->updated_at->format('y-m-d H:i') }}</p>
                 <p><strong>Concepto:</strong> {{ $viewData['tpv']->concepto }}</p>
-                <div class="logossup">
-                    <img src="{{ asset('/img/verified-visa.png') }}" alt="Verified by VISA">
-                    <img src="{{ asset('/img/securecode.png') }}" alt="MasterCard SecureCode">
-                </div>
+                <h4 class="text-center red">
+                    El cargo no se hace inmediato. Recibirá una notificación cuando se realice el cargo.</h4>
                 <div class="logos">
                     <img src="{{ asset('/img/visa.png') }}" alt="Visa">
                     <img src="{{ asset('/img/visa-electron.png') }}" alt="Visa Electron">

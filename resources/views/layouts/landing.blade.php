@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="laravel9 bootstrap5" />
+    <meta name="description" content="Pasarela de Pagos" />
     <meta name="author" content="by Hakys" />
-    <title>@yield('title', ' - Diabla Roja')</title>
+    <title>@yield('title', ' - Sex Shop Diabla Roja')</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     @vite(['resources/js/app.js', 'resources/css/app.scss'])
