@@ -17,14 +17,5 @@ export default defineConfig({
                 additionalData: `@import "node_modules/bootstrap/scss/bootstrap";`
             }
         }
-    },
-    build: {
-        rollupOptions: {
-          input: {
-            app: [
-                'resources/js/app.js',
-            ],
-          },
-        },
-      },
+    }
 });

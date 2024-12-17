@@ -35,14 +35,18 @@
             </button>
             <div class="collapse navbar-collapse d-flex" id="collapsibleNavId">
                 <ul class="navbar-nav w-100 me-auto mt-2 mt-lg-0 align-items-end">
+                    <!--
                     <li class="nav-item">
                         <a class="nav-link active" href="#" aria-current="page">Inicio
                             <span class="visually-hidden">(current)</span></a
                         >
                     </li>
+                    -->
                     @guest
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login')}}</a>
+                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login')}}
+                            <span class="visually-hidden">(current)</span>
+                        </a>
                     </li>
                     @else
                     <li class="nav-item dropdown">
