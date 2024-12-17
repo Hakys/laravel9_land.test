@@ -1,0 +1,7 @@
+@use url('theme.css');
+@use "/node_modules/bootstrap/scss/bootstrap.scss";
+@use "/node_modules/select2/dist/css/select2.css";
+@use "/node_modules/owl.carousel/dist/assets/owl.carousel.css";
+@use "/node_modules/owl.carousel/dist/assets/owl.theme.default.css";
+@use url('schedule.css');
+/* @use url("admin.css"); */

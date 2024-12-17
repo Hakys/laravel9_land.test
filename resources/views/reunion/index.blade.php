@@ -7,10 +7,10 @@
             <div class="flex-grow-1"><h2>{{$viewData['subtitle']}}</h2></div>
             <!--<div class="md- hidd"><a class="btn btn-outline-secondary">
                 <b>Nº de Reuniones:</b> {{ $viewData['reunions']->count() }}</a></div>-->
-            <!--<div><a id="btnNuevoEvento" class="btn btn-success " href="{{route('reunion.create')}}">                    
+            <!--<div><a id="btnNuevoEvento" class="btn btn-success " href="{{route('reunion.create')}}">
                 <i class="fa fa-calendar-plus-o fa-lg" aria-hidden="true"></i>
                 </a></div>
-            <div><a class="btn btn-info text-white" href="{{route('reunion.gestion')}}">                    
+            <div><a class="btn btn-info text-white" href="{{route('reunion.gestion')}}">
                 <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
                 </a></div>-->
                 @livewire('contacto.form-modal',['op'=>'create','to'=>'reunion.index'])
@@ -22,3 +22,4 @@
         </div>
     </div>
 @endsection
+@stack('scripts')

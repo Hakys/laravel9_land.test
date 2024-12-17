@@ -271,3 +271,6 @@
         </div>
     </div>
 </div>
+@push('scripts')
+    <script src='{{ asset('/js/schedule.js') }}'></script>
+@endpush

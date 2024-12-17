@@ -7,21 +7,23 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/js/app.js',
-                'resources/css/app.scss'
             ],
             refresh: true,
-            detectTls: 'laravel9_land.test',
         }),
     ],
-    resolve: {
-        alias: {
-          '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
-        },
+    css: {
+        preprocessorOptions: {
+            scss: {
+                additionalData: `@import "node_modules/bootstrap/scss/bootstrap";`
+            }
+        }
     },
     build: {
         rollupOptions: {
           input: {
-            app: 'resources/js/app.js',
+            app: [
+                'resources/js/app.js',
+            ],
           },
         },
       },

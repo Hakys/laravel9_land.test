@@ -1,19 +1,17 @@
+import '../sass/app.scss';
 import './jquery.min';
+
 import 'bootstrap';
 import * as bootstrap from 'bootstrap';
 window.bootstrap = bootstrap;
+
 import axios from 'axios';
 window.axios = axios;
+
 import 'owl.carousel';
 import './select2.min';
-import './schedule';
-import '../css/app.css';
 
-import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
-import '@fortawesome/fontawesome-free/scss/brands.scss';
-import '@fortawesome/fontawesome-free/scss/regular.scss';
-import '@fortawesome/fontawesome-free/scss/solid.scss';
-import '@fortawesome/fontawesome-free/scss/v4-shims.scss';
+import '../css/app.css';
 
 function confirmDelete(id) {
     if (confirm("¿Confirma BORRAR el elemento?")) {
@@ -24,5 +22,11 @@ function confirmDelete(id) {
     //document.getElementById(id).innerHTML = txt;
     return retorno;
   }
+/*
+  const sass = require('sass');
 
-
+  const result = sass.renderSync({
+    silenceDeprecations: ['legacy-js-api'],
+    ...
+  });
+*/

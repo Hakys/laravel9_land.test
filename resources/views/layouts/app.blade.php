@@ -9,7 +9,7 @@
     <title>@yield('title', ' - Diabla Roja')</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    @vite(['resources/js/app.js', 'resources/css/app.scss'])
+    @vite(['resources/js/app.js'])
     @livewireStyles
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -21,7 +21,7 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-sm navbar-dark bg-theme">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Diabla Roja App</a>
+            <a class="navbar-brand" href="/">Diabla Roja App</a>
             <button
                 class="navbar-toggler d-lg-none"
                 type="button"

@@ -156,3 +156,29 @@ nav {
 .text-justify {
     text-align: justify;
 }
+
+.fa-6 {
+    font-size: 8em;
+    border: 1;
+}
+
+.mitable {
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.clickable-row{
+    cursor: pointer;
+}
+.img_avatar{
+    height:30px;
+}
+.mano{
+    cursor: pointer;
+}
+.cell-con-imagen {
+  background-size: cover;
+  background-position: center;
+  height: 50px;
+  width: 50px;
+}
