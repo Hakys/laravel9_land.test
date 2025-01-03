@@ -1,4 +1,4 @@
-import '../sass/app.scss';
+import '../css/app.scss';
 import './jquery.min';
 
 import 'bootstrap';
@@ -10,8 +10,6 @@ window.axios = axios;
 
 import 'owl.carousel';
 import './select2.min';
-
-//import '../css/app.css';
 
 function confirmDelete(id) {
     if (confirm("¿Confirma BORRAR el elemento?")) {
