@@ -1,4 +1,5 @@
-import '../css/app.scss';
+import '../sass/app.scss';
+import '../css/app.css';
 import './jquery.min';
 
 import 'bootstrap';
@@ -20,11 +21,3 @@ function confirmDelete(id) {
     //document.getElementById(id).innerHTML = txt;
     return retorno;
   }
-/*
-  const sass = require('sass');
-
-  const result = sass.renderSync({
-    silenceDeprecations: ['legacy-js-api'],
-    ...
-  });
-*/

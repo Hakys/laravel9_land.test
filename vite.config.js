@@ -11,12 +11,22 @@ export default defineConfig({
             refresh: true,
         }),
     ],
-
+    resolve: {
+        alias: {
+            '@': '/resources/js',
+        },
+    },
     css: {
         preprocessorOptions: {
             scss: {
                 additionalData: `@import "/node_modules/bootstrap/scss/bootstrap";`
             }
         }
-    }
+    },
+    build: {
+        manifest: true,
+        rollupOptions: {
+            input: 'resources/js/app.js',
+        },
+    },
 });
