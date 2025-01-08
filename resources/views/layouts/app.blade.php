@@ -12,7 +12,7 @@
     <title>@yield('title', ' - Diabla Roja')</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    @vite(['resources/js/app.js'])
+    @vite(['resources/css/app.css','resources/js/app.js'])
     @livewireStyles
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -194,7 +194,6 @@
             </small>
         </div>
     </footer>
-    @vite('resources/js/app.js')
     @livewireScripts
 </body>
 
