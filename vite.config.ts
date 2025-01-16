@@ -19,7 +19,7 @@ export default defineConfig(async () => {
         css: {
             preprocessorOptions: {
                 scss: {
-                    additionalData: `@import "node_modules/bootstrap/scss/bootstrap";`
+                    additionalData: `@import "/node_modules/bootstrap/scss/bootstrap";`
                 }
             }
         },
